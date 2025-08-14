@@ -7,7 +7,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="relative min-h-screen text-white flex items-center"
+      className="pt-8 relative min-h-screen text-white flex items-center"
     >
       {/* Overlay gradient for depth */}
       <div className="absolute inset-0 bg-gradient-to-t from-stone-800 via-stone-900 to-black pointer-events-none"></div>
@@ -55,6 +55,8 @@ const Contact = () => {
           </motion.p>
         </motion.div>
 
+        
+
         {/* Right Side - Contact Info & CTA */}
         <motion.div
           initial={{ opacity: 0, x: 10 }}
@@ -76,6 +78,8 @@ const Contact = () => {
               Available Mon – Fri, 9AM – 6PM
             </p>
           </div>
+
+          
 
           {/* Social Links */}
           <div>
@@ -129,10 +133,9 @@ const Contact = () => {
             </motion.div>
           </motion.button>
         </motion.div>
-      </div>
 
-      {/* Footer */}
-      <div className="absolute bottom-0 w-full py-6 border-t border-white/10 text-center">
+        {/* Footer */}
+      <div className="sm:absolute sm:hidden bottom-0 w-full py-6 border-t border-white/10 text-center">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 0.6 }}
@@ -143,6 +146,22 @@ const Contact = () => {
           © 2024 CineMalt. All rights reserved.
         </motion.p>
       </div>
+      </div>
+
+      {/* Footer */}
+      <div className="absolute max-sm:hidden bottom-0 w-full py-6 border-t border-white/10 text-center">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          viewport={{ once: true }}
+          className="text-sm tracking-wide"
+        >
+          © 2024 CineMalt. All rights reserved.
+        </motion.p>
+      </div>
+
+      
     </section>
   );
 };
