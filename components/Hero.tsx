@@ -1,37 +1,33 @@
 "use client";
 
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
   const ref = useRef(null);
-  const [isDesktop, setIsDesktop] = useState(true);
-
-  // Detect screen size
-  useEffect(() => {
-    const checkSize = () => setIsDesktop(window.innerWidth >= 768);
-    checkSize();
-    window.addEventListener("resize", checkSize);
-    return () => window.removeEventListener("resize", checkSize);
-  }, []);
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  // If mobile → no parallax (just "0%")
+  // Adjust parallax strength based on device
+  const videoRange = isMobile ? ["0%", "5%"] : ["0%", "50%"];
+  const headingRange = isMobile ? ["0%", "-5%"] : ["0%", "-30%"];
+  const paragraphRange = isMobile ? ["0%", "-8%"] : ["0%", "-40%"];
+
   const videoY = useSpring(
-    useTransform(scrollYProgress, [0, 1], isDesktop ? ["0%", "50%"] : ["0%", "0%"]),
+    useTransform(scrollYProgress, [0, 1], videoRange),
     { stiffness: 50, damping: 20 }
   );
   const headingY = useSpring(
-    useTransform(scrollYProgress, [0, 1], isDesktop ? ["0%", "-30%"] : ["0%", "0%"]),
+    useTransform(scrollYProgress, [0, 1], headingRange),
     { stiffness: 50, damping: 20 }
   );
   const paragraphY = useSpring(
-    useTransform(scrollYProgress, [0, 1], isDesktop ? ["0%", "-40%"] : ["0%", "0%"]),
+    useTransform(scrollYProgress, [0, 1], paragraphRange),
     { stiffness: 50, damping: 20 }
   );
 
@@ -54,10 +50,7 @@ const Hero = () => {
           playsInline
           className="block md:hidden w-full h-full object-cover"
         >
-          <source
-            src="https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/hero-mobile.mp4"
-            type="video/mp4"
-          />
+          <source src="https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/hero-mobile.mp4" type="video/mp4" />
         </video>
         {/* Desktop */}
         <video
@@ -67,10 +60,7 @@ const Hero = () => {
           playsInline
           className="hidden md:block w-full h-full object-cover"
         >
-          <source
-            src="https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/hero3.mp4"
-            type="video/mp4"
-          />
+          <source src="https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/hero3.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
       </motion.div>
@@ -125,6 +115,8 @@ const Hero = () => {
     transition-all duration-300"
         >
           <span>See What&apos;s Possible</span>
+
+          {/* Animated arrow container */}
           <motion.div
             animate={{ x: [0, 20, 0] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
@@ -135,6 +127,27 @@ const Hero = () => {
           </motion.div>
         </motion.button>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 1.2 }}
+        className="absolute bottom-28 md:bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <div className="flex flex-col items-center text-white/80">
+          <span className="text-xs tracking-[0.3em] uppercase mb-3">
+            Scroll
+          </span>
+          <div className="w-10 h-20 rounded-full border border-white/20 backdrop-blur-md bg-white/5 flex items-start justify-center overflow-hidden shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] transition-shadow duration-500">
+            <motion.div
+              animate={{ y: [0, 40, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="w-10 h-10 rounded-full bg-gradient-to-b from-white to-white/60 shadow-[0_0_8px_rgba(255,255,255,0.6)]"
+            />
+          </div>
+        </div>
+      </motion.div>
     </section>
   );
 };
