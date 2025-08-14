@@ -54,7 +54,7 @@ const Hero = () => {
           playsInline
           className="block md:hidden w-full h-full object-cover"
         >
-          <source src="/videos/hero-mobile.mp4" type="video/mp4" />
+          <source src="https://8aed336ede8a4e2852fb78c7af744d30.r2.cloudflarestorage.com/cinemalt/hero-mobile.mp4" type="video/mp4" />
         </video>
         {/* Desktop */}
         <video
@@ -64,7 +64,7 @@ const Hero = () => {
           playsInline
           className="hidden md:block w-full h-full object-cover"
         >
-          <source src="/videos/hero3.mp4" type="video/mp4" />
+          <source src="https://8aed336ede8a4e2852fb78c7af744d30.r2.cloudflarestorage.com/cinemalt/hero3.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
       </motion.div>
@@ -107,32 +107,29 @@ const Hero = () => {
 
         {/* Button */}
         <motion.button
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, delay: 0.3 }}
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.97 }}
-  className="flex items-center mx-auto gap-4 px-8 py-3 rounded-full
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.97 }}
+          className="flex items-center mx-auto gap-4 px-8 py-3 rounded-full
     bg-white/10 backdrop-blur-lg text-white text-lg font-medium
     border border-white/30 shadow-[0_0_20px_rgba(255,255,255,0.15)]
     hover:bg-white/20 hover:shadow-[0_0_25px_rgba(255,255,255,0.3)]
     transition-all duration-300"
->
-  <span>See What&apos;s Possible</span>
+        >
+          <span>See What&apos;s Possible</span>
 
-  {/* Animated arrow container */}
-  <motion.div
-    animate={{ x: [0, 20, 0] }}
-    transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-    className="relative w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md"
-  >
-    <motion.div
-      className="absolute w-10 h-10 rounded-full bg-white"
-    />
-    <ArrowRight className="relative z-10 text-black text-xl" />
-  </motion.div>
-</motion.button>
-
+          {/* Animated arrow container */}
+          <motion.div
+            animate={{ x: [0, 20, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            className="relative w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md"
+          >
+            <motion.div className="absolute w-10 h-10 rounded-full bg-white" />
+            <ArrowRight className="relative z-10 text-black text-xl" />
+          </motion.div>
+        </motion.button>
       </div>
 
       {/* Scroll Indicator */}
