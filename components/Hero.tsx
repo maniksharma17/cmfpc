@@ -54,7 +54,7 @@ const Hero = () => {
           playsInline
           className="block md:hidden w-full h-full object-cover"
         >
-          <source src="https://8aed336ede8a4e2852fb78c7af744d30.r2.cloudflarestorage.com/cinemalt/hero-mobile.mp4" type="video/mp4" />
+          <source src="https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/hero-mobile.mp4" type="video/mp4" />
         </video>
         {/* Desktop */}
         <video
@@ -64,7 +64,7 @@ const Hero = () => {
           playsInline
           className="hidden md:block w-full h-full object-cover"
         >
-          <source src="https://8aed336ede8a4e2852fb78c7af744d30.r2.cloudflarestorage.com/cinemalt/hero3.mp4" type="video/mp4" />
+          <source src="https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/hero3.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
       </motion.div>
