@@ -30,7 +30,7 @@ export default function FilmTicker() {
   return (
     <section
       aria-label="Film production terms"
-      className="w-full z-50 bg-white text-black overflow-hidden border-y border-white/10"
+      className="w-full z-50 bg-stone-800 text-white overflow-hidden"
     >
       <div className="relative h-9 flex items-center">
         <div className="ticker group" role="marquee">
@@ -68,7 +68,7 @@ export default function FilmTicker() {
         .item {
           display: inline-flex;
           align-items: center;
-          color: rgba(0,0,0,0.85);
+          color: rgba(255,255,255,0.85);
           font-weight: 300;
           font-size: 0.9rem;
           letter-spacing: 0.02em;
