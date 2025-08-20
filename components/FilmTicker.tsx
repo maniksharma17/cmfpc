@@ -30,7 +30,7 @@ export default function FilmTicker() {
   return (
     <section
       aria-label="Film production terms"
-      className="w-full z-50 bg-stone-800 text-white overflow-hidden"
+      className="w-full z-50 bg-stone-700 text-black overflow-hidden"
     >
       <div className="relative h-9 flex items-center">
         <div className="ticker group" role="marquee">

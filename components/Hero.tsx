@@ -3,10 +3,11 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
+import {useIsMobile} from "@/hooks/useIsMobile"; 
 
 const Hero = () => {
   const ref = useRef(null);
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -18,10 +19,10 @@ const Hero = () => {
   const headingRange = isMobile ? ["0%", "-5%"] : ["0%", "-30%"];
   const paragraphRange = isMobile ? ["0%", "-8%"] : ["0%", "-40%"];
 
-  const videoY = useSpring(
-    useTransform(scrollYProgress, [0, 1], videoRange),
-    { stiffness: 50, damping: 20 }
-  );
+  const videoY = useSpring(useTransform(scrollYProgress, [0, 1], videoRange), {
+    stiffness: 50,
+    damping: 20,
+  });
   const headingY = useSpring(
     useTransform(scrollYProgress, [0, 1], headingRange),
     { stiffness: 50, damping: 20 }
@@ -35,7 +36,7 @@ const Hero = () => {
     <section
       ref={ref}
       id="home"
-      className="relative h-screen flex items-center justify-center overflow-hidden hero-grainy"
+      className="relative h-screen flex items-center justify-start overflow-hidden hero-grainy"
     >
       {/* Background video */}
       <motion.div
@@ -66,18 +67,13 @@ const Hero = () => {
       </motion.div>
 
       {/* Content */}
-      <div
-        className="
-          relative z-10 text-center max-w-4xl mx-auto px-4 text-white
-          md:translate-y-0 translate-y-[-10%]
-        "
-      >
+      <div className="relative z-10 text-center sm:text-left max-w-4xl px-4 sm:px-6 md:pl-24 text-white translate-y-[-8%] md:translate-y-0">
         <motion.h1
           style={{ y: headingY, willChange: "transform" }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-cormorant text-5xl md:text-7xl lg:text-8xl font-light mb-6 leading-tight tracking-tighter"
+          className="font-cormorant text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-light mb-6 leading-tight tracking-tighter drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"
         >
           Stories That
           <motion.span
@@ -95,7 +91,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="text-lg md:text-xl max-w-xl mx-auto mb-8 font-light leading-relaxed"
+          className="text-base sm:text-lg md:text-xl max-w-lg mx-auto mb-8 font-light leading-tight"
         >
           We distill stories and deliver cinematic production that turns ideas
           into iconic brands
@@ -108,22 +104,22 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
-          className="flex items-center mx-auto gap-4 px-8 py-3 rounded-full
-    bg-white/10 backdrop-blur-lg text-white text-lg font-medium
-    border border-white/30 shadow-[0_0_20px_rgba(255,255,255,0.15)]
-    hover:bg-white/20 hover:shadow-[0_0_25px_rgba(255,255,255,0.3)]
-    transition-all duration-300"
+          className="flex max-sm:mx-auto items-center gap-3 sm:gap-4 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full
+            bg-white/10 backdrop-blur-lg text-white text-base sm:text-lg font-medium
+            border border-white/30 shadow-[0_0_20px_rgba(255,255,255,0.15)]
+            hover:bg-white/20 hover:shadow-[0_0_25px_rgba(255,255,255,0.3)]
+            transition-all duration-300"
         >
           <span>See What&apos;s Possible</span>
 
-          {/* Animated arrow container */}
+          {/* Animated arrow */}
           <motion.div
             animate={{ x: [0, 20, 0] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            className="relative w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md"
+            className="relative w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md"
           >
-            <motion.div className="absolute w-10 h-10 rounded-full bg-white" />
-            <ArrowRight className="relative z-10 text-black text-xl" />
+            <motion.div className="absolute w-full h-full rounded-full bg-white" />
+            <ArrowRight className="relative z-10 text-black text-lg sm:text-xl" />
           </motion.div>
         </motion.button>
       </div>
@@ -133,17 +129,17 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 1.2 }}
-        className="absolute bottom-28 md:bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-16 sm:bottom-20 md:bottom-8 left-1/2 -translate-x-1/2"
       >
         <div className="flex flex-col items-center text-white/80">
-          <span className="text-xs tracking-[0.3em] uppercase mb-3">
+          <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase mb-3">
             Scroll
           </span>
-          <div className="w-10 h-20 rounded-full border border-white/20 backdrop-blur-md bg-white/5 flex items-start justify-center overflow-hidden shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] transition-shadow duration-500">
+          <div className="w-8 sm:w-10 h-20 rounded-full border border-white/20 backdrop-blur-md bg-white/5 flex items-start justify-center overflow-hidden shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] transition-shadow duration-500">
             <motion.div
               animate={{ y: [0, 40, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-10 h-10 rounded-full bg-gradient-to-b from-white to-white/60 shadow-[0_0_8px_rgba(255,255,255,0.6)]"
+              className="w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-gradient-to-b from-white to-white/60 shadow-[0_0_8px_rgba(255,255,255,0.6)]"
             />
           </div>
         </div>

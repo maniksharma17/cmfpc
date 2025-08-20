@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Image from 'next/image';
 
 const Contact = () => {
   return (
@@ -22,20 +23,24 @@ const Contact = () => {
           className="flex flex-col justify-center space-y-8"
         >
           {/* Logo */}
-          <motion.p
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="font-light text-4xl text-white"
-          >
-            Cine
-            <span className="alt-font italic font-medium text-white">Malt</span>
-          </motion.p>
+                          <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.6 }}
+                          >
+                            <Image
+                              src="/cinemalt-logo.png"
+                              alt="Cinemalt Logo"
+                              width={120}
+                              height={40}
+                              className="h-10 w-auto sm:h-14"
+                            />
+                          </motion.div>
 
           {/* Heading */}
           <h2 className="font-cormorant text-5xl md:text-6xl text-white font-bold leading-tight">
             Let&apos;s Create
-            <span className="block italic text-white font-bold md:text-7xl [text-shadow:_0_0_12px_rgba(255,255,255,0.6),_0_0_25px_rgba(255,255,255,0.4)]">
+            <span className="block italic text-white font-bold md:text-7xl [text-shadow:_0_0_4px_rgba(255,255,255,0.3),_0_0_25px_rgba(255,255,255,0.4)]">
               Something Unforgettable
             </span>
           </h2>

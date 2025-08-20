@@ -1,6 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { ArrowUpRight } from "lucide-react";
 
 const About = () => {
   const lines = [
@@ -11,7 +12,6 @@ const About = () => {
   ];
 
   const scrollY = useMotionValue(0);
-  const headingY = useTransform(scrollY, v => v * 0);
   const textY = useTransform(scrollY, v => v * 0.001);
 
   useEffect(() => {
@@ -23,12 +23,12 @@ const About = () => {
   return (
     <section
       id="about"
-      className="relative min-h-screen py-28 overflow-hidden bg-stone-800 text-white"
+      className="relative min-h-[60vh] md:min-h-[80vh] sm:min-h-screen py-20 md:py-28 px-6 md:pl-24 overflow-hidden bg-stone-800 text-white flex items-center"
     >
       {/* Foreground text */}
       <motion.div
         style={{ y: textY }}
-        className="relative z-20 max-w-4xl mx-auto px-6 lg:px-8 space-y-16"
+        className="relative z-20 max-w-2xl space-y-8"
       >
         {lines.map((text, i) => (
           <motion.p
@@ -36,12 +36,35 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: i * 0.3 }}
-            viewport={{ once: false }}
-            className="text-3xl md:text-5xl font-light leading-snug drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"
+            viewport={{ once: true }}
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light leading-snug drop-shadow-[0_0_2px_rgba(255,255,255,0.4)]"
           >
             {text}
           </motion.p>
         ))}
+
+        {/* CTA Button */}
+        <motion.button
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.5 }}
+          whileHover={{ scale: 1.05 }}
+          viewport={{ once: true }}
+          whileTap={{ scale: 0.97 }}
+          className="mt-8 flex items-center gap-3 px-6 py-3 rounded-full
+          bg-white/10 backdrop-blur-lg text-white text-base sm:text-lg font-medium
+          border border-white/30 shadow-[0_0_20px_rgba(255,255,255,0.15)]
+          hover:bg-white/20 hover:shadow-[0_0_25px_rgba(255,255,255,0.3)]
+          transition-all duration-300"
+        >
+          <span>Read More About Us</span>
+
+          {/* Animated arrow container */}
+          <motion.div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md">
+            <motion.div className="absolute w-full h-full rounded-full bg-white" />
+            <ArrowUpRight className="relative z-10 text-black text-lg sm:text-xl" />
+          </motion.div>
+        </motion.button>
       </motion.div>
     </section>
   );

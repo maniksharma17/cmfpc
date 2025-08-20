@@ -6,6 +6,9 @@ import Portfolio from '@/components/Portfolio';
 import Mission from '@/components/Mission';
 import Contact from '@/components/Contact';
 import FilmTicker from '@/components/FilmTicker';
+import ClientsTicker from '@/components/Clients';
+import Services from '@/components/Services';
+import Testimonials from '@/components/Testimonials';
 
 export default function Home() {
   return (
@@ -14,7 +17,8 @@ export default function Home() {
         <Hero />
         <About />
         <Portfolio />
-        <Mission />
+        <ClientsTicker />
+        <Services />
         <FilmTicker />
         <Contact />
 
