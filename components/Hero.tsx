@@ -135,7 +135,7 @@ const Hero = () => {
           <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase mb-3">
             Scroll
           </span>
-          <div className="w-8 sm:w-10 h-20 rounded-full border border-white/20 backdrop-blur-md bg-white/5 flex items-start justify-center overflow-hidden shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] transition-shadow duration-500">
+          <div className="w-8 sm:w-10 h-14 sm:h-20 rounded-full border border-white/20 backdrop-blur-md bg-white/5 flex items-start justify-center overflow-hidden shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] transition-shadow duration-500">
             <motion.div
               animate={{ y: [0, 40, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

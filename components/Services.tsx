@@ -36,7 +36,7 @@ export default function Services() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="text-sm sm:text-lg md:text-2xl max-w-4xl mx-auto font-light leading-relaxed flex flex-wrap justify-center gap-x-2 gap-y-2"
+        className="text-md sm:text-lg md:text-2xl max-w-4xl mx-auto font-light leading-relaxed flex flex-wrap justify-center gap-x-2 gap-y-2"
       >
         {SERVICES.map((service, i) => (
           <span

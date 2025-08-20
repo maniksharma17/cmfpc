@@ -33,8 +33,9 @@ const CLIENT_NAMES = [
   "DiploMind",
   "World Federation of Homophilia",
   "Saisha",
-  "Haven Fragrances",
   "Indian Institute of Creative Skills",
+  "Haven Fragrances",
+  
   "Showman Artist",
   "Kohler",
   "JIMS",
@@ -62,7 +63,7 @@ export default function ClientLogos() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="text-sm sm:text-lg md:text-3xl max-w-5xl mx-auto font-normal mb-8 sm:mb-14 leading-relaxed flex flex-wrap justify-center gap-x-2 gap-y-0 sm:gap-y-4"
+        className="text-md sm:text-lg md:text-3xl max-w-5xl mx-auto font-normal mb-8 sm:mb-14 leading-relaxed flex flex-wrap justify-center gap-x-2 gap-y-0 sm:gap-y-4"
       >
         {CLIENT_NAMES.map((client, i) => (
           <span
