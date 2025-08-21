@@ -53,7 +53,6 @@ const Navigation = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6 }}
-                  viewport={{ once: true }}
                 >
                   <Image
                     src="/cinemalt-logo.png"
@@ -73,7 +72,6 @@ const Navigation = () => {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.1 * (i + 1) }}
-                      viewport={{ once: true }}
                       className="text-base lg:text-lg tracking-wide text-white hover:text-gray-300 transition-colors"
                     >
                       {item}
