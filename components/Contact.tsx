@@ -38,7 +38,7 @@ const Contact = () => {
                           </motion.div>
 
           {/* Heading */}
-          <h2 className="font-cormorant text-2xl sm:text-5xl md:text-6xl text-white font-bold leading-tight">
+          <h2 className="font-cormorant text-5xl md:text-6xl text-white font-bold leading-tight">
             Let&apos;s Create
             <span className="block italic text-white font-bold md:text-7xl [text-shadow:_0_0_4px_rgba(255,255,255,0.3),_0_0_25px_rgba(255,255,255,0.4)]">
               Something Unforgettable
@@ -51,7 +51,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mt-4 text-md sm:text-lg text-gray-200 max-w-lg leading-tight sm:leading-relaxed"
+            className="mt-4 text-lg text-gray-200 max-w-lg leading-relaxed"
           >
             From breathtaking visuals to powerful narratives, we bring your
             vision to life. Whether it’s a cinematic commercial, an event film,
