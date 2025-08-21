@@ -65,10 +65,10 @@ const Navigation = () => {
 
                 {/* Desktop Menu */}
                 <div className="hidden md:flex space-x-10 lg:space-x-12">
-                  {["About", "Work", "Team", "Contact"].map((item, i) => (
+                  {["Home", "About", "Work", "Contact"].map((item, i) => (
                     <motion.a
                       key={item}
-                      href={`${item.toLowerCase().replace(/\s+/g, "-")}`}
+                      href={`${item=='Home' ? '/' : item.toLowerCase().replace(/\s+/g, "-")}`}
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.1 * (i + 1) }}
@@ -105,10 +105,10 @@ const Navigation = () => {
             className="fixed top-0 w-full text-white bg-stone-800 z-50"
           >
             <div className="flex justify-evenly sm:justify-center space-x-6 sm:space-x-12 h-12 items-center text-xs sm:text-sm">
-              {["About", "Work", "Team", "Contact"].map((item) => (
+              {["Home", "About", "Work", "Contact"].map((item) => (
                 <a
                   key={item}
-                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                  href={`${item=='Home' ? '/' : item.toLowerCase().replace(/\s+/g, "-")}`}
                   className="uppercase tracking-tight hover:text-gray-300 transition-colors"
                 >
                   {item}
@@ -154,10 +154,10 @@ const Navigation = () => {
                 },
               }}
             >
-              {["About", "Work", "Team", "Contact"].map((item) => (
+              {["Home", "About", "Work", "Contact"].map((item) => (
                 <motion.a
                   key={item}
-                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                  href={`${item=='Home' ? '/' : item.toLowerCase().replace(/\s+/g, "-")}`}
                   variants={{
                     hidden: { x: 20, opacity: 0 },
                     visible: { x: 0, opacity: 1 },
