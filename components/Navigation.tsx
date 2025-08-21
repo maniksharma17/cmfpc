@@ -1,93 +1,85 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
 import Image from "next/image";
 
 const Navigation = () => {
-  const [showNav, setShowNav] = useState(true);
-  const [showCompact, setShowCompact] = useState(false);
-  const [isAtTop, setIsAtTop] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const lastScrollY = useRef(0);
-  const ticking = useRef(false);
+  const [showCompact, setShowCompact] = useState(false);
 
   useEffect(() => {
-    const updateNavbar = () => {
-      const current = Math.max(0, window.scrollY);
-      const delta = current - lastScrollY.current;
+    const controlNavbar = () => {
+      const currentScrollY = window.scrollY;
 
-      if (current <= 80) {
-        setShowNav(true);
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
         setShowCompact(false);
-        setIsAtTop(true);
-      } else {
-        setIsAtTop(false);
-        if (delta > 3) {
-          // scrolling down → hide everything
-          setShowNav(false);
-          setShowCompact(false);
-        } else if (delta < -6) {
-          // scrolling up → show compact
-          setShowNav(false);
-          setShowCompact(true);
-        }
+      } else if (currentScrollY < lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+        setShowCompact(true);
+      } else if (currentScrollY <= 100) {
+        setIsVisible(true);
+        setShowCompact(false);
       }
 
-      lastScrollY.current = current;
-      ticking.current = false;
+      setLastScrollY(currentScrollY);
     };
 
-    const onScroll = () => {
-      if (!ticking.current) {
-        ticking.current = true;
-        window.requestAnimationFrame(updateNavbar);
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll as any);
-  }, []);
+    window.addEventListener("scroll", controlNavbar);
+    return () => window.removeEventListener("scroll", controlNavbar);
+  }, [lastScrollY]);
 
   return (
     <>
-      {/* Main Navbar (only at top) */}
+      {/* Full Navbar */}
       <AnimatePresence>
-        {showNav && (
+        {isVisible && !showCompact && (
           <motion.nav
-            key="main"
-            initial={{ y: -80, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -80, opacity: 0 }}
+            initial={{ y: 0 }}
+            animate={{ y: 0 }}
+            exit={{ y: -100 }}
             transition={{ duration: 0.3 }}
-            className={`fixed top-0 w-full z-50 bg-transparent`}
+            className="fixed top-0 w-full z-50"
           >
-            <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-16 lg:pr-20">
+            <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-16 lg:pr-20 relative z-10">
               <div className="flex justify-between items-center h-20 sm:h-24">
-                <Image
-                  src="/cinemalt-logo.png"
-                  alt="Cinemalt Logo"
-                  width={120}
-                  height={40}
-                  className="h-10 w-auto sm:h-14"
-                  priority
-                />
+                {/* Logo */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <Image
+                    src="/cinemalt-logo.png"
+                    alt="Cinemalt Logo"
+                    width={120}
+                    height={40}
+                    className="h-10 w-auto sm:h-14"
+                  />
+                </motion.div>
 
+                {/* Desktop Menu */}
                 <div className="hidden md:flex space-x-10 lg:space-x-12">
-                  {["About", "Work", "Team", "Contact"].map((item) => (
-                    <a
+                  {["About", "Work", "Team", "Contact"].map((item, i) => (
+                    <motion.a
                       key={item}
-                      href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                      href={`${item.toLowerCase().replace(/\s+/g, "-")}`}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.1 * (i + 1) }}
                       className="text-base lg:text-lg tracking-wide text-white hover:text-gray-300 transition-colors"
                     >
                       {item}
-                    </a>
+                    </motion.a>
                   ))}
                 </div>
 
+                {/* Mobile Menu Icon */}
                 <div className="md:hidden">
                   <button
                     onClick={() => setIsSidebarOpen(true)}
@@ -102,31 +94,28 @@ const Navigation = () => {
         )}
       </AnimatePresence>
 
-      {/* Compact Navbar (on scroll up) */}
+      {/* Compact Menu Bar */}
       <AnimatePresence>
         {showCompact && (
-          <motion.nav
-            key="compact"
-            initial={{ y: -60, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -60, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed top-0 w-full z-50 bg-stone-800 backdrop-blur-md shadow-sm"
+          <motion.div
+            initial={{ y: -50 }}
+            animate={{ y: 0 }}
+            exit={{ y: -50 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-0 w-full text-white bg-stone-800 z-50"
           >
-            <div className="max-w-full mx-auto px-6">
-              <div className="flex justify-around sm:justify-center sm:gap-12 mx-auto items-center h-10">
-                  {["Home", "About", "Work", "Contact"].map((item) => (
-                    <a
-                      key={item}
-                      href={`#${item.toLowerCase()}`}
-                      className="text-sm text-white font-light tracking-tight hover:text-gray-300 transition-colors"
-                    >
-                      {item}
-                    </a>
-                  ))}
-              </div>
+            <div className="flex justify-evenly sm:justify-center space-x-6 sm:space-x-12 h-12 items-center text-xs sm:text-sm">
+              {["About", "Work", "Team", "Contact"].map((item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="uppercase tracking-tight hover:text-gray-300 transition-colors"
+                >
+                  {item}
+                </a>
+              ))}
             </div>
-          </motion.nav>
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -134,29 +123,29 @@ const Navigation = () => {
       <AnimatePresence>
         {isSidebarOpen && (
           <motion.aside
-            key="mobile-sidebar"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-50 flex flex-col bg-stone-800"
+            transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
+            className="fixed bg-stone-800 inset-0 z-50 flex flex-col"
           >
+            {/* Close Button */}
             <div className="flex justify-end p-6">
               <motion.button
                 onClick={() => setIsSidebarOpen(false)}
-                whileHover={{ rotate: 90, scale: 1.06 }}
+                whileHover={{ rotate: 90, scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="text-white text-4xl hover:text-gray-300"
+                className="text-white text-4xl hover:text-gray-300 transition-colors"
               >
                 <IoCloseSharp />
               </motion.button>
             </div>
 
+            {/* Nav Links */}
             <motion.div
               className="mt-auto mb-12 ml-8 sm:ml-12 flex flex-col space-y-4"
               initial="hidden"
               animate="visible"
-              exit="hidden"
               variants={{
                 hidden: { opacity: 0 },
                 visible: {
@@ -180,7 +169,7 @@ const Navigation = () => {
                   }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => setIsSidebarOpen(false)}
-                  className="text-2xl sm:text-4xl font-light tracking-tight text-white/80 hover:text-white"
+                  className="text-2xl sm:text-4xl font-light tracking-tight text-white/80 hover:text-white transition-all"
                 >
                   {item}
                 </motion.a>
