@@ -243,7 +243,7 @@ export default function Categories() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-2xl sm:text-3xl text-stone-400 font-light mb-6"
+          className="text-xl sm:text-3xl text-stone-400 font-light mb-6"
         >
           What do you want to explore?
         </motion.h2>
@@ -261,7 +261,7 @@ export default function Categories() {
               href={`/${cat.toLowerCase().replace(/\s+/g, '-')}`}
               className="group relative inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 bg-white/5 text-stone-200 hover:bg-white/10 transition-all duration-200"
             >
-              <span className="text-sm sm:text-lg md:text-2xl font-light">{cat}</span>
+              <span className="text-lg md:text-2xl font-light">{cat}</span>
               <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-stone-400 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.5} />
               <span className="pointer-events-none absolute -bottom-0.5 left-3 right-3 h-[2px] origin-left scale-x-0 bg-white/60 transition-transform duration-300 group-hover:scale-x-100" />
             </Link>
