@@ -183,17 +183,17 @@ const SocialMedia = () => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
-      className="bg-stone-50 w-full py-12 lg:py-28 text-left lg:px-24 px-4 text-stone-900"
+      className="bg-stone-50 w-full py-12 lg:py-28 text-left lg:px-24 px-6 text-stone-900"
     >
       {/* Heading */}
-      <motion.p variants={fadeUp} className="text-2xl sm:text-3xl md:text-5xl font-light mb-12">
+      <motion.p variants={fadeUp} className="text-3xl md:text-5xl font-normal sm:mb-12 mb-6">
         Join our <span className="alt-font italic">journey</span>
       </motion.p>
 
       {/* Socials */}
       <motion.div
         variants={list}
-        className="flex flex-col sm:flex-row justify-start items-start lg:items-center gap-4 sm:gap-12 md:gap-16"
+        className="flex flex-row flex-wrap justify-start items-start lg:items-center gap-4 sm:gap-12 md:gap-16"
       >
         {SOCIALS.map((social, i) => (
           <motion.a
@@ -209,7 +209,7 @@ const SocialMedia = () => {
             <span
               className="
                 relative transition-all duration-300
-                group-hover:font-bold group-hover:underline
+                group-hover:font-normal group-hover:underline
               "
               style={{
                 // underline color (only visible on hover due to class above)
@@ -220,7 +220,6 @@ const SocialMedia = () => {
               {/* change text color to brand on hover */}
               <span
                 className="transition-colors duration-300 group-hover:text-[var(--hover-c)]"
-                style={{ ["--hover-c" as any]: social.color }}
               >
                 {social.name}
               </span>

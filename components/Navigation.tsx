@@ -17,12 +17,15 @@ const Navigation = () => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // scrolling down
         setIsVisible(false);
         setShowCompact(false);
       } else if (currentScrollY < lastScrollY && currentScrollY > 100) {
-        setIsVisible(false);
+        // scrolling up
+        setIsVisible(true);
         setShowCompact(true);
       } else if (currentScrollY <= 100) {
+        // reset at top
         setIsVisible(true);
         setShowCompact(false);
       }
@@ -37,14 +40,15 @@ const Navigation = () => {
   return (
     <>
       {/* Full Navbar */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isVisible && !showCompact && (
           <motion.nav
-            initial={{ y: 0 }}
-            animate={{ y: 0 }}
-            exit={{ y: -100 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-0 w-full z-50"
+            key="full-nav"
+            initial={{ y: -80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -80, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+            className="fixed top-0 w-full z-50 bg-transparent"
           >
             <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-16 lg:pr-20 relative z-10">
               <div className="flex justify-between items-center h-20 sm:h-24">
@@ -68,7 +72,7 @@ const Navigation = () => {
                   {["About", "Work", "Team", "Contact"].map((item, i) => (
                     <motion.a
                       key={item}
-                      href={`${item.toLowerCase().replace(/\s+/g, "-")}`}
+                      href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.1 * (i + 1) }}
@@ -95,14 +99,15 @@ const Navigation = () => {
       </AnimatePresence>
 
       {/* Compact Menu Bar */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {showCompact && (
           <motion.div
-            initial={{ y: -50 }}
-            animate={{ y: 0 }}
-            exit={{ y: -50 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-0 w-full text-white bg-stone-800 z-50"
+            key="compact-nav"
+            initial={{ y: -60, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -60, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+            className="fixed top-0 w-full text-white bg-stone-800 z-50 shadow-md"
           >
             <div className="flex justify-evenly sm:justify-center space-x-6 sm:space-x-12 h-12 items-center text-xs sm:text-sm">
               {["About", "Work", "Team", "Contact"].map((item) => (
