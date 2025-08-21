@@ -2,6 +2,7 @@ import BackToTop from '@/components/BackToTop';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Poppins, Cormorant_Garamond } from 'next/font/google';
+import Navigation from '@/components/Navigation';
 
 const poppins = Poppins({ 
   subsets: ['latin'],
@@ -28,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${cormorant.variable} font-poppins bg-black text-black overflow-x-hidden`}>
+        <Navigation />
         {children}
         <BackToTop />
       </body>

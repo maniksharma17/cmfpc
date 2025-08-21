@@ -46,13 +46,14 @@ const Navigation = () => {
             transition={{ duration: 0.3 }}
             className="fixed top-0 w-full z-50"
           >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-16 lg:pr-20 relative z-10">
               <div className="flex justify-between items-center h-20 sm:h-24">
                 {/* Logo */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
                 >
                   <Image
                     src="/cinemalt-logo.png"
@@ -68,10 +69,11 @@ const Navigation = () => {
                   {["About", "Work", "Team", "Contact"].map((item, i) => (
                     <motion.a
                       key={item}
-                      href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                      href={`${item.toLowerCase().replace(/\s+/g, "-")}`}
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.1 * (i + 1) }}
+                      viewport={{ once: true }}
                       className="text-base lg:text-lg tracking-wide text-white hover:text-gray-300 transition-colors"
                     >
                       {item}

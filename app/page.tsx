@@ -13,7 +13,6 @@ import Testimonials from '@/components/Testimonials';
 export default function Home() {
   return (
     <main className="relative">
-        <Navigation />
         <Hero />
         <About />
         <Portfolio />

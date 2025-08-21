@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 const SERVICES = [
   "Film Production",
@@ -53,3 +54,4 @@ export default function Services() {
     </section>
   );
 }
+
