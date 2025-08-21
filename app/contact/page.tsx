@@ -7,18 +7,6 @@ import FilmTicker from "@/components/FilmTicker";
 import Contact from "@/components/Contact";
 import { motion, useReducedMotion, Variants } from "framer-motion";
 
-const fadeIn: Variants = {
-  hidden: { opacity: 0, x: -30 },
-  show: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], // 👈 type fix
-    },
-  },
-};
-
 
 const ContactPage = () => {
   return (
@@ -55,9 +43,13 @@ const ContactPage = () => {
 const ContactIntro = () => {
   const reduce = useReducedMotion();
   const fadeLeft: Variants = {
-    hidden: { opacity: 0, x: reduce ? 0 : -8 },
-    show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
-  };
+  hidden: { opacity: 0, x: reduce ? 0 : -20 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
+  },
+};
 
   return (
     <motion.section
@@ -98,9 +90,14 @@ const ContactIntro = () => {
 const FormComponent = () => {
   const reduce = useReducedMotion();
   const fadeUp: Variants = {
-    hidden: { opacity: 0, y: reduce ? 0 : 8 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
-  };
+  hidden: { opacity: 0, y: reduce ? 0 : 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.75, ease: [0.4, 0, 0.2, 1] },
+  },
+};
+
 
   return (
     <motion.section
@@ -167,15 +164,21 @@ const SocialMedia = () => {
     show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
   };
   const list = {
-    hidden: {},
-    show: {
-      transition: { staggerChildren: 0.08, delayChildren: 0.05 },
-    },
-  };
-  const item: Variants = {
-    hidden: { opacity: 0, y: reduce ? 0 : 6 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
-  };
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.15 },
+  },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: reduce ? 0 : 12 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.4, 0, 0.2, 1] },
+  },
+};
+
 
   return (
     <motion.section
