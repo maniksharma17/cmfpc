@@ -44,13 +44,13 @@ const ContactPage = () => {
 const ContactIntro = () => {
   const reduce = useReducedMotion();
   const fadeLeft: Variants = {
-  hidden: { opacity: 0, x: reduce ? 0 : -20 },
-  show: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
-  },
-};
+    hidden: { opacity: 0, x: reduce ? 0 : -40 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 1.6, ease: [0.25, 0.1, 0.25, 1] }, // smoother + slower
+    },
+  };
 
   return (
     <motion.section
@@ -91,14 +91,13 @@ const ContactIntro = () => {
 const FormComponent = () => {
   const reduce = useReducedMotion();
   const fadeUp: Variants = {
-  hidden: { opacity: 0, y: reduce ? 0 : 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.75, ease: [0.4, 0, 0.2, 1] },
-  },
-};
-
+    hidden: { opacity: 0, y: reduce ? 0 : 40 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 1.4, ease: [0.25, 0.1, 0.25, 1] }, // smoother ease
+    },
+  };
 
   return (
     <motion.section
@@ -150,6 +149,5 @@ const FormComponent = () => {
     </motion.section>
   );
 };
-
 
 export default ContactPage;
