@@ -43,14 +43,15 @@ const ContactPage = () => {
 
 const ContactIntro = () => {
   const reduce = useReducedMotion();
+
   const fadeUp: Variants = {
-    hidden: { opacity: 0, y: reduce ? 0 : 40 }, // start lower
+    hidden: { opacity: 0, y: reduce ? 0 : 20 },
     show: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 1.2, // slower
-        ease: [0.25, 0.1, 0.25, 1], // smooth cubic easing
+        duration: 0.7,       // shorter = snappier
+        ease: "easeOut",     // mobile-friendly easing
       },
     },
   };
@@ -60,8 +61,8 @@ const ContactIntro = () => {
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
-      className="flex-1 flex flex-col justify-center gap-8"
+      viewport={{ once: true, amount: 0.15 }} // triggers earlier
+      className="flex-1 flex flex-col justify-center gap-8 will-change-transform"
     >
       <p className="text-2xl lg:text-5xl leading-tight">
         Share your vision, story, creation, challenge, or even the wild thoughts
@@ -90,7 +91,6 @@ const ContactIntro = () => {
     </motion.section>
   );
 };
-
 
 const FormComponent = () => {
   const reduce = useReducedMotion();
