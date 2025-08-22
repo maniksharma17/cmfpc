@@ -43,18 +43,21 @@ const ContactPage = () => {
 
 const ContactIntro = () => {
   const reduce = useReducedMotion();
-  const fadeLeft: Variants = {
-    hidden: { opacity: 0, x: reduce ? 0 : -40 },
+  const fadeUp: Variants = {
+    hidden: { opacity: 0, y: reduce ? 0 : 40 }, // start lower
     show: {
       opacity: 1,
-      x: 0,
-      transition: { duration: 1.6, ease: [0.25, 0.1, 0.25, 1] }, // smoother + slower
+      y: 0,
+      transition: {
+        duration: 1.2, // slower
+        ease: [0.25, 0.1, 0.25, 1], // smooth cubic easing
+      },
     },
   };
 
   return (
     <motion.section
-      variants={fadeLeft}
+      variants={fadeUp}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
@@ -87,6 +90,7 @@ const ContactIntro = () => {
     </motion.section>
   );
 };
+
 
 const FormComponent = () => {
   const reduce = useReducedMotion();
