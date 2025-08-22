@@ -6,6 +6,7 @@ import FilmTicker from '@/components/FilmTicker';
 import { motion, useInView } from 'framer-motion';
 import { ArrowDown, ArrowUpRight, Pause, Play, Maximize } from 'lucide-react';
 import Link from 'next/link';
+import { SocialMedia } from '@/components/SocialMedia';
 
 // ------------------------------
 // Data
@@ -258,7 +259,7 @@ export default function Categories() {
           {CATEGORIES.map((cat) => (
             <Link
               key={cat}
-              href={`/${cat.toLowerCase().replace(/\s+/g, '-')}`}
+              href={`/work/${cat.toLowerCase().replace(/\s+/g, '-')}`}
               className="group relative inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 bg-white/5 text-stone-200 hover:bg-white/10 transition-all duration-200"
             >
               <span className="text-lg md:text-2xl font-light">{cat}</span>
@@ -306,6 +307,7 @@ export default function Categories() {
       </section>
 
       <div>
+        <SocialMedia />
         <FilmTicker />
         <Contact />
       </div>

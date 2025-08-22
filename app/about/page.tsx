@@ -20,6 +20,7 @@ import {
   PenTool,
   Music,
 } from "lucide-react";
+import { SocialMedia } from "@/components/SocialMedia";
 
 const steps = [
     {
@@ -201,7 +202,7 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: i * 0.25 }}
               viewport={{ once: true }}
-              className={`text-2xl md:text-5xl font-light leading-tight tracking-tight sm:leading-relaxed sm:tracking-wide ${
+              className={`text-2xl md:text-4xl font-light leading-tight tracking-tight sm:leading-relaxed sm:tracking-wide ${
                 i === 4 ? "lg:mt-12" : ""
               }`}
               dangerouslySetInnerHTML={{
@@ -359,7 +360,7 @@ const About = () => {
         </div>
       </div>
     </div>
-
+      <SocialMedia />
       <FilmTicker />
       <Contact />
     </section>

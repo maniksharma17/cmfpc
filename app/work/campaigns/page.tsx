@@ -9,13 +9,14 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 // ------------------------------
 // Data
 // ------------------------------
-const BRAND_FILMS = [
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Adhayayan.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Bill%20%26%20Milinda%20Gates%20Foundation.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/House%20Of%20248.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Kohler%20India.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Saisha.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/World%20Hemophilia%20Foundation.mp4",
+const CAMPAIGNS = [
+  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Coke%20Studio%20X%20News18.mp4",
+  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Colgate%20X%20News18.mp4",
+  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Delhi%20Green%20Campaign.mp4",
+  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Giva%20X%20News18.mp4",
+  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Maggi%20X%20News18.mp4",
+  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Silk%20X%20News18.mp4",
+  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Tira%20X%20News18.mp4"
 ];
 
 // ------------------------------
@@ -109,32 +110,10 @@ function VideoTile({ src, index }: { src: string; index: number }) {
     }
   };
 
-  const toggleFullscreen = async () => {
-  const v = videoRef.current;
-  if (!v) return;
-
-  try {
-    if (v.requestFullscreen) {
-      await v.requestFullscreen();
-    }
-
-    // Try to lock orientation to landscape
-    if ((screen.orientation as any)?.lock) {
-      try {
-        await (screen.orientation as any).lock("landscape");
-      } catch (err) {
-        console.warn("Orientation lock not supported:", err);
-      }
-    }
-
-    // Force landscape display ratio
-    v.style.objectFit = "contain";
-    v.style.aspectRatio = "16 / 9";
-  } catch (err) {
-    console.error("Fullscreen failed:", err);
-  }
-};
-
+  const toggleFullscreen = () => {
+    const v = videoRef.current;
+    if (v && v.requestFullscreen) v.requestFullscreen();
+  };
 
   return (
     <motion.div
@@ -143,10 +122,10 @@ function VideoTile({ src, index }: { src: string; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
-      className="mb-6 break-inside-avoid overflow-hidden rounded-2xl shadow-lg bg-black"
+      className="w-full border-t border-t-stone-400"
     >
       <div
-        className="group relative w-full overflow-hidden"
+        className="group relative w-full overflow-hidden bg-black"
         onClick={togglePlay}
       >
         <video
@@ -157,10 +136,10 @@ function VideoTile({ src, index }: { src: string; index: number }) {
           playsInline
           muted
           disablePictureInPicture
-          className="w-full h-auto object-cover select-none rounded-2xl"
+          className="w-full h-auto object-cover select-none"
         />
 
-        {/* Gradient Overlay */}
+        {/* Overlay */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
 
         {/* Title */}
@@ -171,7 +150,7 @@ function VideoTile({ src, index }: { src: string; index: number }) {
         </div>
 
         {/* Controls */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 gap-3">
+        <div className="absolute inset-0 flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 gap-3">
           <button
             type="button"
             aria-label={playing ? "Pause" : "Play"}
@@ -190,7 +169,7 @@ function VideoTile({ src, index }: { src: string; index: number }) {
           <button
             type="button"
             aria-label="Fullscreen"
-            className="grid place-items-center rounded-full h-12 w-12 sm:h-14 sm:w-14 backdrop-blur-sm bg-black/40 border border-white/20 text-white"
+            className="lg:grid hidden place-items-center rounded-full h-12 w-12 sm:h-14 sm:w-14 backdrop-blur-sm bg-black/40 border border-white/20 text-white"
             onClick={(e) => {
               e.stopPropagation();
               toggleFullscreen();
@@ -207,7 +186,7 @@ function VideoTile({ src, index }: { src: string; index: number }) {
 // ------------------------------
 // Main Page
 // ------------------------------
-export default function BrandFilmsPage() {
+export default function CampaignsPage() {
   return (
     <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
@@ -219,7 +198,7 @@ export default function BrandFilmsPage() {
           viewport={{ once: true }}
           className="text-3xl alt-font italic sm:text-6xl text-stone-200 font-light mb-6"
         >
-          Brand Films
+          Campaigns
         </motion.h2>
 
         <motion.p
@@ -229,10 +208,11 @@ export default function BrandFilmsPage() {
           viewport={{ once: true }}
           className="max-w-3xl text-stone-300 text-sm sm:text-2xl leading-relaxed"
         >
-          Our brand films go beyond storytelling — they craft immersive visual
-          journeys that connect audiences to the soul of a brand. From concept
-          to screen, each film is designed to inspire, engage, and leave a
-          lasting impression.
+          Our campaigns are built to spark action and create impact. We blend
+          strategy, creativity, and innovation to deliver ideas that resonate
+          with audiences across platforms. From concept to execution, every
+          campaign is designed to tell a story, build connections, and drive
+          measurable results.{" "}
         </motion.p>
 
         {/* Animated Arrow */}
@@ -251,13 +231,11 @@ export default function BrandFilmsPage() {
       </section>
 
       {/* Section */}
-      <section className="bg-stone-50 py-12">
-        <div className="px-6 lg:px-24">
-          <div className="columns-1 sm:columns-2 lg:columns-2 gap-6 [column-fill:_balance]">
-            {BRAND_FILMS.map((src, i) => (
-              <VideoTile key={src} src={src} index={i} />
-            ))}
-          </div>
+      <section className="bg-stone-50 px-0">
+        <div className="flex flex-col">
+          {CAMPAIGNS.map((src, i) => (
+            <VideoTile key={src} src={src} index={i} />
+          ))}
         </div>
       </section>
 

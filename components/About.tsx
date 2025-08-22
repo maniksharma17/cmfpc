@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { ArrowUpRight } from "lucide-react";
+import { useRouter } from 'next/navigation';
 
 const About = () => {
   const lines = [
@@ -19,6 +20,7 @@ const About = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [scrollY]);
+  const router = useRouter();
 
   return (
     <section
@@ -47,9 +49,12 @@ const About = () => {
         <motion.button
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.5 }}
+          transition={{ duration: 0.3, delay: 1.2 }}
           whileHover={{ scale: 1.05 }}
           viewport={{ once: true }}
+          onClick={()=>{
+            router.push(`/about`)
+          }}
           whileTap={{ scale: 0.97 }}
           className="mt-8 flex items-center gap-3 px-6 py-3 rounded-full
           bg-white/10 backdrop-blur-lg text-white text-base sm:text-lg font-medium

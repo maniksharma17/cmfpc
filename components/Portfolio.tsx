@@ -51,7 +51,7 @@ const portfolioCategories = [
     description: "Visual experiences that amplify sound and emotion.",
     image:
       "https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?q=80&w=2071&auto=format&fit=crop",
-    slug: "music-video",
+    slug: "music-videos",
   },
 ];
 
@@ -88,7 +88,7 @@ export default function Portfolio() {
       {portfolioCategories.map((category, index) => (
         <div
           key={category.name}
-          onClick={() => router.push(`/category/${category.slug}`)}
+          onClick={() => router.push(`/work/${category.slug}`)}
           className="border-y border-y-gray-300 border-y-1/2 relative h-[40vh] sm:h-screen w-full overflow-hidden cursor-pointer group"
         >
           {/* Image */}

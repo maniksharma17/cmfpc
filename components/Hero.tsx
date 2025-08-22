@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
   const ref = useRef(null);
+  const router = useRouter();
 
   return (
     <section
@@ -74,6 +76,9 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
+          onClick={()=>{
+            router.push(`/work`)
+          }}
           className="flex max-sm:mx-auto items-center gap-3 sm:gap-4 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full
             bg-white/10 backdrop-blur-lg text-white text-base sm:text-lg font-medium
             border border-white/30 shadow-[0_0_20px_rgba(255,255,255,0.15)]
