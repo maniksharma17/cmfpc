@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, easeOut } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
@@ -55,30 +55,29 @@ const portfolioCategories = [
   },
 ];
 
-const headingVariants = {
-  initial: { opacity: 0, y: 8 },
-  animate: { opacity: 1, y: 0 },
-};
-
-const paragraphVariants = {
-  initial: { opacity: 0, y: 8 },
-  animate: { opacity: 1, y: 0 },
-};
-
 function CardImage({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="absolute inset-0 overflow-hidden">
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover transform-gpu transition-transform duration-700 ease-in-out group-hover:scale-110"
-      />
+      <motion.div
+        initial={{ scale: 1.1 }}
+        whileInView={{ scale: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.4 }}
+        className="w-full h-full"
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      </motion.div>
     </div>
   );
 }
+
 
 export default function Portfolio() {
   const router = useRouter();
@@ -86,10 +85,16 @@ export default function Portfolio() {
   return (
     <section id="work" className="bg-black text-white">
       {portfolioCategories.map((category, index) => (
-        <div
+        <motion.div
           key={category.name}
           onClick={() => router.push(`/work/${category.slug}`)}
-          className="border-y border-y-gray-300 border-y-1/2 relative h-[40vh] sm:h-screen w-full overflow-hidden cursor-pointer group"
+          transition={{
+            duration: 0.6,
+            ease: "easeOut",
+            delay: index * 0.05,
+          }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="border-y border-y-gray-300 border-y-1/2 relative h-[40vh] sm:h-screen w-full overflow-hidden cursor-pointer"
         >
           {/* Image */}
           <CardImage src={category.image} alt={category.name} />
@@ -104,11 +109,11 @@ export default function Portfolio() {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{
-                duration: 0.65,
-                ease: [0.25, 0.1, 0.25, 1],
-                delay: index * 0.05,
+                duration: 0.4,
+                ease: "easeOut",
+                delay: index * 0.1,
               }}
-              viewport={{ once: true, amount: 0.4 }}
+              viewport={{ once: true, amount: 0.3 }}
               className="flex flex-row gap-4 items-center"
             >
               <h3 className="text-2xl sm:text-4xl font-light leading-tight tracking-tight">
@@ -134,17 +139,17 @@ export default function Portfolio() {
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{
-                duration: 0.65,
-                ease: [0.25, 0.1, 0.25, 1],
-                delay: index * 0.05,
+                duration: 0.5,
+                ease: "easeOut",
+                delay: index * 0.1,
               }}
-              viewport={{ once: true, amount: 0.4 }}
+              viewport={{ once: true, amount: 0.3 }}
               className="mt-1 text-sm italic font-light sm:text-md text-white/80 max-w-lg leading-snug"
             >
               {category.description}
             </motion.p>
           </div>
-        </div>
+        </motion.div>
       ))}
     </section>
   );

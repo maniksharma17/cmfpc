@@ -35,9 +35,9 @@ const About = () => {
         {lines.map((text, i) => (
           <motion.p
             key={i}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: i * 0.3 }}
+            transition={{ duration: 0.3, delay: i * 0.1 }}
             viewport={{ once: true }}
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light leading-snug drop-shadow-[0_0_2px_rgba(255,255,255,0.4)]"
           >
@@ -47,9 +47,9 @@ const About = () => {
 
         {/* CTA Button */}
         <motion.button
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 1.2 }}
+          transition={{ duration: 0.3, delay: 0.4 }}
           whileHover={{ scale: 1.05 }}
           viewport={{ once: true }}
           onClick={()=>{
