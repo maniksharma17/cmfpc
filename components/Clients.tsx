@@ -43,15 +43,9 @@ const CLIENT_NAMES = [
   "The Centre Piece",
 ];
 
-export default function ClientLogos() {
-  const [isMobile, setIsMobile] = useState(false);
+const isMobile = true;
 
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 640);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+export default function ClientLogos() {
 
   return (
     <section className="bg-white w-full py-12 sm:py-20 overflow-hidden text-center px-3">
