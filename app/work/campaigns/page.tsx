@@ -9,14 +9,41 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 // ------------------------------
 // Data
 // ------------------------------
+
 const CAMPAIGNS = [
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Coke%20Studio%20X%20News18.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Colgate%20X%20News18.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Delhi%20Green%20Campaign.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Giva%20X%20News18.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Maggi%20X%20News18.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Silk%20X%20News18.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Tira%20X%20News18.mp4"
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Coke%20Studio%20X%20News18.mp4",
+    thumbnail: "",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Colgate%20X%20News18.mp4",
+    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Colgate%20X%20News18.png",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Delhi%20Green%20Campaign.mp4",
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Delhi%20Green.png",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Giva%20X%20News18.mp4",
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Giva%20X%20News18.png",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Maggi%20X%20News18.mp4",
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/MaggiXNews18.png",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Silk%20X%20News18.mp4",
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Silk%20X%20News18.png",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Tira%20X%20News18.mp4",
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Tira%20X%20News18.png",
+  },
 ];
 
 // ------------------------------
@@ -42,12 +69,20 @@ let globalCurrent: HTMLVideoElement | null = null;
 // ------------------------------
 // Video Tile
 // ------------------------------
-function VideoTile({ src, index }: { src: string; index: number }) {
+function VideoTile({
+  src,
+  index,
+  poster,
+}: {
+  src: string;
+  index: number;
+  poster: string;
+}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inView = useInView(containerRef, { margin: "300px 0px", amount: 0.15 });
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
-  const [poster, setPoster] = useState<string | null>(null);
+  const [poster1, setPoster] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
 
   // Lazy load
@@ -57,9 +92,15 @@ function VideoTile({ src, index }: { src: string; index: number }) {
 
   // Extract first frame as poster
   useEffect(() => {
+    if(index != 0) return;
     const v = videoRef.current;
     if (!v) return;
-    const handleLoaded = () => {
+
+    const handleMetadata = () => {
+      v.currentTime = 0.1; // small offset avoids blank black frame
+    };
+
+    const handleSeeked = () => {
       try {
         const canvas = document.createElement("canvas");
         canvas.width = v.videoWidth;
@@ -67,13 +108,19 @@ function VideoTile({ src, index }: { src: string; index: number }) {
         const ctx = canvas.getContext("2d");
         if (ctx) {
           ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
-          setPoster(canvas.toDataURL("image/jpeg"));
+          setPoster(canvas.toDataURL("image/jpeg", 0.7));
         }
       } catch {}
     };
-    v.addEventListener("loadeddata", handleLoaded, { once: true });
-    return () => v.removeEventListener("loadeddata", handleLoaded);
-  }, [videoSrc]);
+
+    v.addEventListener("loadedmetadata", handleMetadata, { once: true });
+    v.addEventListener("seeked", handleSeeked, { once: true });
+
+    return () => {
+      v.removeEventListener("loadedmetadata", handleMetadata);
+      v.removeEventListener("seeked", handleSeeked);
+    };
+  }, [videoSrc, index]);
 
   // Pause out of view
   useEffect(() => {
@@ -131,7 +178,7 @@ function VideoTile({ src, index }: { src: string; index: number }) {
         <video
           ref={videoRef}
           src={videoSrc ?? undefined}
-          poster={poster ?? undefined}
+          poster={poster ?? poster1}
           preload="metadata"
           playsInline
           muted
@@ -233,8 +280,13 @@ export default function CampaignsPage() {
       {/* Section */}
       <section className="bg-stone-50 px-0">
         <div className="flex flex-col">
-          {CAMPAIGNS.map((src, i) => (
-            <VideoTile key={src} src={src} index={i} />
+          {CAMPAIGNS.map((item, i) => (
+            <VideoTile
+              key={item.src}
+              src={item.src}
+              index={i}
+              poster={item.thumbnail}
+            />
           ))}
         </div>
       </section>

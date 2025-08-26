@@ -59,6 +59,38 @@ function VideoTile({ src, index }: { src: string; index: number }) {
   const [playing, setPlaying] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
+  // Extract first frame as poster
+useEffect(() => {
+  const v = videoRef.current;
+  if (!v) return;
+
+  const handleMetadata = () => {
+    v.currentTime = 0.5; // small offset avoids blank black frame
+  };
+
+  const handleSeeked = () => {
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = v.videoWidth;
+      canvas.height = v.videoHeight;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
+        setPoster(canvas.toDataURL("image/jpeg", 0.7));
+      }
+    } catch {}
+  };
+
+  v.addEventListener("loadedmetadata", handleMetadata, { once: true });
+  v.addEventListener("seeked", handleSeeked, { once: true });
+
+  return () => {
+    v.removeEventListener("loadedmetadata", handleMetadata);
+    v.removeEventListener("seeked", handleSeeked);
+  };
+}, [videoSrc]);
+
+
   useEffect(() => {
     if (inView && !videoSrc) setVideoSrc(src);
 

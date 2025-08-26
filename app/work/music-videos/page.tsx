@@ -9,12 +9,30 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 // ------------------------------
 // Data
 // ------------------------------
+
 const MUSIC_VIDEOS = [
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/Dilli%20Ki%20Sardiyaan.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_1.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_2.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_3.mp4",
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/Dilli%20Ki%20Sardiyaan.mp4",
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Dilli%20Ki%20Sardiyaan.png",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_1.mp4",
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/The%20CenterPiece_1.png",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_2.mp4",
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/The%20CenterPiece_2.png",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_3.mp4",
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/The%20CenterPiece_3.png",
+  },
 ];
+
 
 // ------------------------------
 // Utils
@@ -39,12 +57,12 @@ let globalCurrent: HTMLVideoElement | null = null;
 // ------------------------------
 // Video Tile
 // ------------------------------
-function VideoTile({ src, index }: { src: string; index: number }) {
+function VideoTile({ src, index, poster }: { src: string; index: number; poster: string }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inView = useInView(containerRef, { margin: "300px 0px", amount: 0.15 });
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
-  const [poster, setPoster] = useState<string | null>(null);
+  // const [poster, setPoster] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
 
   // Lazy load
@@ -64,7 +82,7 @@ function VideoTile({ src, index }: { src: string; index: number }) {
         const ctx = canvas.getContext("2d");
         if (ctx) {
           ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
-          setPoster(canvas.toDataURL("image/jpeg"));
+          // setPoster(canvas.toDataURL("image/jpeg"));
         }
       } catch {}
     };
@@ -229,8 +247,8 @@ export default function MusicVideosPage() {
       {/* Section */}
       <section className="bg-stone-50 px-0">
         <div className="flex flex-col">
-          {MUSIC_VIDEOS.map((src, i) => (
-            <VideoTile key={src} src={src} index={i} />
+          {MUSIC_VIDEOS.map((item, i) => (
+            <VideoTile key={item.src} src={item.src} index={i} poster={item.thumbnail} />
           ))}
         </div>
       </section>

@@ -9,14 +9,34 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 // ------------------------------
 // Data
 // ------------------------------
+
 const BRAND_FILMS = [
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Adhayayan.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Bill%20%26%20Milinda%20Gates%20Foundation.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/House%20Of%20248.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Kohler%20India.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Saisha.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/World%20Hemophilia%20Foundation.mp4",
-];
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Adhayayan.mp4",
+    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Adhayayan.png"
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Bill%20%26%20Milinda%20Gates%20Foundation.mp4",
+    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Bill%20%26%20Milinda%20Gates.png"
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/House%20Of%20248.mp4",
+    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/House%20of%20248.png"
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Kohler%20India.mp4",
+    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Kohler.png"
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Saisha.mp4",
+    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Saisha.png"
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/World%20Hemophilia%20Foundation.mp4",
+    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/World%20Hemophilia%20Federation.png"
+  },
+]
+
 
 // ------------------------------
 // Utils
@@ -41,12 +61,11 @@ let globalCurrent: HTMLVideoElement | null = null;
 // ------------------------------
 // Video Tile
 // ------------------------------
-function VideoTile({ src, index }: { src: string; index: number }) {
+function VideoTile({ src, index, poster }: { src: string; index: number; poster: string }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inView = useInView(containerRef, { margin: "300px 0px", amount: 0.15 });
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
-  const [poster, setPoster] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
 
   // Lazy load
@@ -66,7 +85,6 @@ function VideoTile({ src, index }: { src: string; index: number }) {
         const ctx = canvas.getContext("2d");
         if (ctx) {
           ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
-          setPoster(canvas.toDataURL("image/jpeg"));
         }
       } catch {}
     };
@@ -143,7 +161,7 @@ function VideoTile({ src, index }: { src: string; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
-      className="mb-6 break-inside-avoid overflow-hidden rounded-2xl shadow-lg bg-black"
+      className=""
     >
       <div
         className="group relative w-full overflow-hidden"
@@ -157,7 +175,7 @@ function VideoTile({ src, index }: { src: string; index: number }) {
           playsInline
           muted
           disablePictureInPicture
-          className="w-full h-auto object-cover select-none rounded-2xl"
+          className="w-full h-auto object-cover select-none"
         />
 
         {/* Gradient Overlay */}
@@ -251,13 +269,11 @@ export default function BrandFilmsPage() {
       </section>
 
       {/* Section */}
-      <section className="bg-stone-50 py-12">
-        <div className="px-6 lg:px-24">
-          <div className="columns-1 sm:columns-2 lg:columns-2 gap-6 [column-fill:_balance]">
-            {BRAND_FILMS.map((src, i) => (
-              <VideoTile key={src} src={src} index={i} />
-            ))}
-          </div>
+      <section className="bg-stone-50">
+        <div className="flex flex-col">
+          {BRAND_FILMS.map((item, i) => (
+            <VideoTile key={item.src} src={item.src} index={i} poster={item.thumbnail} />
+          ))}
         </div>
       </section>
 

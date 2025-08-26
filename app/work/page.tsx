@@ -32,7 +32,7 @@ const VIDEOS = [
   'https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/ad-films/Tata%20Tea%20Agni.mp4',
   'https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Bill%20%26%20Milinda%20Gates%20Foundation.mp4',
   'https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Kohler%20India.mp4',
-  'https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/World%20Hemophilia%20Foundation.mp4',
+  'https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/World%20Hemophilia%20Foundation.mp4',
   'https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Delhi%20Green%20Campaign.mp4',
   'https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/Dilli%20Ki%20Sardiyaan.mp4',
   'https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/motion-graphics/History%20Hunter.mp4',
@@ -293,7 +293,7 @@ export default function Categories() {
       </section>
 
       {/* Section Header */}
-      <section className="bg-stone-50 lg:py-24 py-12 px-6 lg:px-24">
+      <section className="bg-stone-200 lg:py-24 py-12 px-6 lg:px-24">
         <div className="flex items-baseline justify-between mb-4">
           <h3 className="text-lg sm:text-xl text-stone-600 font-normal">Featured</h3>
           <span className="text-xs text-stone-600">{MEDIA.length} videos</span>

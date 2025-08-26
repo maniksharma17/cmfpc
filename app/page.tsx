@@ -9,6 +9,7 @@ import FilmTicker from '@/components/FilmTicker';
 import ClientsTicker from '@/components/Clients';
 import Services from '@/components/Services';
 import Testimonials from '@/components/Testimonials';
+import { SocialMedia } from '@/components/SocialMedia';
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <Services />
         <ClientsTicker />
         <Testimonials />
+        <SocialMedia />
         <FilmTicker />
         <Contact />
 

@@ -6,6 +6,8 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
 import Image from "next/image";
 
+const NAV_ITEMS = ["Home", "About", "Work", "Contact"];
+
 const Navigation = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -13,21 +15,30 @@ const Navigation = () => {
   const [showCompact, setShowCompact] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+
     const controlNavbar = () => {
-      const currentScrollY = window.scrollY;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false);
-        setShowCompact(false);
-      } else if (currentScrollY < lastScrollY && currentScrollY > 100) {
-        setIsVisible(false);
-        setShowCompact(true);
-      } else if (currentScrollY <= 100) {
-        setIsVisible(true);
-        setShowCompact(false);
+          if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            setIsVisible(false);
+            setShowCompact(false);
+          } else if (currentScrollY < lastScrollY && currentScrollY > 100) {
+            setIsVisible(false);
+            setShowCompact(true);
+          } else if (currentScrollY <= 100) {
+            setIsVisible(true);
+            setShowCompact(false);
+          }
+
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+
+        ticking = true;
       }
-
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener("scroll", controlNavbar);
@@ -40,42 +51,38 @@ const Navigation = () => {
       <AnimatePresence>
         {isVisible && !showCompact && (
           <motion.nav
-            initial={{ y: 0 }}
-            animate={{ y: 0 }}
-            exit={{ y: -100 }}
-            transition={{ duration: 0.3 }}
+            initial={{ y: -80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -80, opacity: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
             className="fixed top-0 w-full z-50"
           >
             <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-16 lg:pr-20 relative z-10">
               <div className="flex justify-between items-center h-20 sm:h-24">
                 {/* Logo */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <Image
-                    src="/cinemalt-logo.png"
-                    alt="Cinemalt Logo"
-                    width={120}
-                    height={40}
-                    className="h-10 w-auto sm:h-14"
-                  />
-                </motion.div>
+                <Image
+                  src="/cinemalt-logo.png"
+                  alt="Cinemalt Logo"
+                  width={120}
+                  height={40}
+                  className="h-10 w-auto sm:h-14"
+                  priority
+                />
 
                 {/* Desktop Menu */}
                 <div className="hidden md:flex space-x-10 lg:space-x-12">
-                  {["Home", "About", "Work", "Contact"].map((item, i) => (
-                    <motion.a
+                  {NAV_ITEMS.map((item) => (
+                    <a
                       key={item}
-                      href={`${item=='Home' ? '/' : item.toLowerCase().replace(/\s+/g, "-")}`}
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.1 * (i + 1) }}
+                      href={`${
+                        item == "Home"
+                          ? "/"
+                          : item.toLowerCase().replace(/\s+/g, "-")
+                      }`}
                       className="text-base lg:text-lg tracking-wide text-white hover:text-gray-300 transition-colors"
                     >
                       {item}
-                    </motion.a>
+                    </a>
                   ))}
                 </div>
 
@@ -98,17 +105,21 @@ const Navigation = () => {
       <AnimatePresence>
         {showCompact && (
           <motion.div
-            initial={{ y: -50 }}
-            animate={{ y: 0 }}
-            exit={{ y: -50 }}
-            transition={{ duration: 0.3 }}
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -50, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
             className="fixed top-0 w-full text-white bg-stone-800 z-50"
           >
             <div className="flex justify-evenly sm:justify-center space-x-6 sm:space-x-12 h-12 items-center text-xs sm:text-sm">
-              {["Home", "About", "Work", "Contact"].map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <a
                   key={item}
-                  href={`${item=='Home' ? '/' : item.toLowerCase().replace(/\s+/g, "-")}`}
+                  href={`${
+                    item == "Home"
+                      ? "/"
+                      : item.toLowerCase().replace(/\s+/g, "-")
+                  }`}
                   className="uppercase tracking-tight hover:text-gray-300 transition-colors"
                 >
                   {item}
@@ -126,19 +137,17 @@ const Navigation = () => {
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
+            transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
             className="fixed bg-stone-800 inset-0 z-50 flex flex-col"
           >
             {/* Close Button */}
             <div className="flex justify-end p-6">
-              <motion.button
+              <button
                 onClick={() => setIsSidebarOpen(false)}
-                whileHover={{ rotate: 90, scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
                 className="text-white text-4xl hover:text-gray-300 transition-colors"
               >
                 <IoCloseSharp />
-              </motion.button>
+              </button>
             </div>
 
             {/* Nav Links */}
@@ -146,18 +155,23 @@ const Navigation = () => {
               className="mt-auto mb-12 ml-8 sm:ml-12 flex flex-col space-y-4"
               initial="hidden"
               animate="visible"
+              exit="hidden"
               variants={{
                 hidden: { opacity: 0 },
                 visible: {
                   opacity: 1,
-                  transition: { staggerChildren: 0.08, delayChildren: 0.05 },
+                  transition: { staggerChildren: 0.07, delayChildren: 0.1 },
                 },
               }}
             >
-              {["Home", "About", "Work", "Contact"].map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <motion.a
                   key={item}
-                  href={`${item=='Home' ? '/' : item.toLowerCase().replace(/\s+/g, "-")}`}
+                  href={`${
+                    item == "Home"
+                      ? "/"
+                      : item.toLowerCase().replace(/\s+/g, "-")
+                  }`}
                   variants={{
                     hidden: { x: 20, opacity: 0 },
                     visible: { x: 0, opacity: 1 },
@@ -165,9 +179,9 @@ const Navigation = () => {
                   whileHover={{
                     x: 6,
                     color: "#fff",
-                    textShadow: "0 0 8px rgba(255,255,255,0.6)",
+                    textShadow: "0 0 6px rgba(255,255,255,0.5)",
                   }}
-                  whileTap={{ scale: 0.97 }}
+                  whileTap={{ scale: 0.96 }}
                   onClick={() => setIsSidebarOpen(false)}
                   className="text-2xl sm:text-4xl font-light tracking-tight text-white/80 hover:text-white transition-all"
                 >

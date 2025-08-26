@@ -43,7 +43,7 @@ const CLIENT_NAMES = [
   "The Centre Piece",
 ];
 
-const isMobile = true;
+const isMobile = false;
 
 export default function ClientLogos() {
 
