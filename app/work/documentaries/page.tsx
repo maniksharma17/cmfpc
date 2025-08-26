@@ -12,9 +12,9 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 
 const DOCUMENTARIES = [
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/motion-graphics/Doordarshan%20Sundarbans.mp4",
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/documentaries/Bojh_Ashish%20Kant%20Tatla%20(Compressed).mp4",
     thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Doordarshan.png",
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Bojh.png",
   },
 ];
 
