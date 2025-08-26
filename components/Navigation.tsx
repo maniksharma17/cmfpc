@@ -76,8 +76,8 @@ const Navigation = () => {
                       key={item}
                       href={`${
                         item == "Home"
-                          ? "/"
-                          : item.toLowerCase().replace(/\s+/g, "-")
+                        ? "/"
+                        : item.toLowerCase().replace(/\s+/g, "-")
                       }`}
                       className="text-base lg:text-lg tracking-wide text-white hover:text-gray-300 transition-colors"
                     >
