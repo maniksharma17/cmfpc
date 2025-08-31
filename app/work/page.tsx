@@ -22,25 +22,89 @@ const CATEGORIES = [
 ] as const;
 
 const REELS = [
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/Diplomind.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/House%20Of%20Weaving_7.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/Swiggy%20Diwali%20Campaign.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/CIENNA.mp4",
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/Diplomind.mp4",
+    slug: "brand-reels",
+    category: "Brand Reel",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/House%20Of%20Weaving_7.mp4",
+    slug: "brand-reels",
+    category: "Brand Reel",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/Swiggy%20Diwali%20Campaign.mp4",
+    slug: "brand-reels",
+    category: "Brand Reel",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/CIENNA.mp4",
+    slug: "brand-reels",
+    category: "Brand Reel",
+  },
 ];
 
 const VIDEOS = [
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/ad-films/Tata%20Tea%20Agni.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Bill%20%26%20Milinda%20Gates%20Foundation.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Kohler%20India.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/World%20Hemophilia%20Foundation.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Delhi%20Green%20Campaign.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/Dilli%20Ki%20Sardiyaan.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/motion-graphics/History%20Hunter.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Maggi%20X%20News18.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Colgate%20X%20News18.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/ad-films/Hero%20Splendor.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_1.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Silk%20X%20News18.mp4",
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/ad-films/Tata%20Tea%20Agni.mp4",
+    category: "Advertisement",
+    slug: "ad-films",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Bill%20%26%20Milinda%20Gates%20Foundation.mp4",
+    slug: "brand-films",
+    category: "Brand Film",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Kohler%20India.mp4",
+    slug: "brand-films",
+    category: "Brand Film",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/World%20Hemophilia%20Foundation.mp4",
+    category: "Brand Film",
+    slug: "brand-films",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Delhi%20Green%20Campaign.mp4",
+    category: "Campaign",
+    slug: "campaigns",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/Dilli%20Ki%20Sardiyaan.mp4",
+    slug: "music-videos",
+    category: "Music Video",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/motion-graphics/History%20Hunter.mp4",
+    slug: "motion-graphics",
+    category: "Motion Graphic",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Maggi%20X%20News18.mp4",
+    category: "Campaign",
+    slug: "campaigns",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Colgate%20X%20News18.mp4",
+    category: "Campaign",
+    slug: "campaigns",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/ad-films/Hero%20Splendor.mp4",
+    category: "Advertisement",
+    slug: "advertisements",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_1.mp4",
+    slug: "music-videos",
+    category: "Music Video",
+  },
+  {
+    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Silk%20X%20News18.mp4",
+    category: "Campaign",
+    slug: "campaigns",
+  },
 ];
 
 // Human title from URL
@@ -57,22 +121,25 @@ function titleFromSrc(src: string) {
 }
 
 // Distribute reels between videos: pattern ~ 2 videos : 1 reel
-function mixMedia(reels: string[], videos: string[]) {
+function mixMedia(reels: typeof REELS, videos: typeof VIDEOS) {
   const r = [...reels];
   const v = [...videos];
-  const out: { src: string; isReel: boolean }[] = [];
+  const out: {
+    src: string;
+    isReel: boolean;
+    slug: string;
+    category: string;
+  }[] = [];
 
-  // Ensure exactly 4 reels and 12 videos
   const reelsToUse = r.slice(0, 4);
   const videosToUse = v.slice(0, 12);
 
-  // Arrange: 3 videos + 1 reel per row → 4 rows total
   for (let i = 0; i < 4; i++) {
     out.push(
-      { src: videosToUse[i * 3], isReel: false },
-      { src: videosToUse[i * 3 + 1], isReel: false },
-      { src: reelsToUse[i], isReel: true },
-      { src: videosToUse[i * 3 + 2], isReel: false }
+      { ...videosToUse[i * 3], isReel: false },
+      { ...videosToUse[i * 3 + 1], isReel: false },
+      { ...reelsToUse[i], isReel: true, category: "Brand Reel" },
+      { ...videosToUse[i * 3 + 2], isReel: false }
     );
   }
 
@@ -90,10 +157,14 @@ let globalCurrent: HTMLVideoElement | null = null;
 function VideoTile({
   src,
   index,
+  slug,
+  category,
   isReel = false,
 }: {
   src: string;
   index: number;
+  slug: string;
+  category: string;
   isReel?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -187,86 +258,98 @@ function VideoTile({
   const padClass = isReel ? "pt-[177.78%]" : "pt-[56.25%]";
 
   return (
-    <motion.div
-      ref={containerRef}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
-      className="break-inside-avoid mb-4"
+  <motion.div
+    ref={containerRef}
+    initial={{ opacity: 0, y: 24 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.25 }}
+    transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
+    className="break-inside-avoid mb-4"
+  >
+    <div
+      className={[
+        "group relative w-full rounded-2xl overflow-hidden shadow-xl shadow-black/30",
+        "transition-transform duration-300 hover:scale-[1.01]",
+        isReel ? "sm:[&>div]:max-h-[460px]" : "",
+      ].join(" ")}
+      onClick={togglePlay}
     >
-      <div
-        className={[
-          "group relative w-full rounded-2xl overflow-hidden shadow-lg shadow-black/20 bg-stone-700/40",
-          "transition-transform duration-300 hover:scale-[1.01]",
-          isReel ? "sm:[&>div]:max-h-[460px]" : "",
-        ].join(" ")}
-        onClick={togglePlay}
-      >
-        <div className={`relative ${padClass}`}>
-          <video
-            ref={videoRef}
-            src={videoSrc ?? undefined}
-            poster={poster ?? undefined}
-            preload="metadata"
-            playsInline
-            muted
-            disablePictureInPicture
-            className="absolute inset-0 w-full h-full object-cover select-none"
-          />
+      <div className={`relative ${padClass}`}>
+        {/* Video */}
+        <video
+          ref={videoRef}
+          src={videoSrc ?? undefined}
+          poster={poster ?? undefined}
+          preload="metadata"
+          playsInline
+          muted
+          disablePictureInPicture
+          className="absolute inset-0 w-full h-full object-cover select-none"
+        />
 
-          <div
-            className={[
-              "pointer-events-none absolute inset-0 transition-opacity duration-300",
-              isReel
-                ? "bg-gradient-to-t from-black/30 via-black/10 to-transparent"
-                : "bg-gradient-to-t from-black/50 via-black/20 to-transparent",
-            ].join(" ")}
-          />
+        {/* Gradient overlay */}
+        <div
+          className={[
+            "pointer-events-none rounded-2xl absolute inset-0 transition-opacity duration-300",
+            isReel
+              ? "bg-gradient-to-t from-black/30 via-black/10 to-transparent"
+              : "bg-gradient-to-t from-black/50 via-black/20 to-transparent",
+          ].join(" ")}
+        />
 
-          <div className="pointer-events-none absolute inset-x-3 bottom-3 flex flex-col gap-1">
-            <h3 className="text-base sm:text-lg font-medium leading-tight drop-shadow">
-              {titleFromSrc(src)}
-            </h3>
-            {isReel && (
-              <span className="inline-flex w-fit rounded-full px-2 py-0.5 text-[10px] uppercase tracking-wide bg-white/80 text-stone-900 shadow">
-                Reel
-              </span>
+        {/* Category badge (clickable) */}
+        <div className="pointer-events-auto absolute top-3 left-3 z-20">
+          <Link
+            href={`/work/${slug}`}
+            className="bg-white text-black text-xs font-light px-2 py-0.5 rounded-full hover:bg-stone-200 transition cursor-pointer"
+            onClick={(e) => e.stopPropagation()} // prevents toggling play
+          >
+            {category}
+          </Link>
+        </div>
+
+        {/* Title (non-clickable overlay) */}
+        <div className="pointer-events-none absolute inset-x-3 bottom-3 flex flex-col gap-1">
+          <h3 className="text-base sm:text-lg font-medium leading-tight drop-shadow">
+            {titleFromSrc(src)}
+          </h3>
+        </div>
+
+        {/* Controls (play/pause, fullscreen) */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 gap-3">
+          <button
+            type="button"
+            aria-label={playing ? "Pause" : "Play"}
+            className="grid place-items-center rounded-full h-14 w-14 sm:h-16 sm:w-16 backdrop-blur-sm bg-black/40 border border-white/20 text-white shadow-md"
+            onClick={(e) => {
+              e.stopPropagation();
+              togglePlay();
+            }}
+          >
+            {playing ? (
+              <Pause className="h-6 w-6" />
+            ) : (
+              <Play className="h-6 w-6 translate-x-[1px]" />
             )}
-          </div>
+          </button>
 
-          <div className="absolute inset-0 flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 gap-3">
-            <button
-              type="button"
-              aria-label={playing ? "Pause" : "Play"}
-              className="grid place-items-center rounded-full h-14 w-14 sm:h-16 sm:w-16 backdrop-blur-sm bg-black/40 border border-white/20 text-white shadow-md"
-              onClick={(e) => {
-                e.stopPropagation();
-                togglePlay();
-              }}
-            >
-              {playing ? (
-                <Pause className="h-6 w-6" />
-              ) : (
-                <Play className="h-6 w-6 translate-x-[1px]" />
-              )}
-            </button>
-            <button
-              type="button"
-              aria-label="Fullscreen"
-              className="lg:grid hidden place-items-center rounded-full h-12 w-12 sm:h-14 sm:w-14 backdrop-blur-sm bg-black/40 border border-white/20 text-white shadow-md"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleFullscreen();
-              }}
-            >
-              <Maximize className="h-5 w-5" />
-            </button>
-          </div>
+          <button
+            type="button"
+            aria-label="Fullscreen"
+            className="hidden lg:grid place-items-center rounded-full h-12 w-12 sm:h-14 sm:w-14 backdrop-blur-sm bg-black/40 border border-white/20 text-white shadow-md"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleFullscreen();
+            }}
+          >
+            <Maximize className="h-5 w-5" />
+          </button>
         </div>
       </div>
-    </motion.div>
-  );
+    </div>
+  </motion.div>
+);
+
 }
 
 // ------------------------------
@@ -278,15 +361,15 @@ export default function Categories() {
   return (
     <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[60vh] lg:min-h-[80vh] flex flex-col items-start justify-center lg:px-24 px-6">
+      <section className="relative min-h-[50vh] lg:min-h-[60vh] max-w-7xl flex flex-col items-start justify-end lg:pb-24 lg:px-24 px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-xl sm:text-3xl text-stone-400 font-light mb-6"
+          className="text-xl sm:text-3xl text-white font-light mb-6"
         >
-          What do you want to explore?
+          Dive into our <span className="alt-font italic">Work</span>
         </motion.h2>
 
         <motion.div
@@ -294,7 +377,7 @@ export default function Categories() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="flex flex-wrap items-center gap-2 sm:gap-3 max-w-6xl"
+          className="flex flex-wrap items-center gap-2 sm:gap-3 max-w-5xl"
         >
           {CATEGORIES.map((cat) => (
             <Link
@@ -339,7 +422,7 @@ export default function Categories() {
       </section>
 
       {/* Section Header */}
-      <section className="bg-stone-200 lg:py-24 py-12 px-6 lg:px-24">
+      <section className="bg-white lg:py-16 py-12 px-6 lg:px-24">
         <div className="flex items-baseline justify-between mb-4">
           <h3 className="text-lg sm:text-xl text-stone-600 font-normal">
             Featured
@@ -352,6 +435,8 @@ export default function Categories() {
             <VideoTile
               key={item.src}
               src={item.src}
+              slug={item.slug}
+              category={item.category}
               index={i}
               isReel={item.isReel}
             />
