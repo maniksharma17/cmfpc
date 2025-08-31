@@ -9,55 +9,50 @@ const portfolioCategories = [
   {
     name: "Advertisements",
     description: "Compelling advertisements that last an impression.",
-    image: "https://images.pexels.com/photos/6202743/pexels-photo-6202743.jpeg",
+    image: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Hero%20Splendor.png",
     slug: "advertisements",
   },
   {
     name: "Brand Films",
     description: "Cinematic storytelling that defines a brand’s identity.",
-    image:
-      "https://images.unsplash.com/photo-1683090987787-d83d1f41a038?q=80&w=2071&auto=format&fit=crop",
+    image: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Kohler.png",
     slug: "brand-films",
   },
   {
     name: "Brand Reels",
     description: "Short, snappy, and visually magnetic.",
-    image:
-      "https://images.unsplash.com/photo-1532800783378-1bed60adaf58?q=80&w=2070&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1532800783378-1bed60adaf58?q=80&w=2070&auto=format&fit=crop",
     slug: "brand-reels",
   },
   {
     name: "Campaigns",
     description: "Strategic visual stories that resonate deeply.",
-    image:
-      "https://images.unsplash.com/photo-1635344620529-2b8aa633231a?q=80&w=2064&auto=format&fit=crop",
+    image: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Silk%20X%20News18.png",
     slug: "campaigns",
   },
   {
     name: "Documentaries",
     description: "Real stories told with raw authenticity.",
-    image:
-      "https://images.unsplash.com/photo-1615310126233-642c6a0df67a?q=80&w=2070&auto=format&fit=crop",
+    image: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Bojh.png",
     slug: "documentaries",
   },
   {
     name: "Motion Graphics",
     description: "Dynamic animations that make ideas come alive.",
-    image: "https://images.pexels.com/photos/417458/pexels-photo-417458.jpeg",
+    image: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Map%20Animation.png",
     slug: "motion-graphics",
   },
   {
     name: "Music Videos",
     description: "Visual experiences that amplify sound and emotion.",
-    image:
-      "https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?q=80&w=2071&auto=format&fit=crop",
+    image: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/The%20CenterPiece_2.png",
     slug: "music-videos",
   },
 ];
 
 function CardImage({ src, alt }: { src: string; alt: string }) {
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden rounded-2xl">
       <motion.div
         initial={{ scale: 1.1 }}
         whileInView={{ scale: 1 }}
@@ -78,12 +73,11 @@ function CardImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-
 export default function Portfolio() {
   const router = useRouter();
 
   return (
-    <section id="work" className="bg-black text-white">
+    <section id="work" className="bg-white text-white px-4 sm:px-8 py-8 sm:py-16 space-y-6">
       {portfolioCategories.map((category, index) => (
         <motion.div
           key={category.name}
@@ -94,24 +88,23 @@ export default function Portfolio() {
             delay: index * 0.05,
           }}
           viewport={{ once: true, amount: 0.3 }}
-          className="border-y border-y-gray-300 border-y-1/2 relative h-[40vh] sm:h-screen w-full overflow-hidden cursor-pointer"
+          className="relative h-[45vh] lg:h-[90vh] w-full overflow-hidden cursor-pointer rounded-3xl shadow-2xl bg-black"
         >
           {/* Image */}
           <CardImage src={category.image} alt={category.name} />
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent rounded-2xl" />
 
           {/* Text */}
           <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-12 max-w-2xl">
-            {/* Heading + Arrow */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.4,
                 ease: "easeOut",
-                delay: index * 0.1,
+                delay: 0.1,
               }}
               viewport={{ once: true, amount: 0.3 }}
               className="flex flex-row gap-4 items-center"
@@ -141,7 +134,7 @@ export default function Portfolio() {
               transition={{
                 duration: 0.5,
                 ease: "easeOut",
-                delay: index * 0.1,
+                delay: 0.2,
               }}
               viewport={{ once: true, amount: 0.3 }}
               className="mt-1 text-sm italic font-light sm:text-md text-white/80 max-w-lg leading-snug"
