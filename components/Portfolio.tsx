@@ -109,7 +109,7 @@ export default function Portfolio() {
               viewport={{ once: true, amount: 0.3 }}
               className="flex flex-row gap-4 items-center"
             >
-              <h3 className="text-2xl sm:text-4xl font-light leading-tight tracking-tight">
+              <h3 className="text-xl sm:text-4xl font-light leading-tight tracking-tight">
                 {category.name}
               </h3>
 
