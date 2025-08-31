@@ -36,7 +36,7 @@ export default function ClientLogos() {
       <motion.p
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut", delay: 0.5 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
         viewport={{ once: true }}
         className="text-xl sm:text-2xl md:text-5xl font-normal mb-8 sm:mb-14"
       >
@@ -64,6 +64,7 @@ export default function ClientLogos() {
               alt={`Client logo ${i}`}
               width={200}
               height={100}
+              loading={"eager"}
               className={`object-contain transition-transform duration-500 ease-in-out group-hover:scale-110 ${
                 logo.invert ? "invert" : ""
               }`}
@@ -101,6 +102,7 @@ export default function ClientLogos() {
                   alt={`Client logo ${i}`}
                   width={200}
                   height={100}
+                  loading={"eager"}
                   className={`object-contain transition-transform duration-500 ease-in-out group-hover:scale-110 ${
                     logo.invert ? "invert" : ""
                   }`}
