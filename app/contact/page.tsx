@@ -24,7 +24,7 @@ const ContactPage = () => {
       </div>
 
       {/* Full-width Social */}
-      <div className="w-full">
+      <div className="w-full light-grainy">
         <SocialMedia />
       </div>
 
