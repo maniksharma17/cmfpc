@@ -360,7 +360,7 @@ function VideoTile({
 
           {/* Controls */}
           {showControls && (
-            <div className="absolute inset-0 flex items-center justify-center gap-3 transition-opacity duration-200">
+            <div className="z-50 absolute inset-0 flex items-center justify-center gap-3 transition-opacity duration-200">
               <button
                 type="button"
                 aria-label={playing ? "Pause" : "Play"}
