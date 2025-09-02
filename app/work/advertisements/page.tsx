@@ -80,7 +80,6 @@ function VideoTile({
     document.querySelectorAll("video").forEach((vid) => {
       if (vid !== current) {
         vid.pause();
-        vid.currentTime = 0;
       }
     });
   };
@@ -122,6 +121,7 @@ function VideoTile({
 
     // Always pause others before fullscreen
     pauseOthers(v);
+    v.currentTime = 0;
 
     if (
       document.fullscreenElement ||
