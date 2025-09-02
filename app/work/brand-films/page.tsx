@@ -13,30 +13,35 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 const BRAND_FILMS = [
   {
     src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Adhayayan.mp4",
-    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Adhayayan.png"
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Adhayayan.png",
   },
   {
     src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Bill%20%26%20Milinda%20Gates%20Foundation.mp4",
-    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Bill%20%26%20Milinda%20Gates.png"
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Bill%20%26%20Milinda%20Gates.png",
   },
   {
     src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/House%20Of%20248.mp4",
-    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/House%20of%20248.png"
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/House%20of%20248.png",
   },
   {
     src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Kohler%20India.mp4",
-    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Kohler.png"
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Kohler.png",
   },
   {
     src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Saisha.mp4",
-    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Saisha.png"
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Saisha.png",
   },
   {
     src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/World%20Hemophilia%20Foundation.mp4",
-    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/World%20Hemophilia%20Federation.png"
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/World%20Hemophilia%20Federation.png",
   },
-]
-
+];
 
 // ------------------------------
 // Utils
@@ -61,7 +66,15 @@ let globalCurrent: HTMLVideoElement | null = null;
 // ------------------------------
 // Video Tile
 // ------------------------------
-function VideoTile({ src, index, poster }: { src: string; index: number; poster: string }) {
+function VideoTile({
+  src,
+  index,
+  poster,
+}: {
+  src: string;
+  index: number;
+  poster: string;
+}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inView = useInView(containerRef, { margin: "300px 0px", amount: 0.15 });
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -128,40 +141,39 @@ function VideoTile({ src, index, poster }: { src: string; index: number; poster:
   };
 
   const toggleFullscreen = async () => {
-  const v = videoRef.current;
-  if (!v) return;
+    const v = videoRef.current;
+    if (!v) return;
 
-  try {
-    if (v.requestFullscreen) {
-      await v.requestFullscreen();
-    }
-
-    // Try to lock orientation to landscape
-    if ((screen.orientation as any)?.lock) {
-      try {
-        await (screen.orientation as any).lock("landscape");
-      } catch (err) {
-        console.warn("Orientation lock not supported:", err);
+    try {
+      if (v.requestFullscreen) {
+        await v.requestFullscreen();
       }
+
+      // Try to lock orientation to landscape
+      if ((screen.orientation as any)?.lock) {
+        try {
+          await (screen.orientation as any).lock("landscape");
+        } catch (err) {
+          console.warn("Orientation lock not supported:", err);
+        }
+      }
+
+      // Force landscape display ratio
+      v.style.objectFit = "contain";
+      v.style.aspectRatio = "16 / 9";
+    } catch (err) {
+      console.error("Fullscreen failed:", err);
     }
-
-    // Force landscape display ratio
-    v.style.objectFit = "contain";
-    v.style.aspectRatio = "16 / 9";
-  } catch (err) {
-    console.error("Fullscreen failed:", err);
-  }
-};
-
+  };
 
   return (
     <motion.div
       ref={containerRef}
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0.8, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
-      className=""
+      className="w-full rounded-3xl shadow-2xl"
     >
       <div
         className="group relative w-full overflow-hidden"
@@ -175,11 +187,11 @@ function VideoTile({ src, index, poster }: { src: string; index: number; poster:
           playsInline
           muted
           disablePictureInPicture
-          className="w-full h-auto object-cover select-none"
+          className="w-full h-auto object-cover select-none rounded-3xl"
         />
 
         {/* Gradient Overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+        <div className="rounded-3xl pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
 
         {/* Title */}
         <div className="pointer-events-none absolute inset-x-4 bottom-4">
@@ -229,13 +241,13 @@ export default function BrandFilmsPage() {
   return (
     <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[80vh] flex flex-col items-start justify-center lg:px-24 px-6">
+      <section className="relative h-[50vh] sm:h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-3xl alt-font italic sm:text-6xl text-stone-200 font-light mb-6"
+          className="text-xl alt-font italic sm:text-3xl text-stone-200 font-light mb-6"
         >
           Brand Films
         </motion.h2>
@@ -245,7 +257,7 @@ export default function BrandFilmsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-300 text-sm sm:text-2xl leading-relaxed"
+          className="max-w-3xl text-stone-300 text-sm sm:text-lg leading-relaxed"
         >
           Our brand films go beyond storytelling — they craft immersive visual
           journeys that connect audiences to the soul of a brand. From concept
@@ -269,10 +281,16 @@ export default function BrandFilmsPage() {
       </section>
 
       {/* Section */}
-      <section className="bg-stone-50">
-        <div className="flex flex-col">
+      <section className="bg-white px-0">
+        <div className="flex flex-col lg:gap-y-8 sm:p-12">
+          {" "}
           {BRAND_FILMS.map((item, i) => (
-            <VideoTile key={item.src} src={item.src} index={i} poster={item.thumbnail} />
+            <VideoTile
+              key={item.src}
+              src={item.src}
+              index={i}
+              poster={item.thumbnail}
+            />
           ))}
         </div>
       </section>

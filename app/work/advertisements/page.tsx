@@ -12,11 +12,13 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 const AD_FILMS = [
   {
     src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/ad-films/Hero%20Splendor.mp4",
-    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Hero%20Splendor.png"
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Hero%20Splendor.png",
   },
   {
     src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/ad-films/Tata%20Tea%20Agni.mp4",
-    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Tata%20Tea%20Agni.png"
+    thumbnail:
+      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Tata%20Tea%20Agni.png",
   },
 ];
 
@@ -43,7 +45,15 @@ let globalCurrent: HTMLVideoElement | null = null;
 // ------------------------------
 // Video Tile
 // ------------------------------
-function VideoTile({ src, index, poster }: { src: string; index: number; poster: string }) {
+function VideoTile({
+  src,
+  index,
+  poster,
+}: {
+  src: string;
+  index: number;
+  poster: string;
+}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inView = useInView(containerRef, { margin: "300px 0px", amount: 0.15 });
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -65,7 +75,6 @@ function VideoTile({ src, index, poster }: { src: string; index: number; poster:
         canvas.width = v.videoWidth;
         canvas.height = v.videoHeight;
         const ctx = canvas.getContext("2d");
-        
       } catch {}
     };
     v.addEventListener("loadeddata", handleLoaded, { once: true });
@@ -107,22 +116,49 @@ function VideoTile({ src, index, poster }: { src: string; index: number; poster:
     }
   };
 
-  const toggleFullscreen = () => {
+  const toggleFullscreen = async () => {
     const v = videoRef.current;
-    if (v && v.requestFullscreen) v.requestFullscreen();
+    if (!v) return;
+
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // Try to lock orientation to landscape on mobile
+      if (
+        screen.orientation &&
+        typeof (screen.orientation as any).lock === "function"
+      ) {
+        try {
+          await (screen.orientation as any).lock("landscape");
+        } catch (err) {
+          console.warn("Orientation lock not supported:", err);
+        }
+      }
+    } else {
+      // Desktop / Laptop fullscreen
+      if (v.requestFullscreen) {
+        v.requestFullscreen();
+      } else if ((v as any).webkitRequestFullscreen) {
+        (v as any).webkitRequestFullscreen();
+      } else if ((v as any).mozRequestFullScreen) {
+        (v as any).mozRequestFullScreen();
+      } else if ((v as any).msRequestFullscreen) {
+        (v as any).msRequestFullscreen();
+      }
+    }
   };
 
   return (
     <motion.div
       ref={containerRef}
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0.8, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
-      className="w-full border-t border-t-stone-400"
+      className="w-full rounded-3xl shadow-intense"
     >
       <div
-        className="group relative w-full overflow-hidden bg-black"
+        className="group relative w-full overflow-hidden bg-transparent rounded-3xl"
         onClick={togglePlay}
       >
         <video
@@ -133,11 +169,11 @@ function VideoTile({ src, index, poster }: { src: string; index: number; poster:
           playsInline
           muted
           disablePictureInPicture
-          className="w-full h-auto object-cover select-none"
+          className="w-full h-auto object-cover select-none rounded-3xl"
         />
 
         {/* Overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent rounded-3xl" />
 
         {/* Title */}
         <div className="pointer-events-none absolute inset-x-4 bottom-4">
@@ -148,6 +184,7 @@ function VideoTile({ src, index, poster }: { src: string; index: number; poster:
 
         {/* Controls */}
         <div className="absolute inset-0 flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 gap-3">
+          {/* Play / Pause */}
           <button
             type="button"
             aria-label={playing ? "Pause" : "Play"}
@@ -163,10 +200,12 @@ function VideoTile({ src, index, poster }: { src: string; index: number; poster:
               <Play className="h-6 w-6 translate-x-[1px]" />
             )}
           </button>
+
+          {/* Fullscreen */}
           <button
             type="button"
             aria-label="Fullscreen"
-            className="lg:grid hidden place-items-center rounded-full h-12 w-12 sm:h-14 sm:w-14 backdrop-blur-sm bg-black/40 border border-white/20 text-white"
+            className="grid place-items-center rounded-full h-12 w-12 sm:h-14 sm:w-14 backdrop-blur-sm bg-black/40 border border-white/20 text-white"
             onClick={(e) => {
               e.stopPropagation();
               toggleFullscreen();
@@ -187,13 +226,13 @@ export default function AdFilmsPage() {
   return (
     <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[80vh] flex flex-col items-start justify-center lg:px-24 px-6">
+      <section className="relative h-[50vh] sm:h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-3xl alt-font italic sm:text-6xl text-stone-200 font-light mb-6"
+          className="text-xl alt-font italic sm:text-3xl text-white font-light mb-6"
         >
           Advertisement Films
         </motion.h2>
@@ -203,13 +242,12 @@ export default function AdFilmsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-300 text-sm sm:text-2xl leading-relaxed"
+          className="max-w-3xl text-stone-200 text-sm sm:text-lg leading-relaxed"
         >
           Our advertisement films are more than just visuals — they are powerful
           narratives that bring brands to life. We blend creativity, strategy,
           and emotion to craft cinematic experiences that captivate audiences
-          and build lasting connections. From ideation to execution, every frame
-          is designed to inspire, engage, and leave a memorable impact.{" "}
+          and build lasting connections.{" "}
         </motion.p>
 
         {/* Animated Arrow */}
@@ -228,10 +266,15 @@ export default function AdFilmsPage() {
       </section>
 
       {/* Section */}
-      <section className="bg-stone-50 px-0">
-        <div className="flex flex-col">
+      <section className="bg-white px-0">
+        <div className="flex flex-col p-4 gap-y-4 lg:gap-y-8 sm:p-12">
           {AD_FILMS.map((item, i) => (
-            <VideoTile key={item.src} src={item.src} index={i} poster={item.thumbnail} />
+            <VideoTile
+              key={item.src}
+              src={item.src}
+              index={i}
+              poster={item.thumbnail}
+            />
           ))}
         </div>
       </section>

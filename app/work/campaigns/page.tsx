@@ -243,7 +243,7 @@ export default function CampaignsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-3xl alt-font italic sm:text-6xl text-stone-200 font-light mb-6"
+          className="text-xl alt-font italic sm:text-3xl text-stone-200 font-light mb-6"
         >
           Campaigns
         </motion.h2>
