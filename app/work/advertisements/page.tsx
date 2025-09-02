@@ -190,7 +190,7 @@ function VideoTile({
           playsInline
           muted
           disablePictureInPicture
-          className="w-full h-auto object-cover select-none rounded-3xl"
+          className="w-full h-auto object-contain select-none rounded-3xl"
         />
 
         {/* Overlay */}
