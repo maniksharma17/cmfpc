@@ -120,30 +120,45 @@ function VideoTile({
     const v = videoRef.current;
     if (!v) return;
 
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    if (isMobile) {
-      // Try to lock orientation to landscape on mobile
-      if (
-        screen.orientation &&
-        typeof (screen.orientation as any).lock === "function"
-      ) {
-        try {
-          await (screen.orientation as any).lock("landscape");
-        } catch (err) {
-          console.warn("Orientation lock not supported:", err);
-        }
+    // If already in fullscreen, exit
+    if (
+      document.fullscreenElement ||
+      (document as any).webkitFullscreenElement ||
+      (document as any).mozFullScreenElement ||
+      (document as any).msFullscreenElement
+    ) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen();
+      } else if ((document as any).mozCancelFullScreen) {
+        (document as any).mozCancelFullScreen();
+      } else if ((document as any).msExitFullscreen) {
+        (document as any).msExitFullscreen();
       }
-    } else {
-      // Desktop / Laptop fullscreen
-      if (v.requestFullscreen) {
-        v.requestFullscreen();
-      } else if ((v as any).webkitRequestFullscreen) {
-        (v as any).webkitRequestFullscreen();
-      } else if ((v as any).mozRequestFullScreen) {
-        (v as any).mozRequestFullScreen();
-      } else if ((v as any).msRequestFullscreen) {
-        (v as any).msRequestFullscreen();
+      return;
+    }
+
+    // Request fullscreen on the <video> element
+    if (v.requestFullscreen) {
+      await v.requestFullscreen();
+    } else if ((v as any).webkitEnterFullscreen) {
+      // iOS Safari
+      (v as any).webkitEnterFullscreen();
+    } else if ((v as any).webkitRequestFullscreen) {
+      (v as any).webkitRequestFullscreen();
+    } else if ((v as any).mozRequestFullScreen) {
+      (v as any).mozRequestFullScreen();
+    } else if ((v as any).msRequestFullscreen) {
+      (v as any).msRequestFullscreen();
+    }
+
+    // Optional: try to lock orientation (works on some Androids once fullscreen is active)
+    if (screen.orientation && (screen.orientation as any).lock) {
+      try {
+        await (screen.orientation as any).lock("landscape");
+      } catch {
+        // Ignore if not supported
       }
     }
   };
