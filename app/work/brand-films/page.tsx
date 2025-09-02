@@ -86,6 +86,16 @@ function VideoTile({
     if (inView && !videoSrc) setVideoSrc(src);
   }, [inView, videoSrc, src]);
 
+  // Pause when out of view
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (!inView && !v.paused) {
+      v.pause();
+      setPlaying(false);
+    }
+  }, [inView]);
+
   // Pause all videos except one
   const pauseOthers = (current: HTMLVideoElement) => {
     document.querySelectorAll("video").forEach((vid) => {
@@ -132,6 +142,7 @@ function VideoTile({
 
     // Always pause others before fullscreen
     pauseOthers(v);
+    v.currentTime = 0;
 
     if (
       document.fullscreenElement ||
@@ -298,7 +309,7 @@ export default function BrandFilmsPage() {
 
       {/* Section */}
       <section className="bg-white px-0">
-        <div className="flex flex-col lg:gap-y-8 sm:p-12">
+        <div className="flex flex-col p-4 gap-y-4 lg:gap-y-8 sm:p-12">
           {" "}
           {BRAND_FILMS.map((item, i) => (
             <VideoTile
