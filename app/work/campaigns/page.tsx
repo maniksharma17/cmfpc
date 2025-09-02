@@ -287,7 +287,7 @@ export default function CampaignsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-300 text-sm sm:text-xl leading-relaxed"
+          className="max-w-3xl text-stone-300 text-sm sm:text-lg leading-relaxed"
         >
           Our campaigns are built to spark action and create impact. We blend
           strategy, creativity, and innovation to deliver ideas that resonate

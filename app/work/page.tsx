@@ -147,13 +147,10 @@ function mixMedia(reels: typeof REELS, videos: typeof VIDEOS) {
 }
 
 // ------------------------------
-// Global video state (so only one plays at a time)
+// Video Tile
 // ------------------------------
 let globalCurrent: HTMLVideoElement | null = null;
 
-// ------------------------------
-// Video Tile
-// ------------------------------
 function VideoTile({
   src,
   index,
@@ -168,24 +165,19 @@ function VideoTile({
   isReel?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const inView = useInView(containerRef, {
-    margin: "300px 0px 300px 0px",
-    amount: 0.15,
-  });
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
+  const [showControls, setShowControls] = useState(true);
   const [poster, setPoster] = useState<string | null>(null);
 
   // Extract first frame as poster
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-
     const handleMetadata = () => {
-      v.currentTime = 1; // small offset avoids blank black frame
+      v.currentTime = 1;
     };
-
     const handleSeeked = () => {
       try {
         const canvas = document.createElement("canvas");
@@ -198,158 +190,212 @@ function VideoTile({
         }
       } catch {}
     };
-
     v.addEventListener("loadedmetadata", handleMetadata, { once: true });
     v.addEventListener("seeked", handleSeeked, { once: true });
-
     return () => {
       v.removeEventListener("loadedmetadata", handleMetadata);
       v.removeEventListener("seeked", handleSeeked);
     };
   }, [videoSrc]);
 
-  // Lazy attach src
+  // Lazy load when in view
+  const inView = useInView(containerRef, { margin: "300px 0px", amount: 0.15 });
   useEffect(() => {
     if (inView && !videoSrc) setVideoSrc(src);
   }, [inView, videoSrc, src]);
 
-  // Auto-pause out of view
+  // Pause when out of view
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     if (!inView && !v.paused) {
       v.pause();
       setPlaying(false);
+      setShowControls(true);
     }
   }, [inView]);
 
+  // Pause all others
+  const pauseOthers = (current: HTMLVideoElement) => {
+    document.querySelectorAll("video").forEach((vid) => {
+      if (vid !== current) {
+        vid.pause();
+      }
+    });
+  };
+
+  // Toggle play/pause
   const togglePlay = async () => {
     const v = videoRef.current;
     if (!v) return;
+
     if (v.paused) {
-      if (globalCurrent && globalCurrent !== v) {
-        globalCurrent.pause();
-      }
+      pauseOthers(v);
       v.muted = false;
       try {
         await v.play();
         setPlaying(true);
         globalCurrent = v;
+        setShowControls(false);
       } catch {
         v.muted = true;
         try {
           await v.play();
           setPlaying(true);
           globalCurrent = v;
+          setShowControls(false);
         } catch {}
       }
     } else {
       v.pause();
       setPlaying(false);
+      setShowControls(true);
       if (globalCurrent === v) globalCurrent = null;
     }
   };
 
-  const toggleFullscreen = () => {
+  // Fullscreen (disabled on reels)
+  const toggleFullscreen = async () => {
+    if (isReel) return; // 🚫 no fullscreen on reels
     const v = videoRef.current;
-    if (v && v.requestFullscreen) v.requestFullscreen();
+    if (!v) return;
+
+    pauseOthers(v);
+    v.currentTime = 0;
+
+    if (
+      document.fullscreenElement ||
+      (document as any).webkitFullscreenElement ||
+      (document as any).mozFullScreenElement ||
+      (document as any).msFullscreenElement
+    ) {
+      if (document.exitFullscreen) {
+        await document.exitFullscreen();
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen();
+      } else if ((document as any).mozCancelFullScreen) {
+        (document as any).mozCancelFullScreen();
+      } else if ((document as any).msExitFullscreen) {
+        (document as any).msExitFullscreen();
+      }
+      return;
+    }
+
+    if (v.requestFullscreen) {
+      await v.requestFullscreen();
+    } else if ((v as any).webkitEnterFullscreen) {
+      (v as any).webkitEnterFullscreen();
+    } else if ((v as any).webkitRequestFullscreen) {
+      (v as any).webkitRequestFullscreen();
+    } else if ((v as any).mozRequestFullScreen) {
+      (v as any).mozRequestFullScreen();
+    } else if ((v as any).msRequestFullscreen) {
+      (v as any).msRequestFullscreen();
+    }
+
+    if (screen.orientation && (screen.orientation as any).lock) {
+      try {
+        await (screen.orientation as any).lock("landscape");
+      } catch {}
+    }
   };
 
+  // Click handler: toggle controls or play
+  const handleContainerClick = () => {
+    if (playing) {
+      setShowControls((prev) => !prev);
+    } else {
+      togglePlay();
+    }
+  };
+
+  // Reel vs. video aspect ratio
   const padClass = isReel ? "pt-[177.78%]" : "pt-[56.25%]";
 
   return (
-  <motion.div
-    ref={containerRef}
-    initial={{ opacity: 0, y: 24 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.25 }}
-    transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
-    className="break-inside-avoid mb-4"
-  >
-    <div
-      className={[
-        "group relative w-full rounded-2xl overflow-hidden shadow-xl shadow-black/30",
-        "transition-transform duration-300 hover:scale-[1.01]",
-        isReel ? "sm:[&>div]:max-h-[460px]" : "",
-      ].join(" ")}
-      onClick={togglePlay}
+    <motion.div
+      ref={containerRef}
+      initial={{ opacity: 0.8, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
+      className="break-inside-avoid mb-4"
     >
-      <div className={`relative ${padClass}`}>
-        {/* Video */}
-        <video
-          ref={videoRef}
-          src={videoSrc ?? undefined}
-          poster={poster ?? undefined}
-          preload="metadata"
-          playsInline
-          muted
-          disablePictureInPicture
-          className="absolute inset-0 w-full h-full object-cover select-none"
-        />
+      <div
+        className="group relative w-full overflow-hidden rounded-2xl shadow-xl shadow-black/30 transition-transform duration-300 hover:scale-[1.01]"
+        onClick={handleContainerClick}
+      >
+        <div className={`relative ${padClass}`}>
+          <video
+            ref={videoRef}
+            src={videoSrc ?? undefined}
+            poster={poster ?? undefined}
+            preload="metadata"
+            playsInline
+            muted
+            disablePictureInPicture
+            className="absolute inset-0 w-full h-full object-cover select-none"
+          />
 
-        {/* Gradient overlay */}
-        <div
-          className={[
-            "pointer-events-none rounded-2xl absolute inset-0 transition-opacity duration-300",
-            isReel
-              ? "bg-gradient-to-t from-black/30 via-black/10 to-transparent"
-              : "bg-gradient-to-t from-black/50 via-black/20 to-transparent",
-          ].join(" ")}
-        />
+          {/* Overlay */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
 
-        {/* Category badge (clickable) */}
-        <div className="pointer-events-auto absolute top-3 left-3 z-20">
-          <Link
-            href={`/work/${slug}`}
-            className="bg-white text-black text-xs font-light px-2 py-0.5 rounded-full hover:bg-stone-200 transition cursor-pointer"
-            onClick={(e) => e.stopPropagation()} // prevents toggling play
-          >
-            {category}
-          </Link>
-        </div>
+          {/* Category (clickable) */}
+          <div className="pointer-events-auto absolute top-3 left-3 z-20">
+            <Link
+              href={`/work/${slug}`}
+              className="bg-white text-black text-xs font-light px-2 py-0.5 rounded-full hover:bg-stone-200 transition cursor-pointer"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {category}
+            </Link>
+          </div>
 
-        {/* Title (non-clickable overlay) */}
-        <div className="pointer-events-none absolute inset-x-3 bottom-3 flex flex-col gap-1">
-          <h3 className="text-base sm:text-lg font-medium leading-tight drop-shadow">
-            {titleFromSrc(src)}
-          </h3>
-        </div>
+          {/* Title */}
+          <div className="pointer-events-none absolute inset-x-3 bottom-3">
+            <h3 className="text-base sm:text-lg font-medium leading-tight drop-shadow">
+              {titleFromSrc(src)}
+            </h3>
+          </div>
 
-        {/* Controls (play/pause, fullscreen) */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 gap-3">
-          <button
-            type="button"
-            aria-label={playing ? "Pause" : "Play"}
-            className="grid place-items-center rounded-full h-14 w-14 sm:h-16 sm:w-16 backdrop-blur-sm bg-black/40 border border-white/20 text-white shadow-md"
-            onClick={(e) => {
-              e.stopPropagation();
-              togglePlay();
-            }}
-          >
-            {playing ? (
-              <Pause className="h-6 w-6" />
-            ) : (
-              <Play className="h-6 w-6 translate-x-[1px]" />
-            )}
-          </button>
+          {/* Controls */}
+          {showControls && (
+            <div className="absolute inset-0 flex items-center justify-center gap-3 transition-opacity duration-200">
+              <button
+                type="button"
+                aria-label={playing ? "Pause" : "Play"}
+                className="grid place-items-center rounded-full h-14 w-14 sm:h-16 sm:w-16 backdrop-blur-sm bg-black/40 border border-white/20 text-white"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  togglePlay();
+                }}
+              >
+                {playing ? (
+                  <Pause className="h-6 w-6" />
+                ) : (
+                  <Play className="h-6 w-6 translate-x-[1px]" />
+                )}
+              </button>
 
-          <button
-            type="button"
-            aria-label="Fullscreen"
-            className="hidden lg:grid place-items-center rounded-full h-12 w-12 sm:h-14 sm:w-14 backdrop-blur-sm bg-black/40 border border-white/20 text-white shadow-md"
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleFullscreen();
-            }}
-          >
-            <Maximize className="h-5 w-5" />
-          </button>
+              {!isReel && (
+                <button
+                  type="button"
+                  aria-label="Fullscreen"
+                  className="grid place-items-center rounded-full h-12 w-12 sm:h-14 sm:w-14 backdrop-blur-sm bg-black/40 border border-white/20 text-white"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFullscreen();
+                  }}
+                >
+                  <Maximize className="h-5 w-5" />
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
-    </div>
-  </motion.div>
-);
-
+    </motion.div>
+  );
 }
 
 // ------------------------------
@@ -361,7 +407,7 @@ export default function Categories() {
   return (
     <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[50vh] lg:min-h-[60vh] max-w-7xl flex flex-col items-start justify-end lg:pb-24 lg:px-24 px-6">
+      <section className="relative min-h-[70vh] lg:min-h-[60vh] max-w-7xl flex flex-col items-start justify-center sm:justify-end lg:pb-24 lg:px-24 px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -400,7 +446,7 @@ export default function Categories() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.2 }}
-          className="absolute bottom-12 right-6 lg:bottom-24 sm:bottom-28 md:bottom-16 lg:right-20"
+          className="max-sm:hidden sm:absolute bottom-12 right-6 lg:bottom-24 sm:bottom-28 md:bottom-16 lg:right-20"
         >
           <div className="flex flex-col items-center text-white/80">
             <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase mb-3">

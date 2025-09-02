@@ -43,14 +43,14 @@ function titleFromSrc(src: string) {
   }
 }
 
-// ------------------------------
-// Global video state
-// ------------------------------
+/**
+ * VIDEO
+ */
+
+// Keep track of currently playing video globally
 let globalCurrent: HTMLVideoElement | null = null;
 
-// ------------------------------
-// Video Tile
-// ------------------------------
+
 function VideoTile({
   src,
   index,
@@ -61,39 +61,18 @@ function VideoTile({
   poster: string;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const inView = useInView(containerRef, { margin: "300px 0px", amount: 0.15 });
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
-  // const [poster, setPoster] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
+  const [showControls, setShowControls] = useState(true);
 
-  // Lazy load
+  // Lazy load when in view
+  const inView = useInView(containerRef, { margin: "300px 0px", amount: 0.15 });
   useEffect(() => {
     if (inView && !videoSrc) setVideoSrc(src);
   }, [inView, videoSrc, src]);
 
-  // Extract first frame as poster
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-
-
-    const handleSeeked = () => {
-      try {
-        const canvas = document.createElement("canvas");
-        canvas.width = v.videoWidth;
-        canvas.height = v.videoHeight;
-        const ctx = canvas.getContext("2d");
-        if (ctx) {
-          ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
-          // setPoster(canvas.toDataURL("image/jpeg", 0.7));
-        }
-      } catch {}
-    };
-
-  }, [videoSrc]);
-
-  // Pause out of view
+  // Pause when out of view
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -103,48 +82,112 @@ function VideoTile({
     }
   }, [inView]);
 
+  // Pause all videos except one
+  const pauseOthers = (current: HTMLVideoElement) => {
+    document.querySelectorAll("video").forEach((vid) => {
+      if (vid !== current) {
+        vid.pause();
+      }
+    });
+  };
+
+  // Toggle play/pause
   const togglePlay = async () => {
     const v = videoRef.current;
     if (!v) return;
+
     if (v.paused) {
-      if (globalCurrent && globalCurrent !== v) globalCurrent.pause();
+      pauseOthers(v);
       v.muted = false;
       try {
         await v.play();
         setPlaying(true);
         globalCurrent = v;
+        setShowControls(false);
       } catch {
         v.muted = true;
         try {
           await v.play();
           setPlaying(true);
           globalCurrent = v;
+          setShowControls(false);
         } catch {}
       }
     } else {
       v.pause();
       setPlaying(false);
+      setShowControls(true);
       if (globalCurrent === v) globalCurrent = null;
     }
   };
 
-  const toggleFullscreen = () => {
+  // Toggle fullscreen
+  const toggleFullscreen = async () => {
     const v = videoRef.current;
-    if (v && v.requestFullscreen) v.requestFullscreen();
+    if (!v) return;
+
+    // Always pause others before fullscreen
+    pauseOthers(v);
+    v.currentTime = 0;
+
+    if (
+      document.fullscreenElement ||
+      (document as any).webkitFullscreenElement ||
+      (document as any).mozFullScreenElement ||
+      (document as any).msFullscreenElement
+    ) {
+      if (document.exitFullscreen) {
+        await document.exitFullscreen();
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen();
+      } else if ((document as any).mozCancelFullScreen) {
+        (document as any).mozCancelFullScreen();
+      } else if ((document as any).msExitFullscreen) {
+        (document as any).msExitFullscreen();
+      }
+      return;
+    }
+
+    if (v.requestFullscreen) {
+      await v.requestFullscreen();
+    } else if ((v as any).webkitEnterFullscreen) {
+      (v as any).webkitEnterFullscreen(); // iOS Safari
+    } else if ((v as any).webkitRequestFullscreen) {
+      (v as any).webkitRequestFullscreen();
+    } else if ((v as any).mozRequestFullScreen) {
+      (v as any).mozRequestFullScreen();
+    } else if ((v as any).msRequestFullscreen) {
+      (v as any).msRequestFullscreen();
+    }
+
+    if (screen.orientation && (screen.orientation as any).lock) {
+      try {
+        await (screen.orientation as any).lock("landscape");
+      } catch {}
+    }
+  };
+
+  // Show controls again if user taps video while playing
+  const handleContainerClick = () => {
+    if (playing) {
+      setShowControls((prev) => !prev);
+    } else {
+      togglePlay();
+    }
   };
 
   return (
     <motion.div
       ref={containerRef}
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0.8, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
-      className="w-full border-t border-t-stone-400"
+      className="w-full rounded-3xl shadow-intense"
     >
       <div
-        className="group relative w-full overflow-hidden bg-black"
-        onClick={togglePlay}
+        className="group relative w-full overflow-hidden bg-transparent rounded-3xl"
+        onClick={handleContainerClick}
       >
         <video
           ref={videoRef}
@@ -154,11 +197,11 @@ function VideoTile({
           playsInline
           muted
           disablePictureInPicture
-          className="w-full h-auto object-cover select-none"
+          className="w-full h-auto object-contain select-none rounded-3xl"
         />
 
         {/* Overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent rounded-3xl" />
 
         {/* Title */}
         <div className="pointer-events-none absolute inset-x-4 bottom-4">
@@ -168,34 +211,37 @@ function VideoTile({
         </div>
 
         {/* Controls */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 gap-3">
-          <button
-            type="button"
-            aria-label={playing ? "Pause" : "Play"}
-            className="grid place-items-center rounded-full h-14 w-14 sm:h-16 sm:w-16 backdrop-blur-sm bg-black/40 border border-white/20 text-white"
-            onClick={(e) => {
-              e.stopPropagation();
-              togglePlay();
-            }}
-          >
-            {playing ? (
-              <Pause className="h-6 w-6" />
-            ) : (
-              <Play className="h-6 w-6 translate-x-[1px]" />
-            )}
-          </button>
-          <button
-            type="button"
-            aria-label="Fullscreen"
-            className="lg:grid hidden place-items-center rounded-full h-12 w-12 sm:h-14 sm:w-14 backdrop-blur-sm bg-black/40 border border-white/20 text-white"
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleFullscreen();
-            }}
-          >
-            <Maximize className="h-5 w-5" />
-          </button>
-        </div>
+        {showControls && (
+          <div className="absolute inset-0 flex items-center justify-center gap-3 transition-opacity duration-200">
+            <button
+              type="button"
+              aria-label={playing ? "Pause" : "Play"}
+              className="grid place-items-center rounded-full h-14 w-14 sm:h-16 sm:w-16 backdrop-blur-sm bg-black/40 border border-white/20 text-white"
+              onClick={(e) => {
+                e.stopPropagation();
+                togglePlay();
+              }}
+            >
+              {playing ? (
+                <Pause className="h-6 w-6" />
+              ) : (
+                <Play className="h-6 w-6 translate-x-[1px]" />
+              )}
+            </button>
+
+            <button
+              type="button"
+              aria-label="Fullscreen"
+              className="grid place-items-center rounded-full h-12 w-12 sm:h-14 sm:w-14 backdrop-blur-sm bg-black/40 border border-white/20 text-white"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFullscreen();
+              }}
+            >
+              <Maximize className="h-5 w-5" />
+            </button>
+          </div>
+        )}
       </div>
     </motion.div>
   );
@@ -214,7 +260,7 @@ export default function MotionGraphicsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-3xl alt-font italic sm:text-6xl text-stone-200 font-light mb-6"
+          className="text-xl alt-font italic sm:text-3xl text-stone-200 font-light mb-6"
         >
           Motion Graphics
         </motion.h2>
@@ -224,7 +270,7 @@ export default function MotionGraphicsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-300 text-sm sm:text-2xl leading-relaxed"
+          className="max-w-3xl text-stone-300 text-sm sm:text-lg leading-relaxed"
         >
           Our motion graphics turn complex ideas into captivating visuals. With
           dynamic design, fluid animation, and a keen eye for detail, we bring
@@ -248,8 +294,8 @@ export default function MotionGraphicsPage() {
       </section>
 
       {/* Section */}
-      <section className="bg-stone-50 px-0">
-        <div className="flex flex-col">
+      <section className="bg-white px-0">
+        <div className="flex flex-col p-4 gap-y-4 lg:gap-y-8 sm:p-12">
           {MOTION_GRAPHICS.map((item, i) => (
             <VideoTile
               key={item.src}

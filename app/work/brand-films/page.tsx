@@ -309,7 +309,7 @@ export default function BrandFilmsPage() {
 
       {/* Section */}
       <section className="bg-white px-0">
-        <div className="flex flex-col p-4 gap-y-4 lg:gap-y-8 sm:p-12">
+        <div className="columns-1 p-4 gap-y-4 lg:gap-y-8 sm:p-12 space-y-4">
           {" "}
           {BRAND_FILMS.map((item, i) => (
             <VideoTile
