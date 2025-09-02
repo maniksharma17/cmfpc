@@ -25,7 +25,7 @@ const About = () => {
   return (
     <section
       id="about"
-      className="relative min-h-[60vh] md:min-h-[80vh] sm:min-h-screen py-20 md:py-28 px-6 md:pl-24 overflow-hidden bg-stone-800 text-white flex items-center"
+      className="dark-grainy bg-repeat bg-center relative min-h-[60vh] md:min-h-[80vh] sm:min-h-screen py-20 md:py-28 px-6 md:pl-24 overflow-hidden bg-stone-800 text-white flex items-center"
     >
       {/* Foreground text */}
       <motion.div
@@ -39,7 +39,7 @@ const About = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: i * 0.1 }}
             viewport={{ once: true }}
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light leading-snug drop-shadow-[0_0_2px_rgba(255,255,255,0.4)]"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light leading-snug "
           >
             {text}
           </motion.p>

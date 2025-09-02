@@ -109,7 +109,7 @@ const Navigation = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -50, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed top-0 w-full text-white bg-stone-800 z-50"
+            className="fixed top-0 w-full text-white bg-stone-800 z-[99]"
           >
             <div className="flex justify-evenly sm:justify-center space-x-6 sm:space-x-12 h-12 items-center text-xs sm:text-sm">
               {NAV_ITEMS.map((item) => (

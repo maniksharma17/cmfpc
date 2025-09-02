@@ -77,7 +77,7 @@ export default function Portfolio() {
   const router = useRouter();
 
   return (
-    <section id="work" className="bg-white text-white px-4 sm:px-8 py-8 sm:py-16 space-y-4">
+    <section id="work" className="light-grainy bg-white text-white px-4 sm:px-8 py-8 sm:py-16 space-y-4">
       {portfolioCategories.map((category, index) => (
         <motion.div
           key={category.name}

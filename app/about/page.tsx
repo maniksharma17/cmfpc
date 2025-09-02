@@ -187,7 +187,7 @@ const About = () => {
   return (
     <section className="relative w-full">
       {/* Intro (Dark) */}
-      <div className="relative bg-stone-800 text-white min-h-screen flex items-center">
+      <div className="dark-grainy relative bg-stone-800 text-white min-h-screen flex items-center">
         <div className="max-w-7xl px-6 lg:px-24 text-left">
           {[
             "Where vision becomes memory,",
@@ -242,7 +242,7 @@ const About = () => {
       </div>
 
       {/* Mission + Vision (Unified Light) */}
-      <div className="bg-white text-black sm:min-h-screen flex items-center py-24">
+      <div className="light-grainy bg-white text-black sm:min-h-screen flex items-center py-24">
         <div className="max-w-7xl px-6 lg:px-24 space-y-2">
           {[
             <>
@@ -285,7 +285,7 @@ const About = () => {
       </div>
 
       {/* Approach (Dark) */}
-      <div className="bg-stone-800 text-stone-50 py-24 h-auto lg:min-h-[80vh]">
+      <div className="dark-grainy bg-stone-800 text-stone-50 py-24 h-auto lg:min-h-[80vh]">
       <div className="max-w-6xl px-6 lg:px-24 space-y-12">
         <motion.h2
           initial={{ opacity: 0, x: -20 }}
@@ -328,7 +328,7 @@ const About = () => {
     </div>
 
       {/* Categories (Light) */}
-      <div className="bg-stone-100 text-black py-24">
+      <div className="light-grainy bg-stone-100 text-black py-24">
       <div className="max-w-6xl px-6 lg:px-24">
         <h2 className="text-3xl md:text-5xl font-light mb-12 text-left">
           Our <span className="alt-font italic">Canvas</span>

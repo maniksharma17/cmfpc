@@ -45,7 +45,7 @@ function TestimonialCard({
   return (
     <div
       className="
-        p-5 sm:p-6 rounded-xl border border-stone-600 bg-stone-700
+        p-5 sm:p-6 rounded-xl border border-stone-600 bg-stone-700/40
         shadow-sm hover:shadow-md transition-all duration-300
         backdrop-blur-sm
       "
@@ -102,7 +102,7 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="bg-stone-800 text-stone-50 py-20 sm:px-10 px-6 md:px-16">
+    <section className="dark-grainy bg-stone-800 text-stone-50 py-20 sm:px-10 px-6 md:px-16">
       <div className="max-w-6xl mx-auto space-y-12">
         <motion.p
           initial={{ opacity: 0, y: 20 }}

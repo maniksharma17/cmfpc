@@ -31,7 +31,7 @@ export default function ClientLogos() {
   ];
 
   return (
-    <section className="bg-white w-full py-12 sm:py-24 text-center px-3">
+    <section className="light-grainy bg-white w-full py-12 sm:py-24 text-center px-3">
       {/* Heading */}
       <motion.p
         initial={{ opacity: 0, y: 20 }}

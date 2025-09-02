@@ -11,7 +11,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="pt-8 relative min-h-screen text-white flex items-center"
+      className="dark-grainy pt-8 relative min-h-screen text-white flex items-center"
     >
       {/* Overlay gradient for depth */}
       <div className="absolute inset-0 bg-gradient-to-t from-stone-800 via-stone-900 to-black pointer-events-none"></div>

@@ -190,7 +190,7 @@ function VideoTile({
           playsInline
           muted
           disablePictureInPicture
-          className="w-full h-auto object-contain select-none rounded-3xl"
+          className="z-50 w-full h-auto object-contain select-none rounded-3xl"
         />
 
         {/* Overlay */}
@@ -245,7 +245,7 @@ function VideoTile({
 // ------------------------------
 export default function AdFilmsPage() {
   return (
-    <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
+    <main className="dark-grainy bg-stone-800 text-stone-100 w-full min-h-screen">
       <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -281,7 +281,7 @@ export default function AdFilmsPage() {
       </section>
 
       {/* Section */}
-      <section className="bg-white py-10">
+      <section className="light-grainy bg-white py-10">
         <div className="columns-1 sm:columns-2 lg:columns-2 gap-4 px-4 sm:px-8 lg:px-12">
           {AD_FILMS.map((item, i) => (
             <div key={item.src} className="mb-4 break-inside-avoid transition">

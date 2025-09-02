@@ -169,10 +169,10 @@ function VideoTile({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
-      className="w-full rounded-3xl shadow-intense"
+      className="z-50 w-full rounded-3xl shadow-intense"
     >
       <div
-        className="group relative w-full overflow-hidden bg-transparent rounded-3xl"
+        className="group z-50 relative w-full overflow-hidden bg-transparent rounded-3xl"
         onClick={handleContainerClick}
       >
         <video
@@ -183,7 +183,7 @@ function VideoTile({
           playsInline
           muted
           disablePictureInPicture
-          className="w-full h-auto object-contain select-none rounded-3xl"
+          className="z-50 w-full h-auto object-contain select-none rounded-3xl"
         />
 
         {/* Overlay */}
@@ -238,7 +238,7 @@ function VideoTile({
 // ------------------------------
 export default function Documentaries() {
   return (
-    <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
+    <main className="dark-grainy bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
       <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
         <motion.h2
@@ -279,7 +279,7 @@ export default function Documentaries() {
       </section>
 
       {/* Section */}
-      <section className="bg-white px-0">
+      <section className="light-grainy bg-white px-0">
         <div className="flex flex-col p-4 gap-y-4 lg:gap-y-8 sm:p-12">
           {DOCUMENTARIES.map((item, i) => (
             <VideoTile

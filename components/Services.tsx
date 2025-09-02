@@ -63,7 +63,7 @@ const SERVICES = [
 
 export default function Services() {
   return (
-    <section className="bg-stone-800 text-white py-12 lg:py-24">
+    <section className="dark-grainy bg-stone-800 text-white py-12 lg:py-24">
       <div className="max-w-6xl px-6 lg:px-24 mx-auto">
         {/* Heading */}
         <motion.p

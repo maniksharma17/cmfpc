@@ -319,10 +319,10 @@ function VideoTile({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
-      className="break-inside-avoid mb-4"
+      className="break-inside-avoid mb-4 z-50"
     >
       <div
-        className="group relative w-full overflow-hidden rounded-2xl shadow-xl shadow-black/30 transition-transform duration-300 hover:scale-[1.01]"
+        className="group relative w-full overflow-hidden transition-transform duration-300 hover:scale-[1.01]"
         onClick={handleContainerClick}
       >
         <div className={`relative ${padClass}`}>
@@ -334,11 +334,11 @@ function VideoTile({
             playsInline
             muted
             disablePictureInPicture
-            className="absolute inset-0 w-full h-full object-cover select-none"
+            className="z-50 rounded-2xl absolute inset-0 w-full h-full object-cover select-none"
           />
 
           {/* Overlay */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+          <div className="rounded-2xl pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
 
           {/* Category (clickable) */}
           <div className="pointer-events-auto absolute top-3 left-3 z-20">
@@ -405,7 +405,7 @@ export default function Categories() {
   const MEDIA = mixMedia(REELS, VIDEOS);
 
   return (
-    <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
+    <main className="dark-grainy bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
       <section className="relative min-h-[60vh] lg:min-h-[60vh] max-w-7xl flex flex-col items-start justify-center sm:justify-end lg:pb-24 lg:px-24 px-6">
         <motion.h2
@@ -468,7 +468,7 @@ export default function Categories() {
       </section>
 
       {/* Section Header */}
-      <section className="bg-white lg:py-16 py-12 px-6 lg:px-24">
+      <section className="border-b border-b-gray-400 light-grainy bg-white lg:py-16 py-12 px-6 lg:px-24">
         <div className="flex items-baseline justify-between mb-4">
           <h3 className="text-lg sm:text-xl text-stone-600 font-normal">
             Featured

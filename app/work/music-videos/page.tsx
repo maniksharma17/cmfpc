@@ -188,10 +188,10 @@ function VideoTile({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
-      className="w-full rounded-3xl shadow-intense"
+      className="z-50 w-full rounded-3xl shadow-intense"
     >
       <div
-        className="group relative w-full overflow-hidden bg-transparent rounded-3xl"
+        className="z-50 group relative w-full overflow-hidden bg-transparent rounded-3xl"
         onClick={handleContainerClick}
       >
         <video
@@ -202,7 +202,7 @@ function VideoTile({
           playsInline
           muted
           disablePictureInPicture
-          className="w-full h-auto object-contain select-none rounded-3xl"
+          className="z-50 w-full h-auto object-contain select-none rounded-3xl"
         />
 
         {/* Overlay */}
@@ -257,7 +257,7 @@ function VideoTile({
 // ------------------------------
 export default function MusicVideosPage() {
   return (
-    <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
+    <main className="dark-grainy bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
       <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
         <motion.h2
@@ -299,7 +299,7 @@ export default function MusicVideosPage() {
       </section>
 
       {/* Section */}
-      <section className="bg-white py-10">
+      <section className="light-grainy bg-white py-10">
         <div className="columns-1 sm:columns-2 lg:columns-2 gap-4 px-4 sm:px-8 lg:px-12">
           {MUSIC_VIDEOS.map((item, i) => (
             <div key={item.src} className="mb-4 break-inside-avoid transition">

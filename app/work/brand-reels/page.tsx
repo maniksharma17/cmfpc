@@ -140,7 +140,7 @@ useEffect(() => {
   return (
     <motion.div
       ref={containerRef}
-      className="mb-6 break-inside-avoid relative group overflow-hidden rounded-2xl shadow-lg bg-black"
+      className="mb-6 z-50 break-inside-avoid relative group overflow-hidden rounded-2xl shadow-lg bg-black"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
@@ -149,7 +149,7 @@ useEffect(() => {
       {/* 🔹 Fullscreen wrapper */}
       <div
         ref={wrapperRef}
-        className={`relative w-full h-auto ${
+        className={`z-50 relative w-full h-auto ${
           isFullscreen
             ? "w-screen h-screen flex items-center justify-center bg-black"
             : ""
@@ -163,7 +163,7 @@ useEffect(() => {
           playsInline
           muted
           disablePictureInPicture
-          className={`w-full h-auto object-cover rounded-2xl ${
+          className={`z-50 w-full h-auto object-cover rounded-2xl ${
             isFullscreen ? "aspect-[9/16] max-h-screen mx-auto rounded-none" : ""
           }`}
         />
@@ -211,7 +211,7 @@ useEffect(() => {
 // ------------------------------
 export default function BrandReelsPage() {
   return (
-    <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
+    <main className="dark-grainy bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
       <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
         <motion.h2
@@ -252,7 +252,7 @@ export default function BrandReelsPage() {
       </section>
 
       {/* Masonry Reel Carousel */}
-      <section className="bg-stone-50 py-12">
+      <section className="light-grainy bg-stone-50 py-12">
         <div className="px-6 lg:px-24">
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
             {BRAND_REELS.map((src, i) => (

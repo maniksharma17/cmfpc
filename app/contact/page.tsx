@@ -11,7 +11,7 @@ import { SocialMedia } from "@/components/SocialMedia";
 
 const ContactPage = () => {
   return (
-    <main className="relative min-h-screen flex flex-col items-center bg-stone-800 w-full text-white">
+    <main className="dark-grainy relative min-h-screen flex flex-col items-center bg-stone-800 w-full text-white">
       {/* Content wrapper for intro + form */}
       <div className="w-full max-w-full px-6 lg:px-24 pt-12">
         {/* 2-column layout on lg+; stacked on mobile */}

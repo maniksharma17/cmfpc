@@ -53,7 +53,7 @@ export const SocialMedia = () => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
-      className="bg-stone-50 w-full lg:py-28 py-14 lg:px-24 px-6 text-stone-900"
+      className="bg-stone-50 light-grainy w-full lg:py-28 py-14 lg:px-24 px-6 text-stone-900"
     >
       {/* Heading */}
       <div className="mb-8 sm:mb-12">
@@ -92,7 +92,7 @@ export const SocialMedia = () => {
               // Use a CSS variable so we can reuse the brand color in Tailwind arbitrary values.
               style={{ ["--brand" as any]: s.color }}
               className="
-                group relative isolate overflow-hidden rounded-2xl
+                z-50 group relative isolate overflow-hidden rounded-2xl
                 bg-white border border-stone-200/80 shadow-sm
                 hover:shadow-xl transition-shadow duration-300
                 focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--brand)]/25
