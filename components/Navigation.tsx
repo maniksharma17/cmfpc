@@ -55,7 +55,7 @@ const Navigation = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -80, opacity: 0 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="fixed top-0 w-full z-50"
+            className="fixed top-0 w-full z-[99]"
           >
             <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-16 lg:pr-20 relative z-10">
               <div className="flex justify-between items-center h-20 sm:h-24">
@@ -138,7 +138,7 @@ const Navigation = () => {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
-            className="fixed bg-stone-800 inset-0 z-50 flex flex-col"
+            className="fixed bg-stone-800 inset-0 z-[99] flex flex-col"
           >
             {/* Close Button */}
             <div className="flex justify-end p-6">

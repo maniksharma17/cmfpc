@@ -322,7 +322,7 @@ function VideoTile({
       className="break-inside-avoid mb-4 z-50"
     >
       <div
-        className="group relative w-full overflow-hidden transition-transform duration-300 hover:scale-[1.01]"
+        className="group z-50 relative w-full overflow-hidden transition-transform duration-300 hover:scale-[1.01]"
         onClick={handleContainerClick}
       >
         <div className={`relative ${padClass}`}>
