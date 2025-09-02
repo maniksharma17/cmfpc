@@ -31,21 +31,21 @@ export default function ClientLogos() {
   ];
 
   return (
-    <section className="bg-white w-full py-12 sm:py-20 text-center px-3">
+    <section className="bg-white w-full py-12 sm:py-24 text-center px-3">
       {/* Heading */}
       <motion.p
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
         viewport={{ once: true }}
-        className="text-xl sm:text-2xl md:text-5xl font-normal mb-8 sm:mb-14"
+        className="text-3xl md:text-5xl text-center font-light mb-12"
       >
-        Trusted by <span className="alt-font italic">leading</span> brands
+        Trusted By <span className="alt-font italic">Leading</span> Brands
       </motion.p>
 
       {/* Logos Grid */}
       {/* MOBILE: Single grid with no slicing */}
-      <div className="flex sm:hidden flex-wrap justify-center gap-6">
+      <div className="grid grid-cols-2 items-center content-center sm:hidden flex-wrap justify-center gap-6">
         {CLIENT_LOGOS.map((logo, i) => (
           <motion.div
             key={i}
@@ -53,11 +53,7 @@ export default function ClientLogos() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeOut", delay: i * 0.05 }}
             viewport={{ once: true }}
-            className={`group flex items-center justify-center
-              ${logo.size === "big"
-                ? "w-24 h-14"
-                : "w-16 h-10"}
-            `}
+            className={`group flex items-center mx-auto justify-center w-24 h-14`}
           >
             <Image
               src={`/clients/${logo.src}`}

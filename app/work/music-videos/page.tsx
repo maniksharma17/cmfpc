@@ -26,7 +26,7 @@ const MUSIC_VIDEOS = [
     thumbnail:
       "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/The%20CenterPiece_1.png",
   },
-  
+
   {
     src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_3.mp4",
     thumbnail:
@@ -55,7 +55,6 @@ function titleFromSrc(src: string) {
 
 // Keep track of currently playing video globally
 let globalCurrent: HTMLVideoElement | null = null;
-
 
 function VideoTile({
   src,
@@ -260,13 +259,13 @@ export default function MusicVideosPage() {
   return (
     <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[80vh] flex flex-col items-start justify-center lg:px-24 px-6">
+      <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-xl alt-font italic sm:text-3xl text-stone-200 font-light mb-6"
+          className="text-2xl alt-font italic sm:text-4xl text-stone-200 font-light mb-6"
         >
           Music Videos
         </motion.h2>
@@ -276,7 +275,7 @@ export default function MusicVideosPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-300 text-sm sm:text-lg leading-relaxed"
+          className="max-w-3xl text-stone-300 text-md sm:text-xl leading-relaxed"
         >
           Our music videos fuse sound and visuals to create unforgettable
           experiences. From concept development to the final cut, we craft
@@ -300,13 +299,10 @@ export default function MusicVideosPage() {
       </section>
 
       {/* Section */}
-      <section className="bg-white">
-        <div className="columns-1 gap-2 p-4 sm:p-12 space-y-8">
+      <section className="bg-white py-10">
+        <div className="columns-1 sm:columns-2 lg:columns-2 gap-4 px-4 sm:px-8 lg:px-12">
           {MUSIC_VIDEOS.map((item, i) => (
-            <div
-              key={item.src}
-              className="break-inside-avoid rounded-lg"
-            >
+            <div key={item.src} className="mb-4 break-inside-avoid transition">
               <VideoTile src={item.src} index={i} poster={item.thumbnail} />
             </div>
           ))}

@@ -213,13 +213,13 @@ export default function BrandReelsPage() {
   return (
     <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative h-[50vh] sm:h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
+      <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-xl alt-font italic sm:text-3xl text-stone-200 font-light mb-6"
+          className="text-2xl alt-font italic sm:text-4xl text-stone-200 font-light mb-6"
         >
           Brand Reels
         </motion.h2>
@@ -229,7 +229,7 @@ export default function BrandReelsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-300 text-sm sm:text-lg leading-relaxed"
+          className="max-w-3xl text-stone-300 text-md sm:text-xl leading-relaxed"
         >
           Our brand reels are designed to grab attention fast and leave a
           lasting impact. Short, sharp, and visually compelling, they showcase

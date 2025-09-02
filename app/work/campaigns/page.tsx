@@ -271,13 +271,13 @@ export default function CampaignsPage() {
   return (
     <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[80vh] flex flex-col items-start justify-center lg:px-24 px-6">
+      <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-xl alt-font italic sm:text-3xl text-stone-200 font-light mb-6"
+          className="text-2xl alt-font italic sm:text-4xl text-stone-200 font-light mb-6"
         >
           Campaigns
         </motion.h2>
@@ -287,7 +287,7 @@ export default function CampaignsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-300 text-sm sm:text-lg leading-relaxed"
+          className="max-w-3xl text-stone-300 text-md sm:text-xl leading-relaxed"
         >
           Our campaigns are built to spark action and create impact. We blend
           strategy, creativity, and innovation to deliver ideas that resonate
@@ -310,15 +310,12 @@ export default function CampaignsPage() {
       </section>
 
       {/* Section */}
-      <section className="bg-white px-0">
-        <div className="flex flex-col p-4 gap-y-4 lg:gap-y-8 sm:p-12">
+      <section className="bg-white py-10">
+        <div className="columns-1 sm:columns-2 lg:columns-2 gap-4 px-4 sm:px-8 lg:px-12">
           {CAMPAIGNS.map((item, i) => (
-            <VideoTile
-              key={item.src}
-              src={item.src}
-              index={i}
-              poster={item.thumbnail}
-            />
+            <div key={item.src} className="mb-4 break-inside-avoid transition">
+              <VideoTile src={item.src} index={i} poster={item.thumbnail} />
+            </div>
           ))}
         </div>
       </section>

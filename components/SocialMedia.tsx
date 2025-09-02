@@ -75,7 +75,7 @@ export const SocialMedia = () => {
       <motion.div
         variants={list}
         className="
-          grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
+          grid grid-cols-2 lg:grid-cols-4
           gap-4 sm:gap-6
         "
       >
@@ -146,7 +146,7 @@ export const SocialMedia = () => {
                 <h3 className="text-2xl md:text-3xl font-light tracking-tight">
                   {s.name}
                 </h3>
-                <p className="mt-1 text-sm text-stone-500">
+                <p className="max-sm:hidden sm:mt-1 text-sm text-stone-500">
                   Follow us on {s.name}.
                 </p>
               </div>
@@ -154,7 +154,8 @@ export const SocialMedia = () => {
               {/* CTA chip */}
               <span
                 className="
-                  mt-5 inline-flex items-center gap-2 rounded-full
+                  max-sm:hidden
+                  sm:mt-5 inline-flex items-center gap-2 rounded-full
                   border px-3 py-1 text-sm
                   border-stone-200 text-stone-700 bg-stone-50
                   group-hover:border-[var(--brand)]/30 group-hover:bg-white

@@ -407,7 +407,7 @@ export default function Categories() {
   return (
     <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[70vh] lg:min-h-[60vh] max-w-7xl flex flex-col items-start justify-center sm:justify-end lg:pb-24 lg:px-24 px-6">
+      <section className="relative min-h-[60vh] lg:min-h-[60vh] max-w-7xl flex flex-col items-start justify-center sm:justify-end lg:pb-24 lg:px-24 px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

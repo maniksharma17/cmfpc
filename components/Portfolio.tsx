@@ -77,7 +77,7 @@ export default function Portfolio() {
   const router = useRouter();
 
   return (
-    <section id="work" className="bg-white text-white px-4 sm:px-8 py-8 sm:py-16 space-y-6">
+    <section id="work" className="bg-white text-white px-4 sm:px-8 py-8 sm:py-16 space-y-4">
       {portfolioCategories.map((category, index) => (
         <motion.div
           key={category.name}
@@ -88,7 +88,7 @@ export default function Portfolio() {
             delay: index * 0.05,
           }}
           viewport={{ once: true, amount: 0.3 }}
-          className="relative h-[45vh] lg:h-[90vh] w-full overflow-hidden cursor-pointer rounded-3xl shadow-2xl bg-black"
+          className="relative h-[25vh] lg:h-[90vh] w-full overflow-hidden cursor-pointer rounded-3xl shadow-intense bg-black"
         >
           {/* Image */}
           <CardImage src={category.image} alt={category.name} />

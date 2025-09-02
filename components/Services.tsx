@@ -63,15 +63,21 @@ const SERVICES = [
 
 export default function Services() {
   return (
-    <section className="bg-stone-800 text-white py-24">
+    <section className="bg-stone-800 text-white py-12 lg:py-24">
       <div className="max-w-6xl px-6 lg:px-24 mx-auto">
         {/* Heading */}
-        <h2 className="text-3xl md:text-5xl text-center font-light mb-12">
-          Our <span className="alt-font italic text-white">Services</span>
-        </h2>
+        <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
+        viewport={{ once: true }}
+        className="text-3xl md:text-5xl text-center font-light mb-12"
+      >
+        Our <span className="alt-font italic">Services</span>
+      </motion.p>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10">
           {SERVICES.map((service, i) => {
             const Icon = service.icon;
             return (
@@ -81,7 +87,7 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="flex items-start gap-4 p-4"
+                className="flex max-sm:flex-col items-start gap-4 lg:p-4"
               >
                 {/* Icon Box */}
                 <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-stone-700 flex items-center justify-center">
