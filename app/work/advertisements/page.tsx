@@ -59,7 +59,7 @@ function VideoTile({
   const [playing, setPlaying] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
-  // Lazy load video when in view
+  // Lazy load when in view
   const inView = useInView(containerRef, { margin: "300px 0px", amount: 0.15 });
   useEffect(() => {
     if (inView && !videoSrc) setVideoSrc(src);
@@ -75,25 +75,30 @@ function VideoTile({
     }
   }, [inView]);
 
+  // Pause all videos except one
+  const pauseOthers = (current: HTMLVideoElement) => {
+    document.querySelectorAll("video").forEach((vid) => {
+      if (vid !== current) {
+        vid.pause();
+        vid.currentTime = 0;
+      }
+    });
+  };
+
   // Toggle play/pause
   const togglePlay = async () => {
     const v = videoRef.current;
     if (!v) return;
 
     if (v.paused) {
-      // Stop any other playing video
-      if (globalCurrent && globalCurrent !== v) {
-        globalCurrent.pause();
-        globalCurrent.currentTime = 0; // reset other video
-      }
+      pauseOthers(v);
       v.muted = false;
       try {
         await v.play();
         setPlaying(true);
         globalCurrent = v;
-        setShowControls(false); // hide controls while playing
+        setShowControls(false);
       } catch {
-        // fallback if autoplay fails
         v.muted = true;
         try {
           await v.play();
@@ -114,6 +119,9 @@ function VideoTile({
   const toggleFullscreen = async () => {
     const v = videoRef.current;
     if (!v) return;
+
+    // Always pause others before fullscreen
+    pauseOthers(v);
 
     if (
       document.fullscreenElement ||
@@ -198,7 +206,6 @@ function VideoTile({
         {/* Controls */}
         {showControls && (
           <div className="absolute inset-0 flex items-center justify-center gap-3 transition-opacity duration-200">
-            {/* Play / Pause */}
             <button
               type="button"
               aria-label={playing ? "Pause" : "Play"}
@@ -215,7 +222,6 @@ function VideoTile({
               )}
             </button>
 
-            {/* Fullscreen */}
             <button
               type="button"
               aria-label="Fullscreen"
@@ -240,7 +246,6 @@ function VideoTile({
 export default function AdFilmsPage() {
   return (
     <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
-      {/* Hero */}
       <section className="relative h-[50vh] sm:h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -262,25 +267,19 @@ export default function AdFilmsPage() {
           Our advertisement films are more than just visuals — they are powerful
           narratives that bring brands to life. We blend creativity, strategy,
           and emotion to craft cinematic experiences that captivate audiences
-          and build lasting connections.{" "}
+          and build lasting connections.
         </motion.p>
 
-        {/* Animated Arrow */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 10 }}
-          transition={{
-            repeat: Infinity,
-            repeatType: "reverse",
-            duration: 1.2,
-          }}
+          transition={{ repeat: Infinity, repeatType: "reverse", duration: 1.2 }}
           className="absolute bottom-6 right-6 text-stone-400"
         >
           <ArrowDown className="w-8 h-8" />
         </motion.div>
       </section>
 
-      {/* Section */}
       <section className="bg-white px-0">
         <div className="flex flex-col p-4 gap-y-4 lg:gap-y-8 sm:p-12">
           {AD_FILMS.map((item, i) => (
