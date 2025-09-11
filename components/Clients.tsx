@@ -3,24 +3,34 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-const CLIENT_LOGOS = [
-  { src: "Bill_&_Melinda_Gates_Foundation_logo.svg.png", size: "big" },
-  { src: "Centrepiece (Logo).png", size: "big" },
-  { src: "Larsen & Toubro (L&T) Logo Vector.png", size: "big" },
-  { src: "Daco_4338596.png", size: "small" },
-  { src: "Discovery_Channel_-_Logo_2019.svg.png", size: "big" },
-  { src: "Haven Fragrances.png", size: "big" },
-  { src: "Add a heading (5) Ketan bhaiya copy.png", size: "big" },
-  { src: "s.png", size: "big", invert: true },
-  { src: "iics.webp", size: "small" },
-  { src: "Jims Logo.png", size: "small" },
-  { src: "Kohler_logo.svg.png", size: "small" },
-  { src: "Hero_MotoCorp_Logo.svg.png", size: "small" },
-  { src: "Saisha.png", size: "small" },
-  { src: "Tata_Power_Logo.svg.png", size: "small" },
-  { src: "Tata_Tea_Logo.svg.png", size: "small" },
-  { src: "WFH-new-logo.jpg", size: "small" },
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+const clientLogos = [
+  { file: "Bill_&_Melinda_Gates_Foundation_logo.svg.png", size: "big" },
+  { file: "Centrepiece (Logo).png", size: "big" },
+  { file: "Larsen & Toubro (L&T) Logo Vector.png", size: "big" },
+  { file: "Daco_4338596.png", size: "small" },
+  { file: "Discovery_Channel_-_Logo_2019.svg.png", size: "big" },
+  { file: "Haven Fragrances.png", size: "big" },
+  { file: "Add a heading (5) Ketan bhaiya copy.png", size: "big" },
+  { file: "s.png", size: "big", invert: true },
+  { file: "iics.webp", size: "small" },
+  { file: "Jims Logo.png", size: "small" },
+  { file: "Kohler_logo.svg.png", size: "small" },
+  { file: "Hero_MotoCorp_Logo.svg.png", size: "small" },
+  { file: "Saisha.png", size: "small" },
+  { file: "Tata_Power_Logo.svg.png", size: "small" },
+  { file: "Tata_Tea_Logo.svg.png", size: "small" },
+  { file: "WFH-new-logo.jpg", size: "small" },
 ];
+
+// Build CLIENT_LOGOS with BASE_URL prepended
+const CLIENT_LOGOS = clientLogos.map((logo) => ({
+  ...logo,
+  src: `${BASE_URL}/client-logos/${encodeURIComponent(logo.file)}`,
+}));
+
+
 
 export default function ClientLogos() {
   // Desktop rows → [5, 6, 5]
@@ -94,7 +104,7 @@ export default function ClientLogos() {
                 `}
               >
                 <Image
-                  src={`/clients/${logo.src}`}
+                  src={`${logo.src}`}
                   alt={`Client logo ${i}`}
                   width={200}
                   height={100}

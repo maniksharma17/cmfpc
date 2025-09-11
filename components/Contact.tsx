@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import Image from 'next/image';
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const Contact = () => {
   const router = useRouter();
-  
+
   return (
     <section
       id="contact"
@@ -26,19 +26,19 @@ const Contact = () => {
           className="flex flex-col justify-center space-y-8"
         >
           {/* Logo */}
-                          <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6 }}
-                          >
-                            <Image
-                              src="/cinemalt-logo.png"
-                              alt="Cinemalt Logo"
-                              width={120}
-                              height={40}
-                              className="h-10 w-auto sm:h-14"
-                            />
-                          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Image
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}/logo/cinemalt.png`}
+              alt="Cinemalt Logo"
+              width={120}
+              height={40}
+              className="h-10 w-auto sm:h-14"
+            />
+          </motion.div>
 
           {/* Heading */}
           <h2 className="font-cormorant text-2xl sm:text-5xl md:text-6xl text-white font-bold leading-tight">
@@ -63,8 +63,6 @@ const Contact = () => {
           </motion.p>
         </motion.div>
 
-        
-
         {/* Right Side - Contact Info & CTA */}
         <motion.div
           initial={{ opacity: 0, x: 10 }}
@@ -86,8 +84,6 @@ const Contact = () => {
               Available Mon – Fri, 9AM – 6PM
             </p>
           </div>
-
-          
 
           {/* Social Links */}
           <div>
@@ -118,8 +114,8 @@ const Contact = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
-            onClick={()=>{
-              router.push(`/contact`)
+            onClick={() => {
+              router.push(`/contact`);
             }}
             className="flex items-center gap-4 px-8 py-3 rounded-full
     bg-white/10 backdrop-blur-lg text-white text-lg font-medium
@@ -146,17 +142,17 @@ const Contact = () => {
         </motion.div>
 
         {/* Footer */}
-      <div className="sm:absolute sm:hidden bottom-0 w-full py-6 border-t border-white/10 text-center">
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 0.6 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          viewport={{ once: true }}
-          className="text-sm tracking-wide"
-        >
-          © 2024 CineMalt. All rights reserved.
-        </motion.p>
-      </div>
+        <div className="sm:absolute sm:hidden bottom-0 w-full py-6 border-t border-white/10 text-center">
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            viewport={{ once: true }}
+            className="text-sm tracking-wide"
+          >
+            © 2024 CineMalt. All rights reserved.
+          </motion.p>
+        </div>
       </div>
 
       {/* Footer */}
@@ -171,8 +167,6 @@ const Contact = () => {
           © 2024 CineMalt. All rights reserved.
         </motion.p>
       </div>
-
-      
     </section>
   );
 };

@@ -5,47 +5,49 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 const portfolioCategories = [
   {
     name: "Advertisements",
     description: "Compelling advertisements that last an impression.",
-    image: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Hero%20Splendor.png",
+    image: `${BASE_URL}/cover/Hero%20Splendor.png`,
     slug: "advertisements",
   },
   {
     name: "Brand Films",
     description: "Cinematic storytelling that defines a brand’s identity.",
-    image: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Kohler.png",
+    image: `${BASE_URL}/cover/Kohler.png`,
     slug: "brand-films",
   },
   {
     name: "Brand Reels",
     description: "Short, snappy, and visually magnetic.",
-    image: "https://images.unsplash.com/photo-1532800783378-1bed60adaf58?q=80&w=2070&auto=format&fit=crop",
+    image: `${BASE_URL}/cover/Brand%20Reel%20Cover%20Page.png`,
     slug: "brand-reels",
   },
   {
     name: "Campaigns",
-    description: "Strategic visual stories that resonate deeply.",
-    image: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Silk%20X%20News18.png",
+    description: "Strategic visual stories that resonate deeply.", 
+    image: `${BASE_URL}/cover/Silk%20X%20News18.png`,
     slug: "campaigns",
   },
   {
     name: "Documentaries",
     description: "Real stories told with raw authenticity.",
-    image: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Bojh.png",
+    image: `${BASE_URL}/cover/Bojh.png`,
     slug: "documentaries",
   },
   {
     name: "Motion Graphics",
     description: "Dynamic animations that make ideas come alive.",
-    image: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Map%20Animation.png",
+    image: `${BASE_URL}/cover/Map%20Animation.png`,
     slug: "motion-graphics",
   },
   {
     name: "Music Videos",
-    description: "Visual experiences that amplify sound and emotion.",
-    image: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/The%20CenterPiece_2.png",
+    description: "Visual experiences that amplify sound and emotion.", 
+    image: `${BASE_URL}/cover/The%20CenterPiece_2.png`,
     slug: "music-videos",
   },
 ];

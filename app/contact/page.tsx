@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import InputField from "@/components/ThemedInput";
 import { ArrowRight } from "lucide-react";
 import FilmTicker from "@/components/FilmTicker";
@@ -8,12 +8,11 @@ import Contact from "@/components/Contact";
 import { motion, useReducedMotion, Variants } from "framer-motion";
 import { SocialMedia } from "@/components/SocialMedia";
 
-
 const ContactPage = () => {
   return (
-    <main className="dark-grainy relative min-h-screen flex flex-col items-center bg-stone-800 w-full text-white">
+    <main className="relative min-h-screen flex flex-col items-center bg-stone-800 w-full text-white">
       {/* Content wrapper for intro + form */}
-      <div className="w-full max-w-full px-6 lg:px-24 pt-12">
+      <div className="dark-grainy w-full max-w-full px-6 lg:px-24 pt-12">
         {/* 2-column layout on lg+; stacked on mobile */}
         <div className="flex flex-col lg:flex-row gap-12 lg:py-32 py-16">
           <ContactIntro />
@@ -24,7 +23,7 @@ const ContactPage = () => {
       </div>
 
       {/* Full-width Social */}
-      <div className="w-full light-grainy">
+      <div className="w-full">
         <SocialMedia />
       </div>
 
@@ -50,8 +49,8 @@ const ContactIntro = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.7,       // shorter = snappier
-        ease: "easeOut",     // mobile-friendly easing
+        duration: 0.7, // shorter = snappier
+        ease: "easeOut", // mobile-friendly easing
       },
     },
   };
@@ -99,8 +98,35 @@ const FormComponent = () => {
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: 1.4, ease: [0.25, 0.1, 0.25, 1] }, // smoother ease
+      transition: { duration: 1.4, ease: [0.25, 0.1, 0.25, 1] },
     },
+  };
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const body = new URLSearchParams();
+    formData.forEach((value, key) => {
+      body.append(key, value.toString());
+    });
+
+    setMessage("Message sent successfully!");
+
+    try {
+      await fetch(
+        "https://script.google.com/macros/s/AKfycbwbiosLYB2Bp9Szmx98iJKoR8e0aqpgqk6h5zTL0pYYm_WAxsHn9xcVgYp1yrhDv9kRCQ/exec",
+        {
+          method: "POST",
+          body,
+        }
+      );
+    } catch (err) {}
+    
+
+    form.reset();
   };
 
   return (
@@ -112,13 +138,14 @@ const FormComponent = () => {
       className="flex-1"
     >
       <motion.form
+        onSubmit={handleSubmit}
         variants={fadeUp}
         className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 space-y-5"
       >
         <InputField label="Name" name="name" placeholder="Enter your name" />
         <InputField
           label="Contact"
-          name="contact"
+          name="phone"
           placeholder="Enter your contact number"
         />
         <InputField
@@ -133,6 +160,8 @@ const FormComponent = () => {
           placeholder="Write your message"
           textarea
         />
+
+        <p className="font-bold text-white text-left my-2">{message}</p>
 
         <div className="pt-4 flex justify-end">
           <button

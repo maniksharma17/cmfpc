@@ -10,23 +10,27 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 // Data
 // ------------------------------
 
-const MOTION_GRAPHICS = [
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+const motionGraphicsFiles = [
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/motion-graphics/Doordarshan%20Sundarbans.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Doordarshan.png",
+    file: "Doordarshan Sundarbans.mp4",
+    thumbnail: "Doordarshan.png",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/motion-graphics/Map%20Animation.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Map%20Animation.png",
+    file: "Map Animation.mp4",
+    thumbnail: "Map Animation.png",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/motion-graphics/History%20Hunter.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/History%20Hunter.png",
+    file: "History Hunter.mp4",
+    thumbnail: "History Hunter.png",
   },
 ];
+
+const MOTION_GRAPHICS = motionGraphicsFiles.map(({ file, thumbnail }) => ({
+  src: `${BASE_URL}/cinemalt-content/motion-graphics/${encodeURIComponent(file)}`,
+  thumbnail: `${BASE_URL}/cover/${encodeURIComponent(thumbnail)}`,
+}));
 
 // ------------------------------
 // Utils
@@ -205,7 +209,7 @@ function VideoTile({
 
         {/* Title */}
         <div className="pointer-events-none absolute inset-x-4 bottom-4">
-          <h3 className="text-lg sm:text-xl font-medium leading-tight drop-shadow">
+          <h3 className="text-lg sm:text-xl font-light leading-tight drop-shadow">
             {titleFromSrc(src)}
           </h3>
         </div>
@@ -252,15 +256,15 @@ function VideoTile({
 // ------------------------------
 export default function MotionGraphicsPage() {
   return (
-    <main className="dark-grainy bg-stone-800 text-stone-100 w-full min-h-screen">
+    <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
+      <section className="dark-grainy relative min-h-[60vh] lg:min-h-[60vh] flex flex-col items-start justify-end lg:px-24 px-6 lg:pb-24 pb-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-2xl alt-font italic sm:text-4xl text-stone-200 font-light mb-6"
+          className="text-3xl sm:text-5xl text-white font-light tracking-tight alt-font italic mb-6"
         >
           Motion Graphics
         </motion.h2>
@@ -270,7 +274,7 @@ export default function MotionGraphicsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-300 text-md sm:text-xl leading-relaxed"
+          className="max-w-2xl text-stone-300 font-light text-base sm:text-lg leading-relaxed"
         >
           Our motion graphics turn complex ideas into captivating visuals. With
           dynamic design, fluid animation, and a keen eye for detail, we bring
@@ -301,10 +305,8 @@ export default function MotionGraphicsPage() {
               <VideoTile src={item.src} index={i} poster={item.thumbnail} />
             </div>
           ))}
+          
         </div>
-      </section>
-      {/* Section */}
-      <section className="light-grainy bg-white py-4">
         <div className="columns-1 px-4 sm:px-8 lg:px-12">
           {MOTION_GRAPHICS.slice(-1).map((item, i) => (
             <div key={item.src} className="mb-4 break-inside-avoid transition">
@@ -313,6 +315,7 @@ export default function MotionGraphicsPage() {
           ))}
         </div>
       </section>
+      
 
 
       <FilmTicker />

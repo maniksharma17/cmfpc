@@ -242,7 +242,7 @@ const About = () => {
       </div>
 
       {/* Mission + Vision (Unified Light) */}
-      <div className="light-grainy bg-white text-black sm:min-h-screen flex items-center py-24">
+      <div className="light-grainy text-black sm:min-h-screen flex items-center py-24">
         <div className="max-w-7xl px-6 lg:px-24 space-y-2">
           {[
             <>

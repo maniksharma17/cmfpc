@@ -9,24 +9,30 @@ import { Pause, Play, ArrowDown } from "lucide-react";
 // ------------------------------
 // Data
 // ------------------------------
-const BRAND_REELS = [
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/CIENNA.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/Diplomind.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/House%20Of%20Weaving_1.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/House%20Of%20Weaving_2.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/House%20Of%20Weaving_3.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/House%20Of%20Weaving_5.mp4",
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/House%20Of%20Weaving_4.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/House%20Of%20Weaving_7.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/Smart%20City_1.mp4",
-    "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/House%20Of%20Weaving_6.mp4",
-
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/Smart%20City_2.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/Smart%20City_3.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/Swiggy%20Diwali%20Campaign.mp4",
-  "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/Swiggy%20Taste%20Test.mp4",
+const reelFiles = [
+  "Cienna.mp4",
+  "Diplomind.mp4",
+  "House Of Weaving 1.mp4",
+  "House Of Weaving 2.mp4",
+  "House Of Weaving 3.mp4",
+  "House Of Weaving 5.mp4",
+  "House Of Weaving 4.mp4",
+  "House Of Weaving 7.mp4",
+  "Smart City 1.mp4",
+  "House Of Weaving 6.mp4",
+  "Smart City 2.mp4",
+  "Smart City 3.mp4",
+  "Swiggy Diwali Campaign.mp4",
+  "Swiggy Taste Test.mp4",
 ];
+
+const BRAND_REELS = reelFiles.map(
+  (file) => `${BASE_URL}/cinemalt-content/brand-reels/${encodeURIComponent(file)}`
+);
+
+
 
 // ------------------------------
 // Utils
@@ -60,36 +66,35 @@ function VideoTile({ src, index }: { src: string; index: number }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Extract first frame as poster
-useEffect(() => {
-  const v = videoRef.current;
-  if (!v) return;
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
 
-  const handleMetadata = () => {
-    v.currentTime = 0.5; // small offset avoids blank black frame
-  };
+    const handleMetadata = () => {
+      v.currentTime = 0.5; // small offset avoids blank black frame
+    };
 
-  const handleSeeked = () => {
-    try {
-      const canvas = document.createElement("canvas");
-      canvas.width = v.videoWidth;
-      canvas.height = v.videoHeight;
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
-        setPoster(canvas.toDataURL("image/jpeg", 0.7));
-      }
-    } catch {}
-  };
+    const handleSeeked = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = v.videoWidth;
+        canvas.height = v.videoHeight;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
+          setPoster(canvas.toDataURL("image/jpeg", 0.7));
+        }
+      } catch {}
+    };
 
-  v.addEventListener("loadedmetadata", handleMetadata, { once: true });
-  v.addEventListener("seeked", handleSeeked, { once: true });
+    v.addEventListener("loadedmetadata", handleMetadata, { once: true });
+    v.addEventListener("seeked", handleSeeked, { once: true });
 
-  return () => {
-    v.removeEventListener("loadedmetadata", handleMetadata);
-    v.removeEventListener("seeked", handleSeeked);
-  };
-}, [videoSrc]);
-
+    return () => {
+      v.removeEventListener("loadedmetadata", handleMetadata);
+      v.removeEventListener("seeked", handleSeeked);
+    };
+  }, [videoSrc]);
 
   useEffect(() => {
     if (inView && !videoSrc) setVideoSrc(src);
@@ -99,7 +104,8 @@ useEffect(() => {
     };
 
     document.addEventListener("fullscreenchange", handleFsChange);
-    return () => document.removeEventListener("fullscreenchange", handleFsChange);
+    return () =>
+      document.removeEventListener("fullscreenchange", handleFsChange);
   }, [inView, videoSrc, src]);
 
   const togglePlay = async () => {
@@ -164,7 +170,9 @@ useEffect(() => {
           muted
           disablePictureInPicture
           className={`z-50 w-full h-auto object-cover rounded-2xl ${
-            isFullscreen ? "aspect-[9/16] max-h-screen mx-auto rounded-none" : ""
+            isFullscreen
+              ? "aspect-[9/16] max-h-screen mx-auto rounded-none"
+              : ""
           }`}
         />
       </div>
@@ -180,12 +188,14 @@ useEffect(() => {
           <span className="bg-white text-gray-600 text-xs font-medium shadow-md px-2 py-1 rounded-full">
             Reel
           </span>
-          <h3 className="text-lg sm:text-xl font-medium drop-shadow">{titleFromSrc(src)}</h3>
+          <h3 className="text-lg sm:text-xl font-medium drop-shadow">
+            {titleFromSrc(src)}
+          </h3>
         </div>
       )}
 
       {/* Controls */}
-      <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div className="z-[999] absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         {/* Play/Pause */}
         <button
           type="button"
@@ -196,30 +206,31 @@ useEffect(() => {
             togglePlay();
           }}
         >
-          {playing ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6 translate-x-[1px]" />}
+          {playing ? (
+            <Pause className="h-6 w-6" />
+          ) : (
+            <Play className="h-6 w-6 translate-x-[1px]" />
+          )}
         </button>
-
-        
       </div>
     </motion.div>
   );
 }
-
 
 // ------------------------------
 // Main Page
 // ------------------------------
 export default function BrandReelsPage() {
   return (
-    <main className="dark-grainy bg-stone-800 text-stone-100 w-full min-h-screen">
+    <main className="bg-stone-900 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
+      <section className="dark-grainy relative min-h-[60vh] lg:min-h-[60vh] flex flex-col items-start justify-end lg:px-24 px-6 lg:pb-24 pb-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-2xl alt-font italic sm:text-4xl text-stone-200 font-light mb-6"
+          className="text-3xl sm:text-5xl text-white font-light tracking-tight alt-font italic mb-6"
         >
           Brand Reels
         </motion.h2>
@@ -229,31 +240,34 @@ export default function BrandReelsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-300 text-md sm:text-xl leading-relaxed"
+          className="max-w-2xl text-stone-300 font-light text-base sm:text-lg leading-relaxed"
         >
-          Our brand reels are designed to grab attention fast and leave a
-          lasting impact. Short, sharp, and visually compelling, they showcase
-          your brand’s personality and message in a format built for maximum
-          reach across social platforms.
+          Short, sharp, and visually compelling — our brand reels grab attention
+          fast and showcase your identity with cinematic flair. Designed for
+          social reach, built to leave a lasting impression.
         </motion.p>
 
+        {/* Scroll Indicator */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 10 }}
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 6 }}
           transition={{
             repeat: Infinity,
             repeatType: "reverse",
-            duration: 1.2,
+            duration: 1.4,
           }}
-          className="absolute bottom-6 right-6 text-stone-400"
+          className="absolute bottom-6 right-6 text-stone-500"
         >
-          <ArrowDown className="w-8 h-8" />
+          <ArrowDown className="w-7 h-7" />
         </motion.div>
       </section>
 
-      {/* Masonry Reel Carousel */}
-      <section className="light-grainy bg-stone-50 py-12">
+      {/* Reel Gallery */}
+      <section className="light-grainy bg-stone-100 py-16">
         <div className="px-6 lg:px-24">
+          <h3 className="text-xl font-medium text-stone-700 mb-8">
+            Featured Reels
+          </h3>
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
             {BRAND_REELS.map((src, i) => (
               <VideoTile key={src} src={src} index={i} />

@@ -10,29 +10,27 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 // Data
 // ------------------------------
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 const MUSIC_VIDEOS = [
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/Dilli%20Ki%20Sardiyaan.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Dilli%20Ki%20Sardiyaan.png",
+    src: `${BASE_URL}/cinemalt-content/music-videos/Dilli%20Ki%20Sardiyaan.mp4`,
+    thumbnail: `${BASE_URL}/cover/dilli%20Ki%20Sardiyaan.png`,
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_2.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/The%20CenterPiece_2.png",
+    src: `${BASE_URL}/cinemalt-content/music-videos/The%20Center%20Piece_2.mp4`,
+    thumbnail: `${BASE_URL}/cover/The%20CenterPiece_2.png`,
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_1.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/The%20CenterPiece_1.png",
+    src: `${BASE_URL}/cinemalt-content/music-videos/The%20Center%20Piece_1.mp4`,
+    thumbnail: `${BASE_URL}/cover/The%20CenterPiece_1.png`,
   },
-
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_3.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/The%20CenterPiece_3.png",
+    src: `${BASE_URL}/cinemalt-content/music-videos/The%20Center%20Piece_3.mp4`,
+    thumbnail: `${BASE_URL}/cover/The%20CenterPiece_3.png`,
   },
 ];
+
 
 // ------------------------------
 // Utils
@@ -210,7 +208,7 @@ function VideoTile({
 
         {/* Title */}
         <div className="pointer-events-none absolute inset-x-4 bottom-4">
-          <h3 className="text-lg sm:text-xl font-medium leading-tight drop-shadow">
+          <h3 className="text-lg sm:text-xl font-light leading-tight drop-shadow">
             {titleFromSrc(src)}
           </h3>
         </div>
@@ -257,15 +255,15 @@ function VideoTile({
 // ------------------------------
 export default function MusicVideosPage() {
   return (
-    <main className="dark-grainy bg-stone-800 text-stone-100 w-full min-h-screen">
+    <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
+      <section className="dark-grainy relative min-h-[60vh] lg:min-h-[60vh] flex flex-col items-start justify-end lg:px-24 px-6 lg:pb-24 pb-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-2xl alt-font italic sm:text-4xl text-stone-200 font-light mb-6"
+          className="text-3xl sm:text-5xl text-white font-light tracking-tight alt-font italic mb-6"
         >
           Music Videos
         </motion.h2>
@@ -275,7 +273,7 @@ export default function MusicVideosPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-300 text-md sm:text-xl leading-relaxed"
+          className="max-w-2xl text-stone-300 font-light text-base sm:text-lg leading-relaxed"
         >
           Our music videos fuse sound and visuals to create unforgettable
           experiences. From concept development to the final cut, we craft
@@ -292,7 +290,7 @@ export default function MusicVideosPage() {
             repeatType: "reverse",
             duration: 1.2,
           }}
-          className="absolute bottom-6 right-6 text-stone-400"
+          className="absolute bottom-8 right-8 text-stone-500"
         >
           <ArrowDown className="w-8 h-8" />
         </motion.div>

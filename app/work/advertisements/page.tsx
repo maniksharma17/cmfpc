@@ -9,16 +9,16 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 // ------------------------------
 // Data
 // ------------------------------
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 const AD_FILMS = [
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/ad-films/Hero%20Splendor.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Hero%20Splendor.png",
+    src: `${BASE_URL}/cinemalt-content/ad-films/Hero%20Splendor.mp4`,
+    thumbnail: `${BASE_URL}/cover/Hero%20Splendor.png`,
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/ad-films/Tata%20Tea%20Agni.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Tata%20Tea%20Agni.png",
+    src: `${BASE_URL}/cinemalt-content/ad-films/Tata%20Tea%20Agni.mp4`,
+    thumbnail: `${BASE_URL}/cover/Tata%20Tea%20Agni.png`,
   },
 ];
 
@@ -190,7 +190,7 @@ function VideoTile({
           playsInline
           muted
           disablePictureInPicture
-          className="z-50 w-full h-auto object-contain select-none rounded-3xl"
+          className="z-[999] w-full h-auto object-contain select-none rounded-3xl"
         />
 
         {/* Overlay */}
@@ -198,7 +198,7 @@ function VideoTile({
 
         {/* Title */}
         <div className="pointer-events-none absolute inset-x-4 bottom-4">
-          <h3 className="text-lg sm:text-xl font-medium leading-tight drop-shadow">
+          <h3 className="text-lg sm:text-xl font-light leading-tight drop-shadow">
             {titleFromSrc(src)}
           </h3>
         </div>
@@ -245,38 +245,44 @@ function VideoTile({
 // ------------------------------
 export default function AdFilmsPage() {
   return (
-    <main className="dark-grainy bg-stone-800 text-stone-100 w-full min-h-screen">
-      <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
+    <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
+      <section className="dark-grainy relative min-h-[60vh] lg:min-h-[60vh] flex flex-col items-start justify-end lg:px-24 px-6 lg:pb-24 pb-16">
+        {/* Heading */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-2xl alt-font italic sm:text-4xl text-white font-light mb-6"
+          className="text-3xl sm:text-5xl text-white font-light tracking-tight alt-font italic mb-6"
         >
           Advertisement Films
         </motion.h2>
 
+        {/* Subtext */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-200 text-md sm:text-xl leading-relaxed"
+          className="max-w-2xl text-stone-300 font-light text-base sm:text-lg leading-relaxed"
         >
-          Our advertisement films are more than just visuals — they are powerful
-          narratives that bring brands to life. We blend creativity, strategy,
-          and emotion to craft cinematic experiences that captivate audiences
-          and build lasting connections.
+          More than just visuals — our films are narratives that blend{" "}
+          creativity, strategy, and emotion to craft cinematic experiences that
+          captivate audiences and build lasting connections.
         </motion.p>
 
+        {/* Floating Arrow */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 10 }}
-          transition={{ repeat: Infinity, repeatType: "reverse", duration: 1.2 }}
-          className="absolute bottom-6 right-6 text-stone-400"
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 6 }}
+          transition={{
+            repeat: Infinity,
+            repeatType: "reverse",
+            duration: 1.4,
+          }}
+          className="absolute bottom-8 right-8 text-stone-500"
         >
-          <ArrowDown className="w-8 h-8" />
+          <ArrowDown className="w-7 h-7" />
         </motion.div>
       </section>
 

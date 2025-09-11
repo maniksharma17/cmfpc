@@ -5,8 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const NAV_ITEMS = ["Home", "About", "Work", "Contact"];
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Navigation = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -44,6 +46,7 @@ const Navigation = () => {
     window.addEventListener("scroll", controlNavbar);
     return () => window.removeEventListener("scroll", controlNavbar);
   }, [lastScrollY]);
+  const router = useRouter();
 
   return (
     <>
@@ -61,7 +64,7 @@ const Navigation = () => {
               <div className="flex justify-between items-center h-20 sm:h-24">
                 {/* Logo */}
                 <Image
-                  src="/cinemalt-logo.png"
+                  src={`${BASE_URL}/logo/cinemalt.png`}
                   alt="Cinemalt Logo"
                   width={120}
                   height={40}
@@ -72,17 +75,14 @@ const Navigation = () => {
                 {/* Desktop Menu */}
                 <div className="hidden md:flex space-x-10 lg:space-x-12">
                   {NAV_ITEMS.map((item) => (
-                    <a
+                    <p
                       key={item}
-                      href={`${
-                        item == "Home"
-                        ? "/"
-                        : item.toLowerCase().replace(/\s+/g, "-")
-                      }`}
+                      onClick={()=>{
+                        const url = item === 'Home' ? '/' : '/'+item.toLowerCase()
+                        router.replace(url)
+                      }}
                       className="text-base lg:text-lg tracking-wide text-white hover:text-gray-300 transition-colors"
-                    >
-                      {item}
-                    </a>
+                    >{item}</p>
                   ))}
                 </div>
 

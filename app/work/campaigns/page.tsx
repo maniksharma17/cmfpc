@@ -10,41 +10,24 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 // Data
 // ------------------------------
 
-const CAMPAIGNS = [
-  {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Coke%20Studio%20X%20News18.mp4",
-    thumbnail: "",
-  },
-  {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Colgate%20X%20News18.mp4",
-    thumbnail: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Colgate%20X%20News18.png",
-  },
-  {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Delhi%20Green%20Campaign.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Delhi%20Green.png",
-  },
-  {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Giva%20X%20News18.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Giva%20X%20News18.png",
-  },
-  {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Maggi%20X%20News18.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/MaggiXNews18.png",
-  },
-  {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Silk%20X%20News18.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Silk%20X%20News18.png",
-  },
-  {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Tira%20X%20News18.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Tira%20X%20News18.png",
-  },
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+const campaignFiles = [
+  { file: "Colgate X News18.mp4", thumbnail: "Colgate X News18.png" },
+  { file: "Delhi Green Campaign.mp4", thumbnail: "Delhi Green.png" },
+  { file: "Giva X News18.mp4", thumbnail: "Giva X News18.png" },
+  { file: "Maggi X News18.mp4", thumbnail: "MaggiXNews18.png" },
+  { file: "Silk X News18.mp4", thumbnail: "Silk X News18.png" },
+  { file: "Coke Studio X News18.mp4", thumbnail: "" },
+  { file: "Tira X News18.mp4", thumbnail: "Tira X News18.png" },
 ];
+
+const CAMPAIGNS = campaignFiles.map(({ file, thumbnail }) => ({
+  src: `${BASE_URL}/cinemalt-content/campaigns/${encodeURIComponent(file)}`,
+  thumbnail: thumbnail
+    ? `${BASE_URL}/cover/${encodeURIComponent(thumbnail)}`
+    : "",
+}));
 
 // ------------------------------
 // Utils
@@ -218,11 +201,11 @@ function VideoTile({
         />
 
         {/* Overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent rounded-3xl" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent rounded-3xl" />
 
         {/* Title */}
         <div className="pointer-events-none absolute inset-x-4 bottom-4">
-          <h3 className="text-lg sm:text-xl font-medium leading-tight drop-shadow">
+          <h3 className="text-lg sm:text-xl font-light leading-tight drop-shadow">
             {titleFromSrc(src)}
           </h3>
         </div>
@@ -269,15 +252,15 @@ function VideoTile({
 // ------------------------------
 export default function CampaignsPage() {
   return (
-    <main className="dark-grainy bg-stone-800 text-stone-100 w-full min-h-screen">
+    <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
+      <section className="dark-grainy relative min-h-[60vh] lg:min-h-[60vh] flex flex-col items-start justify-end lg:px-24 px-6 lg:pb-24 pb-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-2xl alt-font italic sm:text-4xl text-stone-200 font-light mb-6"
+          className="text-3xl sm:text-5xl text-white font-light tracking-tight alt-font italic mb-6"
         >
           Campaigns
         </motion.h2>
@@ -287,7 +270,7 @@ export default function CampaignsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-300 text-md sm:text-xl leading-relaxed"
+          className="max-w-2xl text-stone-300 font-light text-base sm:text-lg leading-relaxed"
         >
           Our campaigns are built to spark action and create impact. We blend
           strategy, creativity, and innovation to deliver ideas that resonate

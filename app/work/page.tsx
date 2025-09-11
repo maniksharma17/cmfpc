@@ -21,91 +21,125 @@ const CATEGORIES = [
   "Music Videos",
 ] as const;
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+// Utility: derive a nice display name from file name
+const deriveName = (file: any) => {
+  const base = file
+    .split("/")
+    .pop()
+    .replace(/\.[^/.]+$/, "");
+  return base
+    .replace(/[_-]/g, " ")
+    .replace(/\b\w/g, (cha: any) => cha.toUpperCase());
+};
+
 const REELS = [
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/Diplomind.mp4",
+    file: "brand-reels/Diplomind.mp4",
     slug: "brand-reels",
     category: "Brand Reel",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/House%20Of%20Weaving_7.mp4",
+    file: "brand-reels/House Of Weaving 7.mp4",
     slug: "brand-reels",
     category: "Brand Reel",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/Swiggy%20Diwali%20Campaign.mp4",
+    file: "brand-reels/Swiggy Diwali Campaign.mp4",
     slug: "brand-reels",
     category: "Brand Reel",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-reels/CIENNA.mp4",
+    file: "brand-reels/Cienna.mp4",
     slug: "brand-reels",
     category: "Brand Reel",
   },
-];
+].map((reel) => ({
+  ...reel,
+  name: deriveName(reel.file),
+  src: `${BASE_URL}/cinemalt-content/${encodeURIComponent(reel.file)}`,
+}));
 
 const VIDEOS = [
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/ad-films/Tata%20Tea%20Agni.mp4",
+    file: "ad-films/Tata Tea Agni.mp4",
+    thumbnailFile: "cover/Tata Tea Agni.png",
     category: "Advertisement",
     slug: "ad-films",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Bill%20%26%20Milinda%20Gates%20Foundation.mp4",
+    file: "brand-films/Bill & Milinda Gates Foundation.mp4",
+    thumbnailFile: "cover/Bill & Milinda Gates.png",
     slug: "brand-films",
     category: "Brand Film",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Kohler%20India.mp4",
+    file: "brand-films/Kohler India.mp4",
+    thumbnailFile: "cover/Kohler.png",
     slug: "brand-films",
     category: "Brand Film",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/World%20Hemophilia%20Foundation.mp4",
+    file: "brand-films/WFH - World Hemophilia Foundation.mp4",
+    thumbnailFile: "cover/World Hemophilia Federation.png",
     category: "Brand Film",
     slug: "brand-films",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Delhi%20Green%20Campaign.mp4",
+    file: "campaigns/Delhi Green Campaign.mp4",
+    thumbnailFile: "cover/Delhi Green.png",
     category: "Campaign",
     slug: "campaigns",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/Dilli%20Ki%20Sardiyaan.mp4",
+    file: "music-videos/Dilli Ki Sardiyaan.mp4",
+    thumbnailFile: "cover/Dilli Ki Sardiyaan.png",
     slug: "music-videos",
     category: "Music Video",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/motion-graphics/History%20Hunter.mp4",
+    file: "motion-graphics/History Hunter.mp4",
+    thumbnailFile: "cover/History Hunter.png",
     slug: "motion-graphics",
     category: "Motion Graphic",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Maggi%20X%20News18.mp4",
+    file: "campaigns/Maggi X News18.mp4",
+    thumbnailFile: "cover/MaggiXNews18.png",
     category: "Campaign",
     slug: "campaigns",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Colgate%20X%20News18.mp4",
+    file: "campaigns/Colgate X News18.mp4",
+    thumbnailFile: "cover/Colgate X News18.png",
     category: "Campaign",
     slug: "campaigns",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/ad-films/Hero%20Splendor.mp4",
+    file: "ad-films/Hero Splendor.mp4",
+    thumbnailFile: "cover/Hero Splendor.png",
     category: "Advertisement",
     slug: "advertisements",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/music-videos/The%20Center%20Piece_1.mp4",
+    file: "music-videos/The Center Piece 1.mp4",
+    thumbnailFile: "cover/The CenterPiece_1.png",
     slug: "music-videos",
     category: "Music Video",
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/campaigns/Silk%20X%20News18.mp4",
+    file: "campaigns/Silk X News18.mp4",
+    thumbnailFile: "cover/Silk X News18.png",
     category: "Campaign",
     slug: "campaigns",
   },
-];
+].map((video) => ({
+  ...video,
+  name: deriveName(video.file),
+  src: `${BASE_URL}/cinemalt-content/${encodeURIComponent(video.file)}`,
+  thumbnail: `${BASE_URL}/${encodeURIComponent(video.thumbnailFile)}`,
+}));
 
 // Human title from URL
 function titleFromSrc(src: string) {
@@ -129,6 +163,8 @@ function mixMedia(reels: typeof REELS, videos: typeof VIDEOS) {
     isReel: boolean;
     slug: string;
     category: string;
+    thumbnail?: string;
+    name: string;
   }[] = [];
 
   const reelsToUse = r.slice(0, 4);
@@ -157,12 +193,16 @@ function VideoTile({
   slug,
   category,
   isReel = false,
+  thumbnail,
+  tileName,
 }: {
   src: string;
   index: number;
   slug: string;
   category: string;
   isReel?: boolean;
+  thumbnail?: string;
+  tileName?: string;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -173,6 +213,7 @@ function VideoTile({
 
   // Extract first frame as poster
   useEffect(() => {
+    if (!isReel) return;
     const v = videoRef.current;
     if (!v) return;
     const handleMetadata = () => {
@@ -196,7 +237,7 @@ function VideoTile({
       v.removeEventListener("loadedmetadata", handleMetadata);
       v.removeEventListener("seeked", handleSeeked);
     };
-  }, [videoSrc]);
+  }, [videoSrc, isReel]);
 
   // Lazy load when in view
   const inView = useInView(containerRef, { margin: "300px 0px", amount: 0.15 });
@@ -319,32 +360,32 @@ function VideoTile({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
-      className="break-inside-avoid mb-4 z-50"
+      className="break-inside-avoid mb-4 z-50 shadow-lg rounded-2xl shadow-gray-200"
     >
       <div
-        className="group z-50 relative w-full overflow-hidden transition-transform duration-300 hover:scale-[1.01]"
+        className="group z-50 shadow-lg rounded-2xl relative w-full overflow-hidden transition-transform duration-300 hover:scale-[1.01]"
         onClick={handleContainerClick}
       >
         <div className={`relative ${padClass}`}>
           <video
             ref={videoRef}
             src={videoSrc ?? undefined}
-            poster={poster ?? undefined}
+            poster={(thumbnail && thumbnail) ?? poster ?? undefined}
             preload="metadata"
             playsInline
             muted
             disablePictureInPicture
-            className="z-50 rounded-2xl absolute inset-0 w-full h-full object-cover select-none"
+            className="z-50 shadow-lg rounded-2xl absolute inset-0 w-full h-full object-cover select-none"
           />
 
           {/* Overlay */}
-          <div className="rounded-2xl pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+          <div className="z-[90] shadow-lg rounded-2xl pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
           {/* Category (clickable) */}
-          <div className="pointer-events-auto absolute top-3 left-3 z-20">
+          <div className="z-[99] pointer-events-auto absolute top-3 left-3">
             <Link
               href={`/work/${slug}`}
-              className="bg-white text-black text-xs font-light px-2 py-0.5 rounded-full hover:bg-stone-200 transition cursor-pointer"
+              className=" bg-white text-black text-xs font-light px-2 py-0.5 rounded-full hover:bg-stone-200 transition cursor-pointer"
               onClick={(e) => e.stopPropagation()}
             >
               {category}
@@ -352,9 +393,9 @@ function VideoTile({
           </div>
 
           {/* Title */}
-          <div className="pointer-events-none absolute inset-x-3 bottom-3">
-            <h3 className="text-base sm:text-lg font-medium leading-tight drop-shadow">
-              {titleFromSrc(src)}
+          <div className="z-[99] pointer-events-none absolute inset-x-3 bottom-2">
+            <h3 className="text-base sm:text-md font-light leading-tight tracking-tight drop-shadow">
+              {tileName}
             </h3>
           </div>
 
@@ -405,70 +446,56 @@ export default function Categories() {
   const MEDIA = mixMedia(REELS, VIDEOS);
 
   return (
-    <main className="dark-grainy bg-stone-800 text-stone-100 w-full min-h-screen">
+    <main className=" bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[60vh] lg:min-h-[60vh] max-w-7xl flex flex-col items-start justify-center sm:justify-end lg:pb-24 lg:px-24 px-6">
+      <section className="dark-grainy relative min-h-[50vh] lg:min-h-[60vh] max-w-full mx-auto flex flex-col items-start justify-end lg:px-24 px-6 pb-16 lg:pb-24">
+        {/* Background Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
+
+        {/* Heading */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-xl sm:text-3xl text-white font-light mb-6"
+          className="relative text-2xl sm:text-3xl lg:text-4xl text-white font-light leading-tight mb-8"
         >
-          Dive into our <span className="alt-font italic">Work</span>
+          Dive into our{" "}
+          <span className="alt-font italic font-normal">Work</span>
         </motion.h2>
 
+        {/* Categories */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="flex flex-wrap items-center gap-2 sm:gap-3 max-w-5xl"
+          className="relative flex flex-wrap items-center gap-3 sm:gap-4 max-w-4xl"
         >
           {CATEGORIES.map((cat) => (
             <Link
               key={cat}
               href={`/work/${cat.toLowerCase().replace(/\s+/g, "-")}`}
-              className="group relative inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 bg-white/5 text-stone-200 hover:bg-white/10 transition-all duration-200"
+              className="group relative inline-flex items-center gap-2 rounded-full px-4 sm:px-5 py-2 sm:py-2.5 
+                   backdrop-blur-md bg-white/10 border border-white/20 text-stone-200
+                   hover:bg-white/20 hover:border-white/40 transition-all duration-300"
             >
-              <span className="text-lg md:text-2xl font-light">{cat}</span>
+              <span className="text-base sm:text-lg md:text-xl font-light">
+                {cat}
+              </span>
               <ArrowUpRight
-                className="w-4 h-4 sm:w-5 sm:h-5 text-stone-400 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-stone-300 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                 strokeWidth={1.5}
               />
-              <span className="pointer-events-none absolute -bottom-0.5 left-3 right-3 h-[2px] origin-left scale-x-0 bg-white/60 transition-transform duration-300 group-hover:scale-x-100" />
             </Link>
           ))}
         </motion.div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="max-sm:hidden sm:absolute bottom-12 right-6 lg:bottom-24 sm:bottom-28 md:bottom-16 lg:right-20"
-        >
-          <div className="flex flex-col items-center text-white/80">
-            <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase mb-3">
-              See a glimpse
-            </span>
-            <div className="w-8 sm:w-10 h-14 sm:h-20 rounded-full border border-white/20 backdrop-blur-md bg-white/5 flex items-start justify-center overflow-hidden shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] transition-shadow duration-500">
-              <motion.div
-                animate={{ y: [0, 40, 0] }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-gradient-to-b from-white to-white/60 shadow-[0_0_8px_rgba(255,255,255,0.6)]"
-              />
-            </div>
-          </div>
-        </motion.div>
+        
       </section>
 
       {/* Section Header */}
-      <section className="border-b border-b-gray-400 light-grainy bg-white lg:py-16 py-12 px-6 lg:px-24">
+      <section className="light-grainy border-b border-b-gray-400 light-grainy bg-white lg:py-16 py-12 px-6 lg:px-24">
         <div className="flex items-baseline justify-between mb-4">
           <h3 className="text-lg sm:text-xl text-stone-600 font-normal">
             Featured
@@ -485,12 +512,14 @@ export default function Categories() {
               category={item.category}
               index={i}
               isReel={item.isReel}
+              thumbnail={item.thumbnail}
+              tileName={item.name}
             />
           ))}
         </div>
       </section>
 
-      <div>
+      <div className="">
         <SocialMedia />
         <FilmTicker />
         <Contact />

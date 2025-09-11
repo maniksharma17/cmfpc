@@ -10,36 +10,32 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 // Data
 // ------------------------------
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 const BRAND_FILMS = [
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Adhayayan.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Adhayayan.png",
+    src: `${BASE_URL}/cinemalt-content/brand-films/Adhayayan.mp4`,
+    thumbnail: `${BASE_URL}/cover/Adhayayan.png`,
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Bill%20%26%20Milinda%20Gates%20Foundation.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Bill%20%26%20Milinda%20Gates.png",
+    src: `${BASE_URL}/cinemalt-content/brand-films/Bill%20%26%20Milinda%20Gates%20Foundation.mp4`,
+    thumbnail: `${BASE_URL}/cover/Bill%20%26%20Milinda%20Gates.png`,
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/House%20Of%20248.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/House%20of%20248.png",
+    src: `${BASE_URL}/cinemalt-content/brand-films/House%20of%20248.mp4`,
+    thumbnail: `${BASE_URL}/cover/House%20of%20248.png`,
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Kohler%20India.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Kohler.png",
+    src: `${BASE_URL}/cinemalt-content/brand-films/Kohler%20India.mp4`,
+    thumbnail: `${BASE_URL}/cover/Kohler.png`,
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/cinemalt-content/brand-films/Saisha.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/Saisha.png",
+    src: `${BASE_URL}/cinemalt-content/brand-films/Saisha.mp4`,
+    thumbnail: `${BASE_URL}/cover/Saisha.png`,
   },
   {
-    src: "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/World%20Hemophilia%20Foundation.mp4",
-    thumbnail:
-      "https://pub-01b195b4f45d4731908d3e577c63b40e.r2.dev/Thumbnails/World%20Hemophilia%20Federation.png",
+    src: `${BASE_URL}/cinemalt-content/brand-films/WFH%20-%20World%20Hemophilia%20Foundation.mp4`,
+    thumbnail: `${BASE_URL}/cover/World%20Hemophilia%20Federation.png`,
   },
 ];
 
@@ -211,7 +207,7 @@ function VideoTile({
           playsInline
           muted
           disablePictureInPicture
-          className="z-50 w-full h-auto object-contain select-none rounded-3xl"
+          className="z-[999] w-full h-auto object-contain select-none rounded-3xl"
         />
 
         {/* Overlay */}
@@ -219,7 +215,7 @@ function VideoTile({
 
         {/* Title */}
         <div className="pointer-events-none absolute inset-x-4 bottom-4">
-          <h3 className="text-lg sm:text-xl font-medium leading-tight drop-shadow">
+          <h3 className="text-lg sm:text-xl font-light leading-tight drop-shadow">
             {titleFromSrc(src)}
           </h3>
         </div>
@@ -266,48 +262,52 @@ function VideoTile({
 // ------------------------------
 export default function BrandFilmsPage() {
   return (
-    <main className="dark-grainy bg-stone-800 text-stone-100 w-full min-h-screen">
+    <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[50vh] lg:min-h-[70vh] flex flex-col items-start justify-center lg:px-24 px-6">
+      <section className="dark-grainy relative min-h-[60vh] lg:min-h-[60vh] flex flex-col items-start justify-end lg:px-24 px-6 lg:pb-24 pb-16">
+        {/* Heading */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-2xl alt-font italic sm:text-4xl text-stone-200 font-light mb-6"
+          className="text-3xl sm:text-5xl text-white font-light tracking-tight alt-font italic mb-6"
         >
           Brand Films
         </motion.h2>
 
+        {/* Subtext */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
           viewport={{ once: true }}
-          className="max-w-3xl text-stone-300 text-md sm:text-xl leading-relaxed"
+          className="max-w-2xl text-stone-300 font-light text-base sm:text-lg leading-relaxed"
         >
-          Our brand films go beyond storytelling — they craft immersive visual
-          journeys that connect audiences to the soul of a brand. From concept
-          to screen, each film is designed to inspire, engage, and leave a
-          lasting impression.
+          Our brand films go beyond{" "}
+          <span className="text-white">storytelling</span> — they craft
+          immersive visual journeys that connect audiences to the{" "}
+          <span className="text-white">soul</span> of a brand. From concept to
+          screen, each film is designed to inspire, engage, and leave a lasting
+          impression.
         </motion.p>
 
-        {/* Animated Arrow */}
+        {/* Floating Arrow */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 10 }}
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 6 }}
           transition={{
             repeat: Infinity,
             repeatType: "reverse",
-            duration: 1.2,
+            duration: 1.4,
           }}
-          className="absolute bottom-6 right-6 text-stone-400"
+          className="absolute bottom-8 right-8 text-stone-500"
         >
-          <ArrowDown className="w-8 h-8" />
+          <ArrowDown className="w-7 h-7" />
         </motion.div>
       </section>
 
-      {/* Section */}
+      {/* Film Grid */}
       <section className="light-grainy bg-white py-10">
         <div className="columns-1 sm:columns-2 lg:columns-2 gap-4 px-4 sm:px-8 lg:px-12">
           {BRAND_FILMS.map((item, i) => (
@@ -318,6 +318,7 @@ export default function BrandFilmsPage() {
         </div>
       </section>
 
+      {/* Footer Elements */}
       <FilmTicker />
       <Contact />
     </main>
