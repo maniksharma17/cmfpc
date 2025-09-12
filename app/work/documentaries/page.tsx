@@ -14,7 +14,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const documentaryFiles = [
   {
-    file: "Bojh_Ashish Kant Tatla (Compressed).mp4",
+    file: "Bojh",
     name: "Bojh",
     thumbnail: "Bojh.png",
   },
