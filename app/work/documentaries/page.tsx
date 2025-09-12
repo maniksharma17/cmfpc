@@ -14,7 +14,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const documentaryFiles = [
   {
-    file: "Bojh",
+    file: "Bojh.mp4",
     name: "Bojh",
     thumbnail: "Bojh.png",
   },
