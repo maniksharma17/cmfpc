@@ -75,7 +75,7 @@ export const SocialMedia = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{ ["--brand" as any]: s.color }}
-              className="z-[99] group rounded-xl border border-stone-200 bg-white shadow-sm hover:shadow-md transition-all p-6 flex flex-col justify-between"
+              className="z-[50] group rounded-xl border border-stone-200 bg-white shadow-sm hover:shadow-md transition-all p-6 flex flex-col justify-between"
             >
               {/* Icon + Arrow */}
               <div className="flex items-center justify-between">
