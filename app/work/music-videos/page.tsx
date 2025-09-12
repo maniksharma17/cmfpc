@@ -15,18 +15,18 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const MUSIC_VIDEOS = [
   {
     src: `${BASE_URL}/cinemalt-content/music-videos/Dilli%20Ki%20Sardiyaan.mp4`,
-    thumbnail: `${BASE_URL}/cover/dilli%20Ki%20Sardiyaan.png`,
+    thumbnail: `${BASE_URL}/cover/Dilli%20Ki%20Sardiyaan.png`,
   },
   {
-    src: `${BASE_URL}/cinemalt-content/music-videos/The%20Center%20Piece_2.mp4`,
+    src: `${BASE_URL}/cinemalt-content/music-videos/The%20Center%20Piece%202.mp4`,
     thumbnail: `${BASE_URL}/cover/The%20CenterPiece_2.png`,
   },
   {
-    src: `${BASE_URL}/cinemalt-content/music-videos/The%20Center%20Piece_1.mp4`,
+    src: `${BASE_URL}/cinemalt-content/music-videos/The%20Center%20Piece%201.mp4`,
     thumbnail: `${BASE_URL}/cover/The%20CenterPiece_1.png`,
   },
   {
-    src: `${BASE_URL}/cinemalt-content/music-videos/The%20Center%20Piece_3.mp4`,
+    src: `${BASE_URL}/cinemalt-content/music-videos/The%20Center%20Piece%203.mp4`,
     thumbnail: `${BASE_URL}/cover/The%20CenterPiece_3.png`,
   },
 ];
