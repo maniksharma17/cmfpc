@@ -1,10 +1,7 @@
-"use client";
 
 import Contact from "@/components/Contact";
 import FilmTicker from "@/components/FilmTicker";
 import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
-import Image from "next/image";
 import {
   Ear,
   Shapes,

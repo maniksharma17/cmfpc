@@ -1,0 +1,6 @@
+name = "my-next-site"
+main = ".vercel/output/static/_worker.js"  
+compatibility_date = "2025-09-11"
+type = "javascript"
+
+routes = ["https://www.cinemalt.com/*"]
