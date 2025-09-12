@@ -25,7 +25,7 @@ const Hero = () => {
           playsInline
           className="block md:hidden w-full h-full object-cover"
         >
-          <source src={`${process.env.NEXT_PUBLIC_BASE_UR}/hero/hero-mobile.mp4`} type="video/mp4" />
+          <source src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-mobile.mp4`} type="video/mp4" />
         </video>
         {/* Desktop */}
         <video
