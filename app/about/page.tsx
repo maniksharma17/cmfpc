@@ -1,4 +1,4 @@
-
+"use client";
 import Contact from "@/components/Contact";
 import FilmTicker from "@/components/FilmTicker";
 import { motion } from "framer-motion";
