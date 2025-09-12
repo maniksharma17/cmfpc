@@ -66,7 +66,7 @@ export default function ClientLogos() {
             className={`group flex items-center mx-auto justify-center w-24 h-14`}
           >
             <Image
-              src={`/clients/${logo.src}`}
+              src={`${logo.src}`}
               alt={`Client logo ${i}`}
               width={200}
               height={100}
