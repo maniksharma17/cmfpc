@@ -248,13 +248,13 @@ export default function Documentaries() {
   return (
     <main className="bg-stone-800 text-stone-100 w-full min-h-screen">
       {/* Hero */}
-      <section className="dark-grainy relative min-h-[60vh] lg:min-h-[60vh] flex flex-col items-start justify-end lg:px-24 px-6 lg:pb-24 pb-16">
+      <section className="dark-grainy relative min-h-[50vh] lg:min-h-[60vh] flex flex-col items-start justify-end lg:px-24 px-6 lg:pb-24 pb-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-3xl sm:text-5xl text-white font-light tracking-tight alt-font italic mb-6"
+          className="text-2xl sm:text-5xl text-white font-light tracking-tight alt-font italic mb-6"
         >
           Documentaries
         </motion.h2>
