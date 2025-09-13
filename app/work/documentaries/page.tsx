@@ -16,7 +16,7 @@ const documentaryFiles = [
   {
     file: "Bojh.mp4",
     name: "Bojh",
-    thumbnail: "Bojh.png",
+    thumbnail: "Bojh.webp",
   },
 ];
 

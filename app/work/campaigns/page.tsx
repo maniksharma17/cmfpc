@@ -13,13 +13,13 @@ import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const campaignFiles = [
-  { file: "Colgate X News18.mp4", thumbnail: "Colgate X News18.png" },
-  { file: "Delhi Green Campaign.mp4", thumbnail: "Delhi Green.png" },
-  { file: "Giva X News18.mp4", thumbnail: "Giva X News18.png" },
-  { file: "Maggi X News18.mp4", thumbnail: "MaggiXNews18.png" },
-  { file: "Silk X News18.mp4", thumbnail: "Silk X News18.png" },
+  { file: "Colgate X News18.mp4", thumbnail: "Colgate X News18.webp" },
+  { file: "Delhi Green Campaign.mp4", thumbnail: "Delhi Green.webp" },
+  { file: "Giva X News18.mp4", thumbnail: "Giva X News18.webp" },
+  { file: "Maggi X News18.mp4", thumbnail: "MaggiXNews18.webp" },
+  { file: "Silk X News18.mp4", thumbnail: "Silk X News18.webp" },
   { file: "Coke Studio X News18.mp4", thumbnail: "" },
-  { file: "Tira X News18.mp4", thumbnail: "Tira X News18.png" },
+  { file: "Tira X News18.mp4", thumbnail: "Tira X News18.webp" },
 ];
 
 const CAMPAIGNS = campaignFiles.map(({ file, thumbnail }) => ({

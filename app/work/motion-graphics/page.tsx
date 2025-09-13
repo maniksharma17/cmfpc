@@ -15,15 +15,15 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const motionGraphicsFiles = [
   {
     file: "Doordarshan Sundarbans.mp4",
-    thumbnail: "Doordarshan.png",
+    thumbnail: "Doordarshan.webp",
   },
   {
     file: "Map Animation.mp4",
-    thumbnail: "Map Animation.png",
+    thumbnail: "Map Animation.webp",
   },
   {
     file: "History Hunter.mp4",
-    thumbnail: "History Hunter.png",
+    thumbnail: "History Hunter.webp",
   },
 ];
 
