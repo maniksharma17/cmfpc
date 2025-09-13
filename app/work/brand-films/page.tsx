@@ -15,27 +15,27 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const BRAND_FILMS = [
   {
     src: `${BASE_URL}/cinemalt-content/brand-films/Adhayayan.mp4`,
-    thumbnail: `${BASE_URL}/cover/Adhayayan.png`,
+    thumbnail: `${BASE_URL}/cover/Adhayayan.webp`,
   },
   {
     src: `${BASE_URL}/cinemalt-content/brand-films/Bill%20%26%20Milinda%20Gates%20Foundation.mp4`,
-    thumbnail: `${BASE_URL}/cover/Bill%20%26%20Milinda%20Gates.png`,
+    thumbnail: `${BASE_URL}/cover/Bill%20%26%20Milinda%20Gates.webp`,
   },
   {
     src: `${BASE_URL}/cinemalt-content/brand-films/House%20of%20248.mp4`,
-    thumbnail: `${BASE_URL}/cover/House%20of%20248.png`,
+    thumbnail: `${BASE_URL}/cover/House%20of%20248.webp`,
   },
   {
     src: `${BASE_URL}/cinemalt-content/brand-films/Kohler%20India.mp4`,
-    thumbnail: `${BASE_URL}/cover/Kohler.png`,
+    thumbnail: `${BASE_URL}/cover/Kohler.webp`,
   },
   {
     src: `${BASE_URL}/cinemalt-content/brand-films/Saisha.mp4`,
-    thumbnail: `${BASE_URL}/cover/Saisha.png`,
+    thumbnail: `${BASE_URL}/cover/Saisha.webp`,
   },
   {
     src: `${BASE_URL}/cinemalt-content/brand-films/WFH%20-%20World%20Hemophilia%20Foundation.mp4`,
-    thumbnail: `${BASE_URL}/cover/World%20Hemophilia%20Federation.png`,
+    thumbnail: `${BASE_URL}/cover/World%20Hemophilia%20Federation.webp`,
   },
 ];
 

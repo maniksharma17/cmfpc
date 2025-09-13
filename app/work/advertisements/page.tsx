@@ -14,11 +14,11 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const AD_FILMS = [
   {
     src: `${BASE_URL}/cinemalt-content/ad-films/Hero%20Splendor.mp4`,
-    thumbnail: `${BASE_URL}/cover/Hero%20Splendor.png`,
+    thumbnail: `${BASE_URL}/cover/Hero%20Splendor.webp`,
   },
   {
     src: `${BASE_URL}/cinemalt-content/ad-films/Tata%20Tea%20Agni.mp4`,
-    thumbnail: `${BASE_URL}/cover/Tata%20Tea%20Agni.png`,
+    thumbnail: `${BASE_URL}/cover/Tata%20Tea%20Agni.webp`,
   },
 ];
 
