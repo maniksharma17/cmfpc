@@ -23,7 +23,7 @@ const portfolioCategories = [
   {
     name: "Brand Reels",
     description: "Short, snappy, and visually magnetic.",
-    image: `${BASE_URL}/cover/Brand%20Reel%20Cover%20Page.webp`,
+    image: `${BASE_URL}/cover/brandreel.webp`,
     slug: "brand-reels",
   },
   {
