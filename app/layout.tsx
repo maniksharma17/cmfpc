@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     siteName: 'CineMalt',
     images: [
       {
-        url: 'https://cdn.cinemalt.com/logo/icon.jpg',
+        url: 'https://cdn.cinemalt.com/logo/icon.png',
         width: 1200,
         height: 630,
         alt: 'CineMalt – Crafting Stories on Screen',
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CineMalt – Crafting Stories on Screen',
     description: 'A film production company creating impactful cinema.',
-    images: ['https://cdn.cinemalt.com/logo/icon.jpg'],
+    images: ['https://cdn.cinemalt.com/logo/icon.png'],
   },
 };
 
@@ -64,7 +64,7 @@ export default function RootLayout({
               "@type": "Organization",
               "name": "CineMalt",
               "url": "https://cinemalt.com",
-              "logo": "https://cdn.cinemalt.com/logo/icon.jpg",
+              "logo": "https://cdn.cinemalt.com/logo/icon.png",
               "description": "Crafting Stories on Screen",
             }),
           }}
