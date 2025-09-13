@@ -25,7 +25,7 @@ const Hero = () => {
           loop
           muted
           playsInline
-          poster={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-mobile-fallback.jpg`}
+          poster={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-mobile-fallback.png`}
           className="block md:hidden w-full h-full object-cover"
         >
           <source
@@ -35,7 +35,7 @@ const Hero = () => {
           {/* Absolute fallback if video not supported */}
           <Image
             fill
-            src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-mobile-fallback.jpg`}
+            src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-mobile-fallback.png`}
             alt="Hero background"
             className="w-full h-full object-cover"
           />
@@ -47,11 +47,11 @@ const Hero = () => {
           loop
           muted
           playsInline
-          poster={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-main-fallback.jpg`}
+          poster={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-main-fallback.png`}
           className="hidden md:block w-full h-full object-cover"
         >
           <source
-            src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-main.mp4`}
+            src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-main.png`}
             type="video/mp4"
           />
           {/* Absolute fallback */}

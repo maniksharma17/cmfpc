@@ -81,7 +81,7 @@ const Navigation = () => {
                         const url = item === 'Home' ? '/' : '/'+item.toLowerCase()
                         router.replace(url)
                       }}
-                      className="text-base lg:text-lg tracking-wide text-white hover:text-gray-300 transition-colors"
+                      className="cursor-pointer text-base lg:text-lg tracking-wide text-white hover:text-gray-300 transition-colors"
                     >{item}</p>
                   ))}
                 </div>
@@ -113,17 +113,16 @@ const Navigation = () => {
           >
             <div className="flex justify-evenly sm:justify-center space-x-6 sm:space-x-12 h-12 items-center text-xs sm:text-sm">
               {NAV_ITEMS.map((item) => (
-                <a
+                <p
                   key={item}
-                  href={`${
-                    item == "Home"
-                      ? "/"
-                      : item.toLowerCase().replace(/\s+/g, "-")
-                  }`}
-                  className="uppercase tracking-tight hover:text-gray-300 transition-colors"
+                  onClick={()=>{
+                    const url = item === 'Home' ? '/' : '/'+item.toLowerCase()
+                    router.replace(url)
+                  }}
+                  className="cursor-pointer uppercase tracking-tight hover:text-gray-300 transition-colors"
                 >
                   {item}
-                </a>
+                </p>
               ))}
             </div>
           </motion.div>
@@ -165,13 +164,13 @@ const Navigation = () => {
               }}
             >
               {NAV_ITEMS.map((item) => (
-                <motion.a
+                <motion.div
                   key={item}
-                  href={`${
-                    item == "Home"
-                      ? "/"
-                      : item.toLowerCase().replace(/\s+/g, "-")
-                  }`}
+                  onClick={()=>{
+                    const url = item === 'Home' ? '/' : '/'+item.toLowerCase()
+                    router.replace(url);
+                    setIsSidebarOpen(false);
+                  }}
                   variants={{
                     hidden: { x: 20, opacity: 0 },
                     visible: { x: 0, opacity: 1 },
@@ -182,11 +181,11 @@ const Navigation = () => {
                     textShadow: "0 0 6px rgba(255,255,255,0.5)",
                   }}
                   whileTap={{ scale: 0.96 }}
-                  onClick={() => setIsSidebarOpen(false)}
-                  className="text-2xl sm:text-4xl font-light tracking-tight text-white/80 hover:text-white transition-all"
+                  
+                  className="cursor-pointer text-2xl sm:text-4xl font-light tracking-tight text-white/80 hover:text-white transition-all"
                 >
                   {item}
-                </motion.a>
+                </motion.div>
               ))}
             </motion.div>
           </motion.aside>
