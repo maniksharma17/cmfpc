@@ -17,8 +17,30 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: 'CineMalt - Film Production Company',
-  description: 'We distill stories and deliver cinematic production that turns ideas into iconic brands.',
+  title: 'CineMalt – Crafting Stories on Screen',
+  description: 'CineMalt is a film production company crafting cinematic stories that turn ideas into iconic brands.',
+  openGraph: {
+    title: 'CineMalt – Crafting Stories on Screen',
+    description: 'A film production company creating impactful cinema.',
+    url: 'https://cinemalt.com',
+    siteName: 'CineMalt',
+    images: [
+      {
+        url: 'https://cdn.cinemalt.com/logo/cinemalt.png',
+        width: 1200,
+        height: 630,
+        alt: 'CineMalt – Crafting Stories on Screen',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CineMalt – Crafting Stories on Screen',
+    description: 'A film production company creating impactful cinema.',
+    images: ['https://cdn.cinemalt.com/logo/cinemalt.png'],
+  },
 };
 
 export default function RootLayout({
@@ -32,7 +54,21 @@ export default function RootLayout({
         <Navigation />
         {children}
         <BackToTop />
-        
+
+        {/* JSON-LD structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "CineMalt",
+              "url": "https://cinemalt.com",
+              "logo": "https://cdn.cinemalt.com/logo/cinemalt.png",
+              "description": "Crafting Stories on Screen",
+            }),
+          }}
+        />
       </body>
     </html>
   );
