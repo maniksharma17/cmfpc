@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const Hero = () => {
   const ref = useRef(null);
@@ -18,25 +19,50 @@ const Hero = () => {
       {/* Background video */}
       <div className="absolute inset-0 w-full h-full">
         {/* Mobile */}
+        {/* Mobile */}
         <video
           autoPlay
           loop
           muted
           playsInline
+          poster={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-mobile-fallback.jpg`}
           className="block md:hidden w-full h-full object-cover"
         >
-          <source src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-mobile.mp4`} type="video/mp4" />
+          <source
+            src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-mobile.mp4`}
+            type="video/mp4"
+          />
+          {/* Absolute fallback if video not supported */}
+          <Image
+            fill
+            src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-mobile-fallback.jpg`}
+            alt="Hero background"
+            className="w-full h-full object-cover"
+          />
         </video>
+
         {/* Desktop */}
         <video
           autoPlay
           loop
           muted
           playsInline
+          poster={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-main-fallback.jpg`}
           className="hidden md:block w-full h-full object-cover"
         >
-          <source src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-main.mp4`} type="video/mp4" />
+          <source
+            src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-main.mp4`}
+            type="video/mp4"
+          />
+          {/* Absolute fallback */}
+          <Image
+            fill
+            src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-main-fallback.jpg`}
+            alt="Hero background"
+            className="w-full h-full object-cover"
+          />
         </video>
+
         <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
       </div>
 
@@ -76,8 +102,8 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
-          onClick={()=>{
-            router.push(`/work`)
+          onClick={() => {
+            router.push(`/work`);
           }}
           className="flex max-sm:mx-auto items-center gap-3 sm:gap-4 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full
             bg-white/10 backdrop-blur-lg text-white text-base sm:text-lg font-medium
