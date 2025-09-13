@@ -94,7 +94,7 @@ const VIDEOS = [
   },
   {
     file: "music-videos/Dilli Ki Sardiyaan.mp4",
-    thumbnailFile: "Dilli Ki Sardiyaan.webp",
+    thumbnailFile: "music1.webp",
     slug: "music-videos",
     category: "Music Video",
   },

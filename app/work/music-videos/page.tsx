@@ -15,7 +15,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const MUSIC_VIDEOS = [
   {
     src: `${BASE_URL}/cinemalt-content/music-videos/Dilli%20Ki%20Sardiyaan.mp4`,
-    thumbnail: `${BASE_URL}/cover/Dilli%20Ki%20Sardiyaan.webp`,
+    thumbnail: `${BASE_URL}/cover/music1.webp`,
   },
   {
     src: `${BASE_URL}/cinemalt-content/music-videos/The%20Center%20Piece%202.mp4`,
