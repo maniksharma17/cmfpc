@@ -76,10 +76,9 @@ const Contact = () => {
             <h4 className="font-cormorant text-xl font-bold mb-4 tracking-wide">
               Get In Touch
             </h4>
-            <p className="text-gray-300 hover:text-white transition-colors cursor-pointer">
-              hello@cinemalt.com
-            </p>
-            <p className="text-gray-300">+1 (555) 123-4567</p>
+            <a href="mailto:contact@cinemalt.com" className="text-gray-300 hover:text-white transition-colors cursor-pointer">
+              contact@cinemalt.com
+            </a>
             <p className="text-gray-400 mt-2 text-sm">
               Available Mon – Fri, 9AM – 6PM
             </p>
@@ -91,15 +90,18 @@ const Contact = () => {
               Follow Our Journey
             </h4>
             <div className="flex space-x-8">
-              {["Instagram", "YouTube", "Facebook", "Vimeo"].map(
+              {[
+                {name: "Instagram", url: 'https://www.instagram.com/cinemalt.in/?utm_source=ig_web_button_share_sheet'}, 
+                {name: "YouTube", url: 'https://youtube.com/@cinemaltstudio?si=yabKzXzGi70Dg_An'}
+              ].map(
                 (platform, idx) => (
                   <motion.a
                     key={idx}
-                    href="#"
+                    href={platform.url}
                     whileHover={{ y: -3 }}
                     className="relative text-gray-300 hover:text-white transition-colors group"
                   >
-                    {platform}
+                    {platform.name}
                     <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all group-hover:w-full"></span>
                   </motion.a>
                 )
@@ -150,7 +152,7 @@ const Contact = () => {
             viewport={{ once: true }}
             className="text-sm tracking-wide"
           >
-            © 2024 CineMalt. All rights reserved.
+            © 2025 CineMalt. All rights reserved.
           </motion.p>
         </div>
       </div>
@@ -164,7 +166,7 @@ const Contact = () => {
           viewport={{ once: true }}
           className="text-sm tracking-wide"
         >
-          © 2024 CineMalt. All rights reserved.
+          © 2025 CineMalt. All rights reserved.
         </motion.p>
       </div>
     </section>

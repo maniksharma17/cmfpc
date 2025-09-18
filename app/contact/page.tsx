@@ -70,12 +70,12 @@ const ContactIntro = () => {
       </p>
 
       <div className="space-y-4">
-        <a href="tel:+919045064021" className="group flex items-center gap-3">
+        {/* <a href="tel:+919045064021" className="group flex items-center gap-3">
           <ArrowRight className="transition-transform group-hover:translate-x-1" />
           <span className="text-xl lg:text-4xl underline-offset-4 hover:underline">
             +91 9045064021
           </span>
-        </a>
+        </a> */}
 
         <a
           href="mailto:contact@cinemalt.com"

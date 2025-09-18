@@ -69,6 +69,8 @@ export default function RootLayout({
             }),
           }}
         />
+        
+        <script src="https://cdn.jsdelivr.net/npm/@mux/mux-player" defer></script>
       </body>
     </html>
   );

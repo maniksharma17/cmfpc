@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducedMotion, motion, Variants } from "framer-motion";
-import { Instagram, Twitter, Facebook, Youtube, ArrowRight } from "lucide-react";
+import { Instagram, Twitter, Facebook, Youtube, ArrowRight, ArrowUpRight } from "lucide-react";
 
 type Social = {
   name: "Instagram" | "Twitter" | "Facebook" | "YouTube";
@@ -11,10 +11,8 @@ type Social = {
 };
 
 const SOCIALS: Social[] = [
-  { name: "Instagram", color: "#E1306C", url: "https://instagram.com", icon: Instagram },
-  { name: "Twitter", color: "#1DA1F2", url: "https://twitter.com", icon: Twitter },
-  { name: "Facebook", color: "#1877F2", url: "https://facebook.com", icon: Facebook },
-  { name: "YouTube", color: "#FF0000", url: "https://youtube.com", icon: Youtube },
+  { name: "YouTube", color: "#FF0000", url: "https://youtube.com/@cinemaltstudio?si=yabKzXzGi70Dg_An", icon: Youtube },
+  { name: "Instagram", color: "#E1306C", url: "https://www.instagram.com/cinemalt.in/?utm_source=ig_web_button_share_sheet", icon: Instagram },
 ];
 
 export const SocialMedia = () => {
@@ -44,7 +42,7 @@ export const SocialMedia = () => {
       className="w-full light-grainy text-stone-900 py-20 lg:py-28 px-6 lg:px-24"
     >
       {/* Heading */}
-      <div className="mb-12 text-left">
+      <div className="mb-12 text-center">
         <motion.h2
           variants={section}
           className="text-3xl md:text-5xl font-light tracking-tight"
@@ -63,7 +61,7 @@ export const SocialMedia = () => {
       {/* Cards */}
       <motion.div
         variants={list}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        className="flex flex-col md:flex-row justify-center items-center gap-6"
       >
         {SOCIALS.map((s) => {
           const Icon = s.icon;
@@ -75,29 +73,15 @@ export const SocialMedia = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{ ["--brand" as any]: s.color }}
-              className="z-[50] group rounded-xl border border-stone-200 bg-white shadow-sm hover:shadow-md transition-all p-6 flex flex-col justify-between"
+              className={`z-[50] flex w-fit flex-row gap-2 justify-start items-center group transition-all sm:p-6 `}
             >
-              {/* Icon + Arrow */}
-              <div className="flex items-center justify-between">
-                <div className="grid place-items-center h-12 w-12 rounded-lg border border-stone-200 bg-stone-50">
-                  <Icon
-                    className="h-6 w-6"
-                    style={{ color: s.color }}
-                    strokeWidth={1.6}
-                  />
-                </div>
-                <ArrowRight
-                  className="h-6 w-6 text-stone-400 group-hover:text-[var(--brand)] transition-colors"
-                />
-              </div>
-
-              {/* Text */}
-              <div className="mt-6">
-                <h3 className="text-xl font-medium">{s.name}</h3>
-                <p className="text-sm text-stone-500 mt-1">
-                  Follow us on {s.name}.
-                </p>
-              </div>
+              <motion.h1 className={`text-3xl md:text-5xl`}
+              style={{
+                color: `${s.color}`
+              }}
+              >{s.name}</motion.h1>
+              <ArrowUpRight color={s.color} size={50} strokeWidth={1} className="group-hover:translate-x-5 group-hover:-translate-y-4 transition-all duration-300 hidden sm:block" />
+              <ArrowUpRight color={s.color} size={30} strokeWidth={1} className="group-hover:translate-x-5 group-hover:-translate-y-4 transition-all duration-300 block sm:hidden" />
             </motion.a>
           );
         })}

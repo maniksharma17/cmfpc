@@ -51,7 +51,7 @@ const Hero = () => {
           className="hidden md:block w-full h-full object-cover"
         >
           <source
-            src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-main.png`}
+            src={`${process.env.NEXT_PUBLIC_BASE_URL}/hero/hero-main.mp4`}
             type="video/mp4"
           />
           {/* Absolute fallback */}

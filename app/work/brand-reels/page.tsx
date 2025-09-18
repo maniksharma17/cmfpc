@@ -1,217 +1,152 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React from "react";
 import Contact from "@/components/Contact";
 import FilmTicker from "@/components/FilmTicker";
-import { motion, useInView } from "framer-motion";
-import { Pause, Play, ArrowDown } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowDown } from "lucide-react";
+import "@mux/mux-player";
 
 // ------------------------------
-// Data
+// Data / Config
 // ------------------------------
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+type FilmItem = {
+  playbackId: string;
+  thumbnail?: string;
+  title?: string;
+  aspect?: string;
+};
 
-const reelFiles = [
-  "Cienna.mp4",
-  "Diplomind.mp4",
-  "House Of Weaving 1.mp4",
-  "House Of Weaving 2.mp4",
-  "House Of Weaving 3.mp4",
-  "House Of Weaving 5.mp4",
-  "House Of Weaving 4.mp4",
-  "House Of Weaving 7.mp4",
-  "Smart City 1.mp4",
-  "House Of Weaving 6.mp4",
-  "Smart City 2.mp4",
-  "Smart City 3.mp4",
-  "Swiggy Diwali Campaign.mp4",
-  "Swiggy Taste Test.mp4",
+const BRAND_REELS: FilmItem[] = [
+  {
+    playbackId: "Ydrw3nH8GvK4GSYnEzSy00xFGp2DuWpAw7QzTD5Gl00Qk",
+    thumbnail:
+      "https://image.mux.com/Ydrw3nH8GvK4GSYnEzSy00xFGp2DuWpAw7QzTD5Gl00Qk/animated.gif?width=320",
+    title: "Diplomind",
+    aspect: "76/135",
+  },
+  {
+    playbackId: "vP2KoDHVppM9C7mx6GCl5Tl9xxlJ8vegW9UavrjPJpk",
+    thumbnail:
+      "https://image.mux.com/vP2KoDHVppM9C7mx6GCl5Tl9xxlJ8vegW9UavrjPJpk/animated.gif?width=320",
+    title: "Cienna",
+    aspect: "76/135",
+  },
+  {
+    playbackId: "enAUZwSGAiM02O003e26h114v5YoV23ORnuPxkVQKFBPM",
+    thumbnail:
+      "https://image.mux.com/enAUZwSGAiM02O003e26h114v5YoV23ORnuPxkVQKFBPM/thumbnail.png?width=214&height=121&time=7",
+    title: "Smart City 1",
+    aspect: "5/9",
+  },
+  {
+    playbackId: "u7IvPqOR2DnMPQEcqkQ2aesBGOZjsfk2UNUE5jRA4zo",
+    thumbnail:
+      "https://image.mux.com/u7IvPqOR2DnMPQEcqkQ2aesBGOZjsfk2UNUE5jRA4zo/animated.gif?width=320",
+    title: "Smart City 2",
+    aspect: "5/9",
+  },
+  {
+    playbackId: "cgAoqjTep7SxJexrgt9SyyZKETDqnN2mwxSQn1lzhF8",
+    thumbnail:
+      "https://image.mux.com/cgAoqjTep7SxJexrgt9SyyZKETDqnN2mwxSQn1lzhF8/animated.gif?width=320",
+    title: "Smart City 3",
+    aspect: "5/9",
+  },
+  
+  {
+    playbackId: "Sth02oUBoCBKBu6GCVMC01eaOjchOFGb2YrCCO01SzVhtk",
+    thumbnail:
+      "https://image.mux.com/Sth02oUBoCBKBu6GCVMC01eaOjchOFGb2YrCCO01SzVhtk/animated.gif?width=320",
+    title: "House Of Weaving 1",
+    aspect: "76/135",
+  },
+  {
+    playbackId: "koVfi7iDftl1J2NMdCm3jTJ01rV00KwuPHirv1TpgVcX00",
+    thumbnail:
+      "https://image.mux.com/koVfi7iDftl1J2NMdCm3jTJ01rV00KwuPHirv1TpgVcX00/animated.gif?width=320",
+    title: "House Of Weaving 2",
+    aspect: "76/135",
+  },
+  {
+    playbackId: "LQIsviAT5wmEPwRMlxcqDsLakxfLKygnNEOUpAcpux4",
+    thumbnail:
+      "https://image.mux.com/LQIsviAT5wmEPwRMlxcqDsLakxfLKygnNEOUpAcpux4/animated.gif?width=320",
+    title: "House Of Weaving 3",
+    aspect: "76/135",
+  },
+  {
+    playbackId: "N4fy01xTA8lTnfxD6zkpA286sjvS4S01jCZo02aCUYxwN8",
+    thumbnail:
+      "https://image.mux.com/N4fy01xTA8lTnfxD6zkpA286sjvS4S01jCZo02aCUYxwN8/animated.gif?width=320",
+    title: "House Of Weaving 6",
+    aspect: "16/7",
+  },
+  {
+    playbackId: "A6llwpFOWqS32gn1ScZP00ca94le00Y72EG7cryDxx02kw",
+    thumbnail:
+      "https://image.mux.com/A6llwpFOWqS32gn1ScZP00ca94le00Y72EG7cryDxx02kw/animated.gif?width=320",
+    title: "House Of Weaving 4",
+    aspect: "76/135",
+  },
+  {
+    playbackId: "Qevr2zC1hcGCIwX6SFTfNpw6z01dvRHTSB700LbDKiLd4",
+    thumbnail:
+      "https://image.mux.com/Qevr2zC1hcGCIwX6SFTfNpw6z01dvRHTSB700LbDKiLd4/animated.gif?width=320",
+    title: "House Of Weaving 5",
+    aspect: "16/7",
+  },
+  
+  {
+    playbackId: "YbneMaJ2i5lg83vLEZCC0172Fve9fv501klPKvTkKf9800",
+    thumbnail:
+      "https://image.mux.com/YbneMaJ2i5lg83vLEZCC0172Fve9fv501klPKvTkKf9800/animated.gif?width=320",
+    title: "House Of Weaving 7",
+    aspect: "76/135",
+  },
+  {
+    playbackId: "Favua100P01tc6u8fMaZuNwuMAnSV8CYDX0138wuoMYVFs",
+    thumbnail:
+      "https://image.mux.com/Favua100P01tc6u8fMaZuNwuMAnSV8CYDX0138wuoMYVFs/animated.gif?width=320",
+    title: "Swiggy Taste Test",
+    aspect: "101/180",
+  },
+  {
+    playbackId: "N3aCrec8L3l9I201n00lh8vven3zLe7BQmVJY73Lb01D5k",
+    thumbnail:
+      "https://image.mux.com/N3aCrec8L3l9I201n00lh8vven3zLe7BQmVJY73Lb01D5k/animated.gif?width=320",
+    title: "Swiggy Diwali Campaign",
+    aspect: "76/135",
+  },
 ];
 
-const BRAND_REELS = reelFiles.map(
-  (file) => `${BASE_URL}/cinemalt-content/brand-reels/${encodeURIComponent(file)}`
-);
-
-
-
 // ------------------------------
-// Utils
+// Media Tile (mux-player)
 // ------------------------------
-function titleFromSrc(src: string) {
-  try {
-    const file = decodeURIComponent(src.split("/").pop() || "").replace(
-      /\.[^.]+$/,
-      ""
-    );
-    return file.replace(/[._-]+/g, " ").trim();
-  } catch {
-    return "Untitled";
-  }
-}
-
-let globalCurrent: HTMLVideoElement | null = null;
-
-// ------------------------------
-// Video Tile (Reel Card)
-// ------------------------------
-function VideoTile({ src, index }: { src: string; index: number }) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const inView = useInView(containerRef, { margin: "200px", amount: 0.25 });
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  const [videoSrc, setVideoSrc] = useState<string | null>(null);
-  const [poster, setPoster] = useState<string | null>(null);
-  const [playing, setPlaying] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  // Extract first frame as poster
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-
-    const handleMetadata = () => {
-      v.currentTime = 0.5; // small offset avoids blank black frame
-    };
-
-    const handleSeeked = () => {
-      try {
-        const canvas = document.createElement("canvas");
-        canvas.width = v.videoWidth;
-        canvas.height = v.videoHeight;
-        const ctx = canvas.getContext("2d");
-        if (ctx) {
-          ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
-          setPoster(canvas.toDataURL("image/jpeg", 0.7));
-        }
-      } catch {}
-    };
-
-    v.addEventListener("loadedmetadata", handleMetadata, { once: true });
-    v.addEventListener("seeked", handleSeeked, { once: true });
-
-    return () => {
-      v.removeEventListener("loadedmetadata", handleMetadata);
-      v.removeEventListener("seeked", handleSeeked);
-    };
-  }, [videoSrc]);
-
-  useEffect(() => {
-    if (inView && !videoSrc) setVideoSrc(src);
-
-    const handleFsChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
-    };
-
-    document.addEventListener("fullscreenchange", handleFsChange);
-    return () =>
-      document.removeEventListener("fullscreenchange", handleFsChange);
-  }, [inView, videoSrc, src]);
-
-  const togglePlay = async () => {
-    const v = videoRef.current;
-    if (!v) return;
-    if (v.paused) {
-      if (globalCurrent && globalCurrent !== v) globalCurrent.pause();
-      v.muted = false;
-      try {
-        await v.play();
-        setPlaying(true);
-        globalCurrent = v;
-      } catch {
-        v.muted = true;
-        try {
-          await v.play();
-          setPlaying(true);
-          globalCurrent = v;
-        } catch {}
-      }
-    } else {
-      v.pause();
-      setPlaying(false);
-      if (globalCurrent === v) globalCurrent = null;
-    }
-  };
-
-  const toggleFullscreen = () => {
-    const wrapper = wrapperRef.current;
-    if (!wrapper) return;
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else {
-      wrapper.requestFullscreen?.();
-    }
-  };
-
+function MediaTile({ item, index }: { item: FilmItem; index: number }) {
   return (
     <motion.div
-      ref={containerRef}
-      className="mb-6 z-50 break-inside-avoid relative group overflow-hidden rounded-2xl shadow-lg bg-black"
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0.8, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
+      className="relative w-full z-[999] shadow-intense rounded-2xl overflow-hidden mb-6"
+      style={{ aspectRatio: item.aspect ?? "9/16" }}
     >
-      {/* 🔹 Fullscreen wrapper */}
-      <div
-        ref={wrapperRef}
-        className={`z-50 relative w-full h-auto ${
-          isFullscreen
-            ? "w-screen h-screen flex items-center justify-center bg-black"
-            : ""
-        }`}
-      >
-        <video
-          ref={videoRef}
-          src={videoSrc ?? undefined}
-          poster={poster ?? undefined}
-          preload="metadata"
-          playsInline
-          muted
-          disablePictureInPicture
-          className={`z-50 w-full h-auto object-cover rounded-2xl ${
-            isFullscreen
-              ? "aspect-[9/16] max-h-screen mx-auto rounded-none"
-              : ""
-          }`}
-        />
-      </div>
+      <mux-player
+        stream-type="on-demand"
+        playback-id={item.playbackId}
+        poster={item.thumbnail}
+        metadata-video-title={item.title}
+        primary-color="#ffffff"
+        secondary-color="#"
+        style={{ width: "100%", height: "100%" }}
+      ></mux-player>
 
-      {/* Overlay gradient */}
-      {!isFullscreen && (
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-      )}
-
-      {/* Badge + Title */}
-      {!isFullscreen && (
-        <div className="absolute bottom-4 left-4 flex items-center gap-2">
-          <span className="bg-white text-gray-600 text-xs font-medium shadow-md px-2 py-1 rounded-full">
-            Reel
-          </span>
-          <h3 className="text-lg sm:text-xl font-medium drop-shadow">
-            {titleFromSrc(src)}
-          </h3>
-        </div>
-      )}
-
-      {/* Controls */}
-      <div className="z-[999] absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        {/* Play/Pause */}
-        <button
-          type="button"
-          aria-label={playing ? "Pause" : "Play"}
-          className="grid place-items-center rounded-full h-14 w-14 sm:h-16 sm:w-16 backdrop-blur-sm bg-black/50 border border-white/20 text-white"
-          onClick={(e) => {
-            e.stopPropagation();
-            togglePlay();
-          }}
-        >
-          {playing ? (
-            <Pause className="h-6 w-6" />
-          ) : (
-            <Play className="h-6 w-6 translate-x-[1px]" />
-          )}
-        </button>
+      <div className="absolute bottom-2 left-4 text-white drop-shadow-md">
+        <h3 className="font-normal tracking-wide text-sm sm:text-base">
+          {item.title}
+        </h3>
       </div>
     </motion.div>
   );
@@ -269,8 +204,8 @@ export default function BrandReelsPage() {
             Featured Reels
           </h3>
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
-            {BRAND_REELS.map((src, i) => (
-              <VideoTile key={src} src={src} index={i} />
+            {BRAND_REELS.map((item, i) => (
+              <MediaTile key={item.playbackId} item={item} index={i} />
             ))}
           </div>
         </div>

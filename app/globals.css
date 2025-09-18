@@ -40,7 +40,8 @@
 .light-grainy {
   position: relative;
   background-color: theme("colors.white");
-  overflow: hidden; /* keep pseudo clipped */
+  overflow: hidden; 
+  z-index: 0;
 }
 
 .light-grainy::after {

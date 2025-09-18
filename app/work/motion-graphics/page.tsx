@@ -1,251 +1,71 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React from "react";
 import Contact from "@/components/Contact";
 import FilmTicker from "@/components/FilmTicker";
-import { motion, useInView } from "framer-motion";
-import { Pause, Play, Maximize, ArrowDown } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowDown } from "lucide-react";
+import "@mux/mux-player";
 
 // ------------------------------
-// Data
+// Data / Config
 // ------------------------------
+type FilmItem = {
+  playbackId: string;
+  thumbnail?: string;
+  title?: string;
+  aspect?: string;
+};
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
-const motionGraphicsFiles = [
+const MOTION_GRAPHICS: FilmItem[] = [
   {
-    file: "Doordarshan Sundarbans.mp4",
-    thumbnail: "Doordarshan.webp",
+    playbackId: "QeZVe9wuAtM2rPsJnkesQ55ioEF3CF1FtYio4PhUN1g",
+    thumbnail:
+      "https://image.mux.com/QeZVe9wuAtM2rPsJnkesQ55ioEF3CF1FtYio4PhUN1g/animated.gif?width=320",
+    title: "Map Animation",
+    aspect: "16/9",
   },
   {
-    file: "Map Animation.mp4",
-    thumbnail: "Map Animation.webp",
+    playbackId: "4p700TQ0024CH01sZCmEtaX4nS4uoGFnmaaCkfiuHkOm3o",
+    thumbnail:
+      "https://image.mux.com/4p700TQ0024CH01sZCmEtaX4nS4uoGFnmaaCkfiuHkOm3o/animated.gif?width=320",
+    title: "Doordarshan Sundarbans",
+    aspect: "16/9",
   },
   {
-    file: "History Hunter.mp4",
-    thumbnail: "History Hunter.webp",
+    playbackId: "X00OenMA2s02BQbgE8sHCNOH6v5lt1H9Js339lwQw9kQs",
+    thumbnail:
+      "https://image.mux.com/X00OenMA2s02BQbgE8sHCNOH6v5lt1H9Js339lwQw9kQs/animated.gif?width=320",
+    title: "History Hunter",
+    aspect: "16/9",
   },
 ];
 
-const MOTION_GRAPHICS = motionGraphicsFiles.map(({ file, thumbnail }) => ({
-  src: `${BASE_URL}/cinemalt-content/motion-graphics/${encodeURIComponent(file)}`,
-  thumbnail: `${BASE_URL}/cover/${encodeURIComponent(thumbnail)}`,
-}));
-
 // ------------------------------
-// Utils
+// Media Tile (mux-player)
 // ------------------------------
-function titleFromSrc(src: string) {
-  try {
-    const file = decodeURIComponent(src.split("/").pop() || "").replace(
-      /\.[^.]+$/,
-      ""
-    );
-    return file.replace(/[._-]+/g, " ").trim();
-  } catch {
-    return "Untitled";
-  }
-}
-
-/**
- * VIDEO
- */
-
-// Keep track of currently playing video globally
-let globalCurrent: HTMLVideoElement | null = null;
-
-
-function VideoTile({
-  src,
-  index,
-  poster,
-}: {
-  src: string;
-  index: number;
-  poster: string;
-}) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [videoSrc, setVideoSrc] = useState<string | null>(null);
-  const [playing, setPlaying] = useState(false);
-  const [showControls, setShowControls] = useState(true);
-
-  // Lazy load when in view
-  const inView = useInView(containerRef, { margin: "300px 0px", amount: 0.15 });
-  useEffect(() => {
-    if (inView && !videoSrc) setVideoSrc(src);
-  }, [inView, videoSrc, src]);
-
-  // Pause when out of view
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    if (!inView && !v.paused) {
-      v.pause();
-      setPlaying(false);
-    }
-  }, [inView]);
-
-  // Pause all videos except one
-  const pauseOthers = (current: HTMLVideoElement) => {
-    document.querySelectorAll("video").forEach((vid) => {
-      if (vid !== current) {
-        vid.pause();
-      }
-    });
-  };
-
-  // Toggle play/pause
-  const togglePlay = async () => {
-    const v = videoRef.current;
-    if (!v) return;
-
-    if (v.paused) {
-      pauseOthers(v);
-      v.muted = false;
-      try {
-        await v.play();
-        setPlaying(true);
-        globalCurrent = v;
-        setShowControls(false);
-      } catch {
-        v.muted = true;
-        try {
-          await v.play();
-          setPlaying(true);
-          globalCurrent = v;
-          setShowControls(false);
-        } catch {}
-      }
-    } else {
-      v.pause();
-      setPlaying(false);
-      setShowControls(true);
-      if (globalCurrent === v) globalCurrent = null;
-    }
-  };
-
-  // Toggle fullscreen
-  const toggleFullscreen = async () => {
-    const v = videoRef.current;
-    if (!v) return;
-
-    // Always pause others before fullscreen
-    pauseOthers(v);
-    v.currentTime = 0;
-
-    if (
-      document.fullscreenElement ||
-      (document as any).webkitFullscreenElement ||
-      (document as any).mozFullScreenElement ||
-      (document as any).msFullscreenElement
-    ) {
-      if (document.exitFullscreen) {
-        await document.exitFullscreen();
-      } else if ((document as any).webkitExitFullscreen) {
-        (document as any).webkitExitFullscreen();
-      } else if ((document as any).mozCancelFullScreen) {
-        (document as any).mozCancelFullScreen();
-      } else if ((document as any).msExitFullscreen) {
-        (document as any).msExitFullscreen();
-      }
-      return;
-    }
-
-    if (v.requestFullscreen) {
-      await v.requestFullscreen();
-    } else if ((v as any).webkitEnterFullscreen) {
-      (v as any).webkitEnterFullscreen(); // iOS Safari
-    } else if ((v as any).webkitRequestFullscreen) {
-      (v as any).webkitRequestFullscreen();
-    } else if ((v as any).mozRequestFullScreen) {
-      (v as any).mozRequestFullScreen();
-    } else if ((v as any).msRequestFullscreen) {
-      (v as any).msRequestFullscreen();
-    }
-
-    if (screen.orientation && (screen.orientation as any).lock) {
-      try {
-        await (screen.orientation as any).lock("landscape");
-      } catch {}
-    }
-  };
-
-  // Show controls again if user taps video while playing
-  const handleContainerClick = () => {
-    if (playing) {
-      setShowControls((prev) => !prev);
-    } else {
-      togglePlay();
-    }
-  };
-
+function MediaTile({ item, index }: { item: FilmItem; index: number }) {
   return (
     <motion.div
-      ref={containerRef}
       initial={{ opacity: 0.8, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, delay: Math.min(index * 0.03, 0.3) }}
-      className="z-50 w-full rounded-3xl shadow-intense"
+      className="relative w-full z-[999] shadow-intense rounded-2xl overflow-hidden"
+      style={{ aspectRatio: item.aspect ?? "16/9" }}
     >
-      <div
-        className="group z-50 relative w-full overflow-hidden bg-transparent rounded-3xl"
-        onClick={handleContainerClick}
-      >
-        <video
-          ref={videoRef}
-          src={videoSrc ?? undefined}
-          poster={poster ?? undefined}
-          preload="metadata"
-          playsInline
-          muted
-          disablePictureInPicture
-          className="z-50 w-full h-auto object-contain select-none rounded-3xl"
-        />
+      <mux-player
+        stream-type="on-demand"
+        playback-id={item.playbackId}
+        poster={item.thumbnail}
+        metadata-video-title={item.title}
+        primary-color="#ffffff"
+        secondary-color="#"
+        style={{ width: "100%", height: "100%" }}
+      ></mux-player>
 
-        {/* Overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent rounded-3xl" />
-
-        {/* Title */}
-        <div className="pointer-events-none absolute inset-x-4 bottom-4">
-          <h3 className="text-lg sm:text-xl font-light leading-tight drop-shadow">
-            {titleFromSrc(src)}
-          </h3>
-        </div>
-
-        {/* Controls */}
-        {showControls && (
-          <div className="absolute inset-0 flex items-center justify-center gap-3 transition-opacity duration-200">
-            <button
-              type="button"
-              aria-label={playing ? "Pause" : "Play"}
-              className="grid place-items-center rounded-full h-14 w-14 sm:h-16 sm:w-16 backdrop-blur-sm bg-black/40 border border-white/20 text-white"
-              onClick={(e) => {
-                e.stopPropagation();
-                togglePlay();
-              }}
-            >
-              {playing ? (
-                <Pause className="h-6 w-6" />
-              ) : (
-                <Play className="h-6 w-6 translate-x-[1px]" />
-              )}
-            </button>
-
-            <button
-              type="button"
-              aria-label="Fullscreen"
-              className="grid place-items-center rounded-full h-12 w-12 sm:h-14 sm:w-14 backdrop-blur-sm bg-black/40 border border-white/20 text-white"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleFullscreen();
-              }}
-            >
-              <Maximize className="h-5 w-5" />
-            </button>
-          </div>
-        )}
+      <div className="absolute bottom-2 left-4 text-white drop-shadow-md">
+        <h3 className="font-normal tracking-wide text-lg">{item.title}</h3>
       </div>
     </motion.div>
   );
@@ -276,47 +96,36 @@ export default function MotionGraphicsPage() {
           viewport={{ once: true }}
           className="max-w-2xl text-stone-300 font-light text-base sm:text-lg leading-relaxed"
         >
-          Our motion graphics turn complex ideas into captivating visuals. With
-          dynamic design, fluid animation, and a keen eye for detail, we bring
-          brands, products, and stories to life. Every frame is crafted to
-          engage, explain, and leave a memorable impact.{" "}
+          Our motion graphics turn complex ideas into captivating visuals. With dynamic design, fluid animation, and a keen eye for detail, we bring brands, products, and stories to life. Every frame is crafted to engage, explain, and leave a memorable impact.
         </motion.p>
 
-        {/* Animated Arrow */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 10 }}
-          transition={{
-            repeat: Infinity,
-            repeatType: "reverse",
-            duration: 1.2,
-          }}
+          transition={{ repeat: Infinity, repeatType: "reverse", duration: 1.2 }}
           className="absolute bottom-6 right-6 text-stone-400"
         >
           <ArrowDown className="w-8 h-8" />
         </motion.div>
       </section>
 
-      {/* Section */}
+      {/* Film Grid */}
       <section className="light-grainy bg-white pt-10">
         <div className="columns-1 sm:columns-2 lg:columns-2 gap-4 px-4 sm:px-8 lg:px-12">
-          {MOTION_GRAPHICS.slice(0,2).map((item, i) => (
-            <div key={item.src} className="mb-4 lg:mb-6 break-inside-avoid transition">
-              <VideoTile src={item.src} index={i} poster={item.thumbnail} />
+          {MOTION_GRAPHICS.slice(0, 2).map((item, i) => (
+            <div key={item.playbackId} className="mb-4 lg:mb-6 break-inside-avoid transition">
+              <MediaTile item={item} index={i} />
             </div>
           ))}
-          
         </div>
         <div className="columns-1 px-4 sm:px-8 lg:px-12">
           {MOTION_GRAPHICS.slice(-1).map((item, i) => (
-            <div key={item.src} className="mb-4 break-inside-avoid transition">
-              <VideoTile src={item.src} index={i} poster={item.thumbnail} />
+            <div key={item.playbackId} className="mb-4 break-inside-avoid transition">
+              <MediaTile item={item} index={i} />
             </div>
           ))}
         </div>
       </section>
-      
-
 
       <FilmTicker />
       <Contact />
